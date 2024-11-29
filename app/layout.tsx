@@ -1,4 +1,12 @@
 
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'JULIETT HOME',
+  description: 'The official JULIETT WEBSITE',
+  metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
+};
+
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
  
