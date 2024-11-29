@@ -7,29 +7,49 @@ import { signOut } from '@/auth';
 
 export default function SideNav() {
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2">
-      <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
-        href="/"
-      >
-        <div className="w-32 text-white md:w-40">
-          <AcmeLogo />
-        </div>
+    <div className="fixed top-0 left-0 w-full max-w-screen h-20 flex items-center p-4 space-x-32"
+      style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
+      <Link href="/" >
+        <p className={`text-3xl text-white md:text-5xl bg-white-500 md:leading-normal`}>
+          JULIETT
+        </p>
       </Link>
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
+
+      <div className="flex text-white text-l grow flex-row justify-between space-x-12  mr-32" style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
         <NavLinks />
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-        <form  action={async () => {
-            'use server';
-            await signOut();
-          }}
-        >
-          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-            <PowerIcon className="w-6" />
+        <div className="hidden h-full w-full grow  md:block" >
+        </div>
+        <form action={async () => { 'use server'; await signOut(); }} >
+          <button className="flex h-[48px] text-white w-full items-center justify-center gap-2  text-l font-medium hover:bg-sky-100 hover:text-blue-600" style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
+            <PowerIcon className="w-8" />
             <div className="hidden md:block">Sign Out</div>
           </button>
         </form>
       </div>
     </div>
+    // <div className="flex h-full flex-col px-3 py-4 md:px-2">
+    //   <Link
+    //     className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
+    //     href="/"
+    //   >
+    //     <div className="w-32 text-white md:w-40">
+    //       <AcmeLogo />
+    //     </div>
+    //   </Link>
+    //   <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
+    //     <NavLinks />
+    //     <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
+    //     <form  action={async () => {
+    //         'use server';
+    //         await signOut();
+    //       }}
+    //     >
+    //       <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
+    //         <PowerIcon className="w-6" />
+    //         <div className="hidden md:block">Sign Out</div>
+    //       </button>
+    //     </form>
+    //   </div>
+    // </div>
   );
 }

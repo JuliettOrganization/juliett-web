@@ -12,13 +12,14 @@ import clsx from 'clsx';
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  {
-    name: 'Invoices',
-    href: '/dashboard/invoices',
-    icon: DocumentDuplicateIcon,
-  },
-  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+  // { name: 'Home', href: '/home', icon: HomeIcon },
+ 
+  { name: 'Home', href: '/home'},
+  { name: 'Report Manager',href: '/home/reportmanager',},
+  { name: 'Report Design', href: '/home/customers' },
+  { name: 'Loading Status', href: '/home/customers' },
+  { name: 'Scheduler', href: '/home/customers'},
+  { name: 'Configuration', href: '/home/customers' },
 ];
 
 export default function NavLinks() {
@@ -26,19 +27,20 @@ export default function NavLinks() {
   return (
     <>
       {links.map((link) => {
-        const LinkIcon = link.icon;
+        // const LinkIcon = link.icon;
         return (
           <Link
             key={link.name}
             href={link.href}
+            style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
+              'flex  grow items-center justify-center gap-2 p-3 text-l font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3' ,
               {
-                'bg-sky-100 text-blue-600': pathname === link.href,
+                'text-l  bg-sky-100 text-purple-500  font-bold': pathname === link.href,
               },
             )}
           >
-            <LinkIcon className="w-6" />
+            {/* <LinkIcon className="w-6" /> */}
             <p className="hidden md:block">{link.name}</p>
           </Link>
         );

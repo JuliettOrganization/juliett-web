@@ -2,6 +2,29 @@
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
 
+
+  export function HomeSkeleton() {
+    return (
+      <div
+        className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
+      >
+        <div className="flex p-4">
+          <div className="h-5 w-5 rounded-md bg-gray-200" />
+          <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
+        </div>
+        <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
+          <div className="h-7 w-20 rounded-md bg-gray-200" />
+        </div>
+      </div>
+    );
+  }
+
+
+
+
+
+
+
 export function CardSkeleton() {
   return (
     <div
@@ -139,7 +162,7 @@ export function TableRowSkeleton() {
   );
 }
 
-export function InvoicesMobileSkeleton() {
+export function ReportsMobileSkeleton() {
   return (
     <div className="mb-2 w-full rounded-md bg-white p-4">
       <div className="flex items-center justify-between border-b border-gray-100 pb-8">
@@ -163,36 +186,36 @@ export function InvoicesMobileSkeleton() {
   );
 }
 
-export function InvoicesTableSkeleton() {
+export function ReportsTableSkeleton() {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
-            <InvoicesMobileSkeleton />
-            <InvoicesMobileSkeleton />
-            <InvoicesMobileSkeleton />
-            <InvoicesMobileSkeleton />
-            <InvoicesMobileSkeleton />
-            <InvoicesMobileSkeleton />
+            <ReportsMobileSkeleton />
+            <ReportsMobileSkeleton />
+            <ReportsMobileSkeleton />
+            <ReportsMobileSkeleton />
+            <ReportsMobileSkeleton />
+            <ReportsMobileSkeleton />
           </div>
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  Customer
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Email
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Amount
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Date
+                  Name
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Status
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Description
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Date Concept
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Period
                 </th>
                 <th
                   scope="col"

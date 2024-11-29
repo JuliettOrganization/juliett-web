@@ -1,37 +1,37 @@
-import {
-  BanknotesIcon,
-  ClockIcon,
-  UserGroupIcon,
-  InboxIcon,
-} from '@heroicons/react/24/outline';
+import {ArrowRightCircleIcon} from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
 import { fetchCardData } from '@/app/lib/data';
 const iconMap = {
-  collected: BanknotesIcon,
-  customers: UserGroupIcon,
-  pending: ClockIcon,
-  invoices: InboxIcon,
+  basic: ArrowRightCircleIcon
 };
+import Link from 'next/link';
+import clsx from 'clsx';
+
 
 export default async function CardWrapper() {
-  const {
-    numberOfInvoices,
-    numberOfCustomers,
-    totalPaidInvoices,
-    totalPendingInvoices,
-  } = await fetchCardData();
+  // const {
+  //   numberOfInvoices,
+  //   numberOfCustomers,
+  //   totalPaidInvoices,
+  //   totalPendingInvoices,
+  // } = await fetchCardData();
+  const report_manager = 'Access all of your draft reports and final results.';
+    const report_design = 'Quickly access to a new draft report design.';
+    const status_loading = 'Be aware of the latest data loaded in your system.';
+    const scheduler = 'Schedule your report to receive them by email or through sftp on a regular basis.';
+    const config = 'Customize your own groupings, airline class mapping and more.';
+    const profile = 'Customize your profle and user experience.';
+    
   return (
     <>
       {/* NOTE: Uncomment this code in Chapter 9 */}
 
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
-      <Card
-        title="Total Customers"
-        value={numberOfCustomers}
-        type="customers"
-      />
+      <Card title="Report Manager" value={report_manager} type='basic' path='/home/reportmanager'/>
+      <Card title="Report Design" value={report_design} type='basic' path='/home/reportdesign' />
+      <Card title="Loading Status" value={status_loading} type='basic' path='/home/loadingstatus' />
+      <Card title="Scheduler" value={scheduler} type='basic' path='/home/scheduler'/>
+      <Card title="Configuration" value={config} type='basic' path='/home/configuration'/>
+      <Card title="Profile" value={profile} type='basic' path='/home/Profile'/>
     </>
   );
 }
@@ -40,25 +40,32 @@ export function Card({
   title,
   value,
   type,
+  path,
+ 
 }: {
   title: string;
-  value: number | string;
-  type: 'invoices' | 'customers' | 'pending' | 'collected';
+  value: string;
+  type: 'basic';
+  path: string;
 }) {
   const Icon = iconMap[type];
 
   return (
-    <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
-      <div className="flex p-4">
-        {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
-        <h3 className="ml-2 text-sm font-medium">{title}</h3>
-      </div>
-      <p
-        className={`${lusitana.className}
-          truncate rounded-xl bg-white px-4 py-8 text-center text-2xl`}
+    <div className="rounded-xl bg-gray-50 p-2 hover:bg-purple-100 hover:text-purple-600">
+      <Link href={path}
       >
+      <div className="flex p-4 hover:bg-purple-100 hover:text-purple-600">
+        
+        {Icon ? <Icon className="h-7 w-7 text-purple-500 " /> : null}
+        <h3 className="ml-2 text-xl text-purple-500 font-medium  "
+        >{title}</h3>
+      </div>
+      
+      <p
+       className='flex flex-col items-start text-gray-500 rounded-xl px-14 text-left text-sm h-24'>
         {value}
       </p>
+      </Link>
     </div>
   );
 }
