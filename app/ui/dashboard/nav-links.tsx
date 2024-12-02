@@ -16,7 +16,7 @@ const links = [
  
   { name: 'Home', href: '/home'},
   { name: 'Report Manager',href: '/home/reportmanager',},
-  { name: 'Report Design', href: '/home/customers' },
+  { name: 'Report Design', href: '/home/reportdesign' },
   { name: 'Loading Status', href: '/home/customers' },
   { name: 'Scheduler', href: '/home/customers'},
   { name: 'Configuration', href: '/home/customers' },
@@ -24,7 +24,7 @@ const links = [
 
 export default function NavLinks() {
   const pathname = usePathname();
-  return (
+  const beginningOfPathname = pathname ? `/${pathname.split('/')[1]}/${pathname.split('/')[2]}` : '';  return (
     <>
       {links.map((link) => {
         // const LinkIcon = link.icon;
@@ -32,16 +32,16 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
-            style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}
+            style={{ backgroundColor: 'rgba(0, 0, 0,0.8)'}}
             className={clsx(
-              'flex  grow items-center justify-center gap-2 p-3 text-l font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3' ,
+              'flex  grow items-center justify-center h-20 gap-2 p-3 text-l font-medium hover:bg-sky-100 hover:text-purple-800 md:flex-none md:justify-start md:p-2 md:px-3' ,
               {
-                'text-l  bg-sky-100 text-purple-500  font-bold': pathname === link.href,
+                'text-l  bg-sky-100 text-purple-500 h-20  p-3 font-bold border-b-4 border-purple-500': beginningOfPathname === link.href,
               },
             )}
           >
             {/* <LinkIcon className="w-6" /> */}
-            <p className="hidden md:block">{link.name}</p>
+            <p className="hidden md:block ">{link.name}</p>
           </Link>
         );
       })}

@@ -99,10 +99,18 @@ export async function fetchFilteredReports  (
       SELECT
         userid,
         reportid,
-        reportname,description,updated,date_concept,period,status
+        reportname,
+        description,
+        date_concept,
+        period,
+        status
       FROM master.report_manager
-  
-       
+       where 
+       report_manager.reportname ILIKE ${`%${query}%`} OR
+        report_manager.description ILIKE ${`%${query}%`} OR
+        report_manager.date_concept ILIKE ${`%${query}%`} OR
+         report_manager.period ILIKE ${`%${query}%`} OR
+          report_manager.status ILIKE ${`%${query}%`} 
       ORDER BY reportid DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;

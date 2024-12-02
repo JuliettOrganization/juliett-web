@@ -2,9 +2,11 @@
 
 
 import { useActionState } from 'react';
-import { CustomerField } from '@/app/lib/definitions';
+import TagInput from '@/app/components/TagInput';
+import { DateConcept } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
+  XMarkIcon,
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
@@ -13,119 +15,186 @@ import {
 import { Button } from '@/app/ui/button';
 import { createInvoice, State } from '@/app/lib/actions';
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
+export default function Form() {
+  const handleSubmit = (e) => { e.preventDefault();};
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createInvoice, initialState);
   return (
     <form action={formAction}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Customer Name */}
-        <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose customer
-          </label>
-          <div className="relative">
-            <select
-              id="customer"
-              name="customerId"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue=""
-              aria-describedby="customer-error"
+      
+      <div className="rounded-md bg-purple-200">
+      <div className="flex flex-row rounded-md bg-purple-200 pt-4 pr-4 pl-6 pb-1 space-x-6">
 
-            >
-              <option value="" disabled>
-                Select a customer
-              </option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
-            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
-          </div>
-          <div id="customer-error" aria-live="polite" aria-atomic="true">
-        {state.errors?.customerId &&
-          state.errors.customerId.map((error: string) => (
-            <p className="mt-2 text-sm text-red-500" key={error}>
-              {error}
-            </p>
-          ))}
-      </div>
-        </div>
-
-        {/* Invoice Amount */}
-        <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
-            Choose an amount
+         {/* Report Name */}
+         <div className="mb-4 w-[250px]">
+          <label htmlFor="report_name" className="mb-2 block text-sm font-medium">
+            Report Name
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="amount"
-                name="amount"
-                type="number"
-                step="0.01"
-                placeholder="Enter USD amount"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                id="report_name"
+                name="report_name"
+                type="string"
+                // step="0.01"
+                placeholder="Type here"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
                 required
 
               />
-              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            
+            </div>
+          </div>
+        </div>
+        
+        {/* Description */}
+        <div className="mb-4 w-[250px]">
+          <label htmlFor="description" className="mb-2 block text-sm font-medium">
+            Description
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="Description"
+                name="Description"
+                type="string"
+                // step="0.01"
+                placeholder="Type here"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+                
+
+              />
+            
             </div>
           </div>
         </div>
 
-        {/* Invoice Status */}
-        <fieldset>
-          <legend className="mb-2 block text-sm font-medium">
-            Set the invoice status
-          </legend>
-          <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
-            <div className="flex gap-4">
-              <div className="flex items-center">
-                <input
-                  id="pending"
-                  name="status"
-                  type="radio"
-                  value="pending"
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="pending"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
-                >
-                  Pending <ClockIcon className="h-4 w-4" />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="paid"
-                  name="status"
-                  type="radio"
-                  value="paid"
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="paid"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  Paid <CheckIcon className="h-4 w-4" />
-                </label>
-              </div>
-            </div>
-          </div>
-        </fieldset>
+        {/* Tags */}
+       
+        <div className="mb-4">
+          <label htmlFor="description" className="mb-2 block text-sm font-medium">
+            Tags
+          </label>
+          
+          <div className="flex flex-grow rounded-md border border-gray-200 bg-white px-[14px] pl-0 py-0 flex items-center gap-4">
+             <div onSubmit={handleSubmit} className="flex items-center">
+               <TagInput /> 
+               </div> 
+               </div>
+               </div>
+     
       </div>
-      <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/invoices"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
-        <Button type="submit">Create Invoice</Button>
+     
+      <div className="flex flex-row pt-0 pr-4 pl-6 pb-4 rounded-md bg-purple-200 space-x-6">
+
+         {/* Date Concept */}
+         <div className="mb-4">
+          <label htmlFor="DateConcept" className="mb-2 block text-sm font-medium">
+          Date Concept
+          </label>
+          <div className="relative">
+            <select
+              id="DateConcept"
+              name="DateConcept"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              defaultValue="Issue Date"
+            >
+           <option value="Option1">Issue Date</option>
+           <option value="Option2">Travel Date</option>
+           <option value="Option3">Reporting Date</option>
+            </select>
+          </div>
+        </div>
+        
+          {/* Date from */}
+          <div className="mb-4">
+          <label htmlFor="DateFrom" className="mb-2 block text-sm font-medium">
+          Date From
+          </label>
+          <div className="relative">
+            <input
+              id="DateFrom"
+              name="DateFrom"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              type="date"
+              defaultValue=""
+              />
+          </div>
+        </div>
+        
+
+  {/* Date to */}
+  <div className="mb-4">
+          <label htmlFor="DateTo" className="mb-2 block text-sm font-medium">
+          Date From
+          </label>
+          <div className="relative">
+            <input
+              id="DateTo"
+              name="DateTo"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              type="date"
+              defaultValue="Click Here"
+              />
+          </div>
+        </div>
+
+ {/* Date Concept */}
+ <div className="mb-4">
+          <label htmlFor="BenchmarkPeriod" className="mb-2 block text-sm font-medium">
+          Benchmark Period
+          </label>
+          <div className="relative">
+            <select
+              id="BenchmarkPeriod"
+              name="BenchmarkPeriod"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              defaultValue="Yes"
+            >
+           <option value="Option1">Yes</option>
+           <option value="Option2">No</option>
+            </select>
+          </div>
+        </div>
+{/* Date from benchmark */}
+<div className="mb-4">
+          <label htmlFor="DateFromBenchmark" className="mb-2 block text-sm font-medium">
+          Date From
+          </label>
+          <div className="relative">
+            <input
+              id="DateFromBenchmark"
+              name="DateFromBenchmark"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              type="date"
+              defaultValue="Click Here"
+              />
+          </div>
+        </div>
+
+        {/* Date to benchmark */}
+<div className="mb-4">
+          <label htmlFor="DateToBenchmark" className="mb-2 block text-sm font-medium">
+          Date From
+          </label>
+          <div className="relative">
+            <input
+              id="DateToBenchmark"
+              name="DateToBenchmark"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              type="date"
+              defaultValue="Click Here"
+              />
+          </div>
+        </div>
+
+     
+      
+       
+      </div>
+      
       </div>
     </form>
   );
 }
+

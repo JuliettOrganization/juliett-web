@@ -1,9 +1,9 @@
 
 
 
-.transparentBlack { 
+/* .transparentBlack { 
   @apply fixed top-0 left-0 w-full h-20 flex items-center p-4; 
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */ }
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */  
 
 .backgrounds {
   background-image: url('/login_background.png'); 

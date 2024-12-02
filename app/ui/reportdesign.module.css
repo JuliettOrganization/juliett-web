@@ -1,0 +1,30 @@
+/* components/VerticalFlexLayout.module.css */
+.container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+    width: 100vw;
+  }
+  
+  .leftPanel, .rightPanel {
+    flex-direction: column; 
+    flex: 1; /* Distribute space equally between the panels */
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    padding: 150;
+  }
+  
+  .leftPanel {
+    flex: 6;
+    background-color: rgb(4, 4, 4,0);
+    font-size: 3.5rem;
+    color: white; 
+  }
+  
+  .rightPanel {
+    flex: 1;
+    background-color: rgba(201, 19, 125, 0.85); /* Slightly darker gray for the right panel */
+    color: white; /* White text color */ 
+    font-size: 40rem; /* Very large font size, adjust as needed */ 
+    font-weight: bold; /* Optional: Makes the text bold */
+  }

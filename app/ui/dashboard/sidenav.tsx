@@ -15,12 +15,12 @@ export default function SideNav() {
         </p>
       </Link>
 
-      <div className="flex text-white text-l grow flex-row justify-between space-x-12  mr-32" style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
+      <div className="flex text-white text-l grow flex-row justify-between items-center h-20 space-x-12  mr-32" style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
         <NavLinks />
         <div className="hidden h-full w-full grow  md:block" >
         </div>
         <form action={async () => { 'use server'; await signOut(); }} >
-          <button className="flex h-[48px] text-white w-full items-center justify-center gap-2  text-l font-medium hover:bg-sky-100 hover:text-blue-600" style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
+          <button className="flex h-[48px] text-white w-full items-center justify-center gap-2 p-4 text-l font-medium hover:bg-sky-100 hover:text-blue-600" style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
             <PowerIcon className="w-8" />
             <div className="hidden md:block">Sign Out</div>
           </button>
