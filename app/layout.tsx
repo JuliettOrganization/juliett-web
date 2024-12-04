@@ -2,7 +2,7 @@
 import { Metadata } from 'next';
  
 export const metadata: Metadata = {
-  title: 'JULIETT HOME',
+  title: 'JULIETT',
   description: 'The official JULIETT WEBSITE',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };

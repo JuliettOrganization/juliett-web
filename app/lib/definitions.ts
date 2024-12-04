@@ -14,6 +14,7 @@ export type User = {
   name: string;
   email: string;
   password: string;
+  image?: string; // Add the image property, optional
 };
 
 export type Customer = {

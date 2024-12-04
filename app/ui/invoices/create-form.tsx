@@ -22,8 +22,8 @@ export default function Form() {
   return (
     <form action={formAction}>
       
-      <div className="rounded-md bg-purple-200">
-      <div className="flex flex-row rounded-md bg-purple-200 pt-4 pr-4 pl-6 pb-1 space-x-6">
+      <div className="rounded-md bg-white border">
+      <div className="flex flex-row rounded-md bg-white pt-4 pr-4 pl-6 pb-1 space-x-6">
 
          {/* Report Name */}
          <div className="mb-4 w-[250px]">
@@ -85,7 +85,7 @@ export default function Form() {
      
       </div>
      
-      <div className="flex flex-row pt-0 pr-4 pl-6 pb-4 rounded-md bg-purple-200 space-x-6">
+      <div className="flex flex-row pt-0 pr-4 pl-6 pb-4 rounded-md bg-white space-x-6">
 
          {/* Date Concept */}
          <div className="mb-4">
@@ -117,7 +117,7 @@ export default function Form() {
               name="DateFrom"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
               type="date"
-              defaultValue=""
+              defaultValue="2025-01-01"
               />
           </div>
         </div>
@@ -134,7 +134,7 @@ export default function Form() {
               name="DateTo"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
               type="date"
-              defaultValue="Click Here"
+              defaultValue="2025-01-31"
               />
           </div>
         </div>
@@ -149,7 +149,7 @@ export default function Form() {
               id="BenchmarkPeriod"
               name="BenchmarkPeriod"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue="Yes"
+              defaultValue="No"
             >
            <option value="Option1">Yes</option>
            <option value="Option2">No</option>
@@ -167,7 +167,7 @@ export default function Form() {
               name="DateFromBenchmark"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
               type="date"
-              defaultValue="Click Here"
+              defaultValue="2024-01-01"
               />
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function Form() {
               name="DateToBenchmark"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
               type="date"
-              defaultValue="Click Here"
+               defaultValue="2024-01-31"
               />
           </div>
         </div>

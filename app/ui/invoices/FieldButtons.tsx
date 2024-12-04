@@ -10,20 +10,22 @@ const FieldButton: React.FC<FieldButtonProps> = ({ text, onClick }) => {
   return (
     <button
       onClick={() => onClick(text)}
-      className="rounded-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2"
-    >
+      className="rounded-full items-center bg-white border border-purple-500 hover:bg-purple-500 text-black hover:text-white p-1 text-[12px] m-2 w-52 h-8 truncate whitespace-nowrap overflow-hidden" title={text}>
       {text}
     </button>
   );
 };
+interface FieldButtonsProps 
+{ addTag: (field: string) => void; 
+  fields: string[];} // Step 1: Add fields prop 
 
-const FieldButtons: React.FC<{ addTag: (field: string) => void }> = ({ addTag }) => {
-  return (
-    <div className="p-4 bg-gray-50">
-      <div className="flex flex-wrap">
-        {['ticket number', 'agency', 'code', 'route','routed'].map((text, index) => (
-          <FieldButton key={index} text={text} onClick={addTag} />
-        ))}
+const FieldButtons: React.FC<FieldButtonsProps> = ({ addTag, fields }) => {
+    return (
+    <div className="rounded-lg items-center p-1 bg-white">
+      <div className="flex flex-wrap h-2/5 overflow-y-auto">
+        {fields.map((text, index) => (
+<FieldButton key={index} text={text} onClick={addTag} /> // Step 2: Render FieldButton components using fields prop        ))}
+      ))}
       </div>
     </div>
   );

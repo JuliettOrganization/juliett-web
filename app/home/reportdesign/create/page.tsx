@@ -6,8 +6,8 @@ export default async function Page() {
 
     
   return (
-    <main>
-      <div>
+    <main >
+      <div >
         <CreateFormLayout />
    </div> </main>
    ); }
