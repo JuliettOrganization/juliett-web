@@ -1,7 +1,7 @@
-import Pagination from '@/app/ui/invoices/pagination';
+import Pagination from '@/app/ui/(0_account)/home/reportmanager/pagination';
 import Search from '@/app/ui/search';
-import Table from '@/app/ui/invoices/table';
-import { CreateReport } from '@/app/ui/invoices/buttons';
+import Table from '@/app/ui/(0_account)/home/reportmanager/table';
+import { CreateReport } from '@/app/ui/(0_account)/home/reportmanager/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { ReportsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';

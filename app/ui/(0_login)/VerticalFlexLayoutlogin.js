@@ -2,7 +2,7 @@
 import styles from '@/app/ui/home.module.css';
 import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import LoginForm from '@/app/ui/login-form';
+import LoginForm from '@/app/ui/(0_login)/login-form';
 
 
 const VerticalFlexLayoutLogin = () => {

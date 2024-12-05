@@ -1,5 +1,5 @@
 
-import SideNav from '@/app/ui/dashboard/sidenav';
+import SideNav from '@/app/ui/(0_account)/home/sidenav';
 
  
 

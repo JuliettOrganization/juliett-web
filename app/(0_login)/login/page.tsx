@@ -1,6 +1,6 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import LoginForm from '@/app/ui/login-form';
-import VerticalFlexLayoutLogin from '@/app/VerticalFlexLayoutlogin';
+
+import LoginForm from '@/app/ui/(0_login)/login-form';
+import VerticalFlexLayoutLogin from '@/app/ui/(0_login)/VerticalFlexLayoutlogin';
 import styles from '@/app/ui/home.module.css';
 
 
