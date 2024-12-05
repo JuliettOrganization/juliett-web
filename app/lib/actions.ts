@@ -68,8 +68,8 @@ export async function createInvoice(prevState: State, formData: FormData) {
   }
  
   // Revalidate the cache for the invoices page and redirect the user.
-  revalidatePath('/home/invoices');
-  redirect('/home/invoices');
+  revalidatePath('/home_account/invoices');
+  redirect('/home_account/invoices');
 }
 
   const UpdateInvoice = FormSchema.omit({ id: true, date: true });
@@ -92,8 +92,8 @@ export async function createInvoice(prevState: State, formData: FormData) {
     } catch (error) {
       return { message: 'Database Error: Failed to Update Invoice.' };
     }
-    revalidatePath('/home/invoices');
-    redirect('/home/invoices');
+    revalidatePath('/home_account/invoices');
+    redirect('/home_account/invoices');
   }
 
   export async function deleteInvoice(id: string) {
@@ -101,7 +101,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
 
     try {
       await sql`DELETE FROM invoices WHERE id = ${id}`;
-      revalidatePath('/home/invoices');
+      revalidatePath('/home_account/invoices');
       return { message: 'Deleted Invoice.' };
     } catch (error) {
       return { message: 'Database Error: Failed to Delete Invoice.' };

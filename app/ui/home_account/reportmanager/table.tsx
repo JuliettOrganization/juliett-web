@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
+import { UpdateInvoice, DeleteInvoice } from '@/app/ui/home_account/reportmanager/buttons';
+import ReportStatus from '@/app/ui/home_account/reportmanager/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredReports } from '@/app/lib/data';
 
@@ -38,7 +38,7 @@ export default async function ReportsTable({
                         <p className="text-sm text-purple-500">{report.reportname}</p>
                         </div>
                         <div>
-                        <InvoiceStatus status={report.status} />
+                        <ReportStatus status={report.status} />
                         </div>
                         <div>
                         <p className="text-sm text-purple-500">{report.description}</p>
@@ -98,7 +98,7 @@ export default async function ReportsTable({
                     {report.reportname}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3">
-                  <InvoiceStatus status={report.status} />
+                  <ReportStatus status={report.status} />
                   </td>
                   <td className="whitespace-nowrap px-4 py-3">
                     {report.description}

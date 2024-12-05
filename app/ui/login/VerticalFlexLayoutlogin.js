@@ -1,8 +1,8 @@
 // components/VerticalFlexLayout.js
-import styles from '@/app/ui/home.module.css';
+import styles from '@/app/ui/home_account.module.css';
 import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import LoginForm from '@/app/ui/(0_login)/login-form';
+import LoginForm from '@/app/ui/login/login-form';
 
 
 const VerticalFlexLayoutLogin = () => {

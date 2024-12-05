@@ -1,7 +1,7 @@
 
-import LoginForm from '@/app/ui/(0_login)/login-form';
-import VerticalFlexLayoutLogin from '@/app/ui/(0_login)/VerticalFlexLayoutlogin';
-import styles from '@/app/ui/home.module.css';
+import LoginForm from '@/app/ui/login/login-form';
+import VerticalFlexLayoutLogin from '@/app/ui/login/VerticalFlexLayoutlogin';
+import styles from '@/app/ui/home_account.module.css';
 
 
 export default function LoginPage() {

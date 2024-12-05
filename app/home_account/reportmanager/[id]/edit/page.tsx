@@ -1,5 +1,5 @@
-import Form from '@/app/ui/(0_account)/home/reportmanager/edit-form';
-import Breadcrumbs from '@/app/ui/(0_account)/home/reportmanager/breadcrumbs';
+import Form from '@/app/ui/home_account/reportmanager/edit-form';
+import Breadcrumbs from '@/app/ui/home_account/reportmanager/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 

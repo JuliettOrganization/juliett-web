@@ -1,11 +1,11 @@
 'use client';
 import React, { useState } from 'react';
-import Form from '@/app/ui/(0_userpages)/home_account/reportmanager/create-form';
+import Form from '@/app/ui/home_account/reportmanager/create-form';
 import { ArrowUturnLeftIcon, RectangleGroupIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { ButtonSave } from '@/app/ui/button';
-import FieldButtons from '@/app/ui/(0_userpages)/home_account/reportmanager/FieldButtons';
-import SelectedFields from '@/app/ui/(0_userpages)/home_account/reportmanager/SelectedFields';
+import FieldButtons from '@/app/ui/home_account/reportmanager/FieldButtons';
+import SelectedFields from '@/app/ui/home_account/reportmanager/SelectedFields';
 
 const CreateFormLayout: React.FC = () => {
   const availableFields = [
@@ -56,7 +56,7 @@ const CreateFormLayout: React.FC = () => {
         <div className="absolute bottom-64 bg-red-700 flex flex-col justify-end gap-4 border-b-2 border-white pl-12 pr-24 mr-6 ml-6"></div>
         <div className="absolute bottom-32 flex flex-col gap-4 p-3 mr-6 ml-6">
           <Link
-            href="/home/reportmanager"
+            href="/home_account/reportmanager"
             className="flex h-10 items-center justify-center rounded-full bg-gray-100 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
           >
             Cancel
@@ -71,7 +71,7 @@ const CreateFormLayout: React.FC = () => {
       <div className="fixed top-20 left-0 w-full h-12 flex items-center p-4 bg-white shadow-bottom-border space-x-4">
         <ArrowUturnLeftIcon className="w-5 md:w-6 font-bold text-purple-500" />
         <p className="font-bold text-purple-500">
-          <Link href={'/home/reportmanager'}>Report Manager</Link>
+          <Link href={'/home_account/reportmanager'}>Report Manager</Link>
         </p>
       </div>
 

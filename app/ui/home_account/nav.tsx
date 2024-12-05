@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import NavLinks from '@/app/ui/(0_userpages)/home_account/nav-links';
+import NavLinks from '@/app/ui/home_account/nav-links';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import { signOut } from '@/auth';
 
 
-export default function SideNav() {
+export default function Nav() {
   return (
     <div className="fixed top-0 left-0 w-full max-w-screen h-20 flex items-center p-4 space-x-32"
       style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>

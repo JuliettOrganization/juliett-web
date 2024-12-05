@@ -26,12 +26,12 @@ export default async function CardWrapper() {
     <>
       {/* NOTE: Uncomment this code in Chapter 9 */}
 
-      <Card title="Report Manager" value={report_manager} type='basic' path='/home/reportmanager'/>
-      <Card title="Report Design" value={report_design} type='basic' path='/home/reportdesign' />
-      <Card title="Loading Status" value={status_loading} type='basic' path='/home/loadingstatus' />
-      <Card title="Scheduler" value={scheduler} type='basic' path='/home/scheduler'/>
-      <Card title="Configuration" value={config} type='basic' path='/home/configuration'/>
-      <Card title="Profile" value={profile} type='basic' path='/home/Profile'/>
+      <Card title="Report Manager" value={report_manager} type='basic' path='/home_account/reportmanager'/>
+      <Card title="Report Design" value={report_design} type='basic' path='/home_account/reportdesign' />
+      <Card title="Loading Status" value={status_loading} type='basic' path='/home_account/loadingstatus' />
+      <Card title="Scheduler" value={scheduler} type='basic' path='/home_account/scheduler'/>
+      <Card title="Configuration" value={config} type='basic' path='/home_account/configuration'/>
+      <Card title="Profile" value={profile} type='basic' path='/home_account/Profile'/>
     </>
   );
 }

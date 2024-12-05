@@ -1,5 +1,5 @@
-import Form from '@/app/ui/(0_account)/home/reportmanager/create-form';
-import Breadcrumbs from '@/app/ui/(0_account)/home/reportmanager/breadcrumbs';
+import Form from '@/app/ui/home_account/reportmanager/create-form';
+import Breadcrumbs from '@/app/ui/home_account/reportmanager/breadcrumbs';
 import { fetchCustomers } from '@/app/lib/data';
  
 export default async function Page() {
