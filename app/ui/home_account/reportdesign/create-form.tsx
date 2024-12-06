@@ -3,14 +3,14 @@
 
 import { useActionState } from 'react';
 import TagInput from '@/app/ui/home_account/reportdesign/TagInput';
-import { createInvoice, State } from '@/app/lib/actions';
+import { State } from '@/app/lib/actions';
 
 export default function Form() {
   const handleSubmit = (e) => { e.preventDefault();};
   const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useActionState(createInvoice, initialState);
+ 
   return (
-    <form action={formAction}>
+    <form >
       
       <div className="rounded-md bg-white border">
       <div className="flex flex-row rounded-md bg-white pt-4 pr-4 pl-6 pb-1 space-x-6">
@@ -66,7 +66,7 @@ export default function Form() {
             Tags
           </label>
           
-          <div className="flex flex-grow rounded-md border border-gray-200 bg-white px-[14px] pl-0 py-0 flex items-center gap-4">
+          <div className="flex flex-grow rounded-md border border-gray-200 bg-white px-[14px] pl-0 py-0 items-center gap-4">
              <div onSubmit={handleSubmit} className="flex items-center">
                <TagInput /> 
                </div> 

@@ -1,6 +1,6 @@
 
 
-import CreateFormLayout from '@/app/ui/home_account/reportmanager/create-form-layout-page'
+import CreateFormLayout from '@/app/ui/home_account/reportdesign/create-form-layout-page'
 
 export default async function Page() {
 

@@ -1,19 +1,15 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import styles from '@/app/ui/home_account.module.css';
-import { lusitana } from '@/app/ui/fonts';
-import Image from 'next/image';
+
+import styles from '@/app/ui/global_public.module.css';
 import VerticalFlexLayout from '@/app/VerticalFlexLayout';
 
 export default function Page() {
   
   return (
-    <main  className={styles.backgrounds}>
+    <main  className={styles.backgrounds}>   {/* This is the backround picture */}
+  
       
-      <div className="fixed top-0 left-0 w-full h-20 flex items-center p-4" 
-      style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
-        <p className={`text-3xl text-white md:text-5xl bg-white-500 md:leading-normal`}>
+      <div className="topbar_flex">
+        <p className="topbar_juliett_font">
           JULIETT</p>
       </div>
       <VerticalFlexLayout />

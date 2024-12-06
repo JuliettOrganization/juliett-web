@@ -5,6 +5,7 @@ const iconMap = {
   basic: ArrowRightCircleIcon
 };
 import Link from 'next/link';
+import clsx from 'clsx';
 
 
 export default async function CardWrapper() {
@@ -14,8 +15,8 @@ export default async function CardWrapper() {
   //   totalPaidInvoices,
   //   totalPendingInvoices,
   // } = await fetchCardData();
-  const report_manager = 'Access all of your draft reports and final results.';
-    const report_design = 'Quickly access to a new draft report design.';
+  const Basic_account = 'This is an normal account.';
+    const Admin_account = 'This is the Admin page.';
     const status_loading = 'Be aware of the latest data loaded in your system.';
     const scheduler = 'Schedule your report to receive them by email or through sftp on a regular basis.';
     const config = 'Customize your own groupings, airline class mapping and more.';
@@ -23,14 +24,10 @@ export default async function CardWrapper() {
     
   return (
     <>
-      {/* NOTE: Uncomment this code in Chapter 9 */}
+      {/* {The list  of cards will have to be dynamically taken from the database to get teh list of accounts the user shoudl have access to} */}
 
-      <Card title="Report Manager" value={report_manager} type='basic' path='/home_account/reportmanager'/>
-      <Card title="Report Design" value={report_design} type='basic' path='/home_account/reportdesign/create' />
-      <Card title="Loading Status" value={status_loading} type='basic' path='/home_account/loadingstatus' />
-      <Card title="Scheduler" value={scheduler} type='basic' path='/home_account/scheduler'/>
-      <Card title="Configuration" value={config} type='basic' path='/home_account/configuration'/>
-      <Card title="Profile" value={profile} type='basic' path='/home_account/Profile'/>
+      <Card title="ABCD Travel Global" value={Basic_account} type='basic' path='/home_account'/>
+      <Card title="Admin" value={Admin_account} type='basic' path='/admin' />
     </>
   );
 }

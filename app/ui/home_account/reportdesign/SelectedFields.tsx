@@ -19,7 +19,8 @@ const SelectedFields: React.FC<SelectedFieldsProps> = ({ fields, removeField }) 
                 {field}
                 <button
                   type="button"
-                  className="ml-auto text-red-300 text-sm hover:text-red-700"
+                  className="ml-auto text-white bg-purple-800 justify-center rounded-full h-4 w-4 flex items-center text-sm hover:text-red-400"
+                  
                   onClick={() => removeField(field)}
                 >
                   &times;

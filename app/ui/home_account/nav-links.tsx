@@ -1,10 +1,4 @@
 'use client';
-
-import {
-  UserGroupIcon,
-  HomeIcon,
-  DocumentDuplicateIcon,
-} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
@@ -14,17 +8,17 @@ import clsx from 'clsx';
 const links = [
   // { name: 'Home', href: '/home_account', icon: HomeIcon },
  
-  { name: 'Home', href: '/home_account'},
-  { name: 'Report Manager',href: '/home_account/reportmanager',},
-  { name: 'Report Design', href: '/home_account/reportdesign' },
-  { name: 'Loading Status', href: '/home_account/customers' },
-  { name: 'Scheduler', href: '/home_account/customers'},
-  { name: 'Configuration', href: '/home_account/customers' },
+  { name: 'Home', href: '/home_account', colorref: '/home_account'},
+  { name: 'Report Manager',href: '/home_account/reportmanager',colorref: '/home_account/reportmanager'},
+  { name: 'Report Design', href: '/home_account/reportdesign/create',colorref: '/home_account/reportdesign'},
+  { name: 'Loading Status', href: '/home_account/loadingstatus',colorref: '/home_account/loadingstatus'  },
+  { name: 'Scheduler', href: '/home_account/scheduler',colorref: '/home_account/scheduler'},
+  { name: 'Configuration', href: '/home_account/configuration',colorref:'/home_account/configuration'  },
 ];
 
 export default function NavLinks() {
   const pathname = usePathname();
-  const beginningOfPathname = pathname ? `/${pathname.split('/')[1]}/${pathname.split('/')[2]}` : '';  return (
+  const beginningOfPathname = pathname ? `/${pathname.split('/')[1]}` + (pathname.split('/')[2] ? `/${pathname.split('/')[2]}` : '') : '';  return (
     <>
       {links.map((link) => {
         // const LinkIcon = link.icon;
@@ -32,11 +26,11 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
-            style={{ backgroundColor: 'rgba(0, 0, 0,0.8)'}}
+            
             className={clsx(
-              'flex  grow items-center justify-center h-20 gap-2 p-3 text-l font-medium hover:bg-sky-100 hover:text-purple-500 md:flex-none md:justify-start md:p-2 md:px-3' ,
+              'flex grow items-center justify-center h-20 gap-2 p-3 text-l font-medium hover:text-purple-500 md:flex-none md:justify-start md:p-2 md:px-3' ,
               {
-                'text-l  bg-sky-100 text-purple-400 h-20  p-3 font-bold border-b-4 border-purple-400': beginningOfPathname === link.href,
+                'text-l text-purple-400 h-20  p-3 font-bold border-b-4 border-purple-400': beginningOfPathname === link.colorref,
               },
             )}
           >

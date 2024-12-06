@@ -1,25 +1,12 @@
 
-import LoginForm from '@/app/ui/login/login-form';
 import VerticalFlexLayoutLogin from '@/app/ui/login/VerticalFlexLayoutlogin';
-import styles from '@/app/ui/home_account.module.css';
+import styles from '@/app/ui/global_public.module.css';
 
 
 export default function LoginPage() {
   return (
-//     <main className="flex items-center justify-center md:h-screen">
-//       <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-//         <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
-//           <div className="w-32 text-white md:w-36">
-//             <AcmeLogo />
-//           </div>
-//         </div>
-//         <LoginForm />
-//       </div>
-//     </main>
-//   );
 
-  <main  className={styles.backgrounds}>
-      
+  <main  className={styles.backgrounds}>  
   <div className="fixed top-0 left-0 w-full h-20 flex items-center p-4 bg-black">
     <p className={`text-3xl text-white md:text-5xl bg-white-500 md:leading-normal`}>
       JULIETT</p>

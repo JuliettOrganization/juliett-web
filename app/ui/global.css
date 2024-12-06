@@ -23,3 +23,34 @@ input[type='number']::-webkit-outer-spin-button {
   }
 }
 
+.topbar_flex { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 5rem; /* 20 means 5rem in Tailwind CSS */ 
+  display: flex; 
+  align-items: center; 
+  padding: 1rem; /* Tailwind CSS p-4 means 1rem */ 
+  background-color: rgba(0, 0, 0,0.8) ; }
+
+  .topbar_backgroundColor
+  { 
+    background-color: rgba(0, 0, 0,0.8); }
+
+
+.topbar_uliett_font { 
+    @apply text-2xl text-white md:text-3xl md:leading-normal hover:text-green-500; }
+   
+.topbar_j_font { 
+      @apply text-3xl text-white font-bold md:text-5xl md:leading-normal hover:text-green-500; }
+
+.topbar_nav_font { 
+    @apply  text-white md:leading-normal; }
+
+
+
+
+
+
+

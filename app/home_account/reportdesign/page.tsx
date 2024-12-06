@@ -1,23 +1,14 @@
-import Form from '@/app/ui/home_account/reportmanager/create-form';
-import Breadcrumbs from '@/app/ui/home_account/reportmanager/breadcrumbs';
-import { fetchCustomers } from '@/app/lib/data';
- 
+
+
+import CreateFormLayout from '@/app/ui/home_account/reportdesign/create-form-layout-page'
+
 export default async function Page() {
-  const customers = await fetchCustomers();
- 
+
+    
   return (
-    <main>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
-          {
-            label: 'Create Invoice',
-            href: '/dashboard/invoices/create',
-            active: true,
-          },
-        ]}
-      />
-      <Form customers={customers} />
-    </main>
-  );
-}
+    <main >
+      <div >
+        <CreateFormLayout />
+        {/* SHOULD BE EDIT FORM LAYOUT JUST TO COLLECT THE DATA OF THE FORM TO BE DISLAYED */}
+   </div> </main>
+   ); }

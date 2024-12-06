@@ -1,11 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import Form from '@/app/ui/home_account/reportmanager/create-form';
+import Form from '@/app/ui/home_account/reportdesign/create-form';
+import FilterForm from '@/app/ui/home_account/reportdesign/filter-form';
 import { ArrowUturnLeftIcon, RectangleGroupIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { ButtonSave } from '@/app/ui/button';
-import FieldButtons from '@/app/ui/home_account/reportmanager/FieldButtons';
-import SelectedFields from '@/app/ui/home_account/reportmanager/SelectedFields';
+import FieldButtons from '@/app/ui/home_account/reportdesign/FieldButtons';
+import SelectedFields from '@/app/ui/home_account/reportdesign/SelectedFields';
+import ToggleSwitchItinerary from './filter-form-toggle-exclude';
 
 const CreateFormLayout: React.FC = () => {
   const availableFields = [
@@ -68,68 +70,78 @@ const CreateFormLayout: React.FC = () => {
       </div>
 
       {/* THIS IS THE TOP WHITE BAR */}
-      <div className="fixed top-20 left-0 w-full h-12 flex items-center p-4 bg-white shadow-bottom-border space-x-4">
+      <div className="fixed top-20 left-0 w-full z-50 h-12 flex items-center p-4 bg-white shadow-bottom-border space-x-4">
         <ArrowUturnLeftIcon className="w-5 md:w-6 font-bold text-purple-500" />
         <p className="font-bold text-purple-500">
           <Link href={'/home_account/reportmanager'}>Report Manager</Link>
         </p>
       </div>
 
-      {/* THIS IS THE FORM */}
-      <div className="flex flex-col mt-10 mr-48 overflow-y-auto">
+      {/* THIS IS THE TOP MAIN FORM */}
+      <div className="flex flex-col mt-10 mr-48 overflow-y-auto shadow-lg">
         <Form />
       </div>
 
       {/* TABS */}
-      <div className="flex flex-col mt-10 mr-48">
-        <div className="flex space-x-1 border-b-2">
+      <div className="flex flex-col mt-10 mr-48 h-full overflow-y-auto">
+        <div className="flex space-x-1">
           <button
             onClick={() => setActiveTab(0)}
-            className={`px-4 py-2 ${activeTab === 0 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white' : 'rounded-t-lg bg-gray-200'}`}
+            className={`px-4 py-2 ${activeTab === 0 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white text-purple-500' : 'rounded-t-lg bg-gray-200'}`}
           >
             Field Selection
           </button>
           <button
             onClick={() => setActiveTab(1)}
-            className={`px-4 py-2 ${activeTab === 1 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white' : 'rounded-t-lg bg-gray-200'}`}
+            className={`px-4 py-2 ${activeTab === 1 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white text-purple-500' : 'rounded-t-lg bg-gray-200'}`}
           >
             Filters
           </button>
           <button
             onClick={() => setActiveTab(2)}
-            className={`px-4 py-2 ${activeTab === 2 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white' : 'rounded-t-lg bg-gray-200'}`}
+            className={`px-4 py-2 ${activeTab === 2 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white text-purple-500' : 'rounded-t-lg bg-gray-200'}`}
           >
             Tab 3
           </button>
         </div>
 
         {/* TAB CONTENT */}
-        <div className="p-4 bg-white">
-          {activeTab === 0 && (
-            <div>
-              <div className="relative flex flex-1 flex-shrink-0">
-                <input
-                  type="text"
-                  placeholder="Click on fields below to include them on the report Group By. Type here to search fields..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                />
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-              </div>
+            {/* TAB 1 */}
+                {/* THIS IS THE SEARCH BAR */}
+                <div className="bg-white rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-lg">
+                  {activeTab === 0 && (
+                    <div>
+                      <div className="relative p-4 flex flex-1 flex-shrink-0">
+                        <input
+                          type="text"
+                          placeholder="Click on fields below to include them on the report Group By. Type here to search fields..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        />
+                        <MagnifyingGlassIcon className="absolute left-8 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                      </div>
 
-              {/* THIS IS THE FIELD SELECTION */}
-              <FieldButtons addTag={addTag} fields={filteredFields} />
-            </div>
-          )}
-          {activeTab === 1 && (
-            <div>
-              {/* Content for Tab 2 */}
-            </div>
-          )}
+                      {/* THIS IS THE FIELD SELECTION */}
+                      <FieldButtons addTag={addTag} fields={filteredFields} selectedFields={fields}/>
+                    </div>
+                  )}
+
+             {/* TAB 2: FILTERS */}   
+                {activeTab === 1 && (
+                  <div >
+                <div className="bg-white rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-lg">
+                <FilterForm />
+      </div>
+     
+                  </div>
+                )}
+
+            {/* TAB 3 */} 
           {activeTab === 2 && (
             <div>
               {/* Content for Tab 3 */}
+              <ToggleSwitchItinerary />
             </div>
           )}
         </div>

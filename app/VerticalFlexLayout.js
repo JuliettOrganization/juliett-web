@@ -1,5 +1,5 @@
 // components/VerticalFlexLayout.js
-import styles from '@/app/ui/home_account.module.css';
+import styles from '@/app/ui/global_public.module.css';
 import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 

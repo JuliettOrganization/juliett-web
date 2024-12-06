@@ -34,8 +34,8 @@ const FieldInputForm: React.FC = () => {
 
   return (
     <>
-      <FieldButtons addTag={addTag} fields={availableFields}/>
-      <SelectedFields fields={fields} removeField={removeField} />
+      <FieldButtons addTag={addTag} fields={availableFields} selectedFields={fields}/>
+     
     </>
   );
 };

@@ -29,7 +29,7 @@ const TagInput = () => {
   };
 
   return (
-    <div className="flex flex-row space-x-2">
+    <div className="flex flex-row space-x-2 items-center">
       <input
         type="text"
         id="tag-input"
@@ -39,13 +39,13 @@ const TagInput = () => {
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <div className="flex flex-wrap space-x-2 space-y-2 items-end">
+      <div className="flex flex-wrap space-x-2 items-center">
         {tags.map((tag, index) => (
-          <span key={index} className={`${tag.color} text-white rounded-full p-1 text-sm flex items-start`}>
+          <span key={index} className={`${tag.color} text-white rounded-full px-2 py-1 text-sm flex items-center`}>
             {tag.text}
             <button
               type="button"
-              className="ml-2 text-white"
+              className="ml-3 text-white rounded-full h-4 w-4 flex items-center justify-center bg-purple-800"
               onClick={() => removeTag(index)}
             >
               &times;
