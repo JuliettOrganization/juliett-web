@@ -1,15 +1,18 @@
+import ConfigurationLayout from '@/app/ui/home_account/configuration/configuration_main'
 
- 
+
 export default async function Page() { 
   return (
     <main>
-     <div className="rounded-xl bg-gray-50 p-10 shadow-sm mr-40 ml-40 mt-20"> 
-      <div className='space-y-1 mr-8 ml-7' >
+     <div className="rounded-xl border-none p-2 mr-10 ml-10 mt-5"> 
+      <div className='space-y-2 mr-8 ml-8 mt-2' >
       <div className='mb-4 text-xl md:text-4xl'>
         USER CONFIGURATION
         </div> 
-        <div className='mb-4 text-gray-500 text-sm md:text-base'>
-        
+        <div className='md:text-base'>
+        <div >
+        <ConfigurationLayout />
+   </div> 
 
       </div>
       </div>

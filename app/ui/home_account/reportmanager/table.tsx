@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/home_account/reportmanager/buttons';
+import { UpdateReport, DeleteReport } from '@/app/ui/home_account/reportmanager/buttons';
 import ReportStatus from '@/app/ui/home_account/reportmanager/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredReports } from '@/app/lib/data';
+import ReportTags from '@/app/ui/home_account/reportmanager/tags';
 
 export default async function ReportsTable({
   query,
@@ -24,16 +25,6 @@ export default async function ReportsTable({
                 key={report.reportid}
                 className="mb-2 w-full rounded-md bg-black p-4"
               >
-                {/* <div className="flex items-center justify-between border-b pb-4"> */}
-                  {/* <div>
-                    <div className="mb-2 flex items-center">
-                      <p>{report.reportname}</p>
-                    </div>
-                    <InvoiceStatus status={report.status} />
-                    <p className="text-sm text-gray-500">{report.description}</p>
-                  </div> */}
-               
-                {/* </div> */}
                          <div>
                         <p className="text-sm text-purple-500">{report.reportname}</p>
                         </div>
@@ -43,17 +34,21 @@ export default async function ReportsTable({
                         <div>
                         <p className="text-sm text-purple-500">{report.description}</p>
                         </div>
-                {/* <div className="flex w-full items-center justify-between pt-4"> */}
                       <div> 
                       <p className="text-sm text-gray-500">{report.date_concept}</p>
-                        {/* <p>{formatDateToLocal(report.updated)}</p> */}
+                   
                       </div>
                         <div>
                         <p className="text-sm text-purple-500">{report.period}</p>
                         </div>
+                        <div>
+                        <ReportTags tags={report.tags ? report.tags.split(';') : []} />
+                        </div>
+                        
+
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={report.reportid} />
-                    <DeleteInvoice id={report.reportid} />
+                    <UpdateReport id={report.reportid} />
+                    <DeleteReport id={report.reportid} />
                   </div>
                 </div>
               // </div>
@@ -76,6 +71,9 @@ export default async function ReportsTable({
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Period
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Tags
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
@@ -109,11 +107,14 @@ export default async function ReportsTable({
                   <td className="whitespace-nowrap px-3 py-3">
                     {report.period}
                   </td>
+                  <td className="whitespace-nowrap px-4 py-3">
+                  <ReportTags tags={report.tags ? report.tags.split(';') : []} />
+                  </td>
                 
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={report.reportid} />
-                      <DeleteInvoice id={report.reportid} />
+                      <UpdateReport id={report.reportid} />
+                      <DeleteReport id={report.reportid} />
                     </div>
                   </td>
                 </tr>

@@ -10,7 +10,7 @@ export default function Nav_account_selection() {
     <div className="flex flex-row items-center"> 
     <div> 
       <p className="topbar_j_font"> J </p> </div>
-      <div className=""> 
+      <div> 
       <p className="topbar_uliett_font"> ULIETT </p> </div></div>
     </Link>
       <div className="flex justify-end"> 

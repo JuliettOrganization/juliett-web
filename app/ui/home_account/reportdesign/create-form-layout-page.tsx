@@ -7,7 +7,9 @@ import Link from 'next/link';
 import { ButtonSave } from '@/app/ui/button';
 import FieldButtons from '@/app/ui/home_account/reportdesign/FieldButtons';
 import SelectedFields from '@/app/ui/home_account/reportdesign/SelectedFields';
-import ToggleSwitchItinerary from './filter-form-toggle-exclude';
+import ToggleSwitchCustomSql from './filter-form-custom-sql-toggle';
+import  TextBoxSQL from './filter-form-custom-sql';
+
 
 const CreateFormLayout: React.FC = () => {
   const availableFields = [
@@ -55,7 +57,7 @@ const CreateFormLayout: React.FC = () => {
         <div className="flex flex-col space-y-4 h-3/5 overflow-y-auto">
           <SelectedFields fields={fields} removeField={removeField} />
         </div>
-        <div className="absolute bottom-64 bg-red-700 flex flex-col justify-end gap-4 border-b-2 border-white pl-12 pr-24 mr-6 ml-6"></div>
+        <div className="absolute bottom-80 bg-red-700 flex flex-col justify-end gap-4 border-b-2 border-white pl-12 pr-24 mr-6 ml-6"></div>
         <div className="absolute bottom-32 flex flex-col gap-4 p-3 mr-6 ml-6">
           <Link
             href="/home_account/reportmanager"
@@ -65,6 +67,9 @@ const CreateFormLayout: React.FC = () => {
           </Link>
           <ButtonSave className="flex h-10 items-center justify-center rounded-full" type="submit">
             Save Report
+          </ButtonSave>
+          <ButtonSave className="flex h-10 items-center justify-center rounded-full" type="submit">
+            Run Report
           </ButtonSave>
         </div>
       </div>
@@ -101,7 +106,7 @@ const CreateFormLayout: React.FC = () => {
             onClick={() => setActiveTab(2)}
             className={`px-4 py-2 ${activeTab === 2 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white text-purple-500' : 'rounded-t-lg bg-gray-200'}`}
           >
-            Tab 3
+            Custom Filters
           </button>
         </div>
 
@@ -139,10 +144,14 @@ const CreateFormLayout: React.FC = () => {
 
             {/* TAB 3 */} 
           {activeTab === 2 && (
-            <div>
+            <div className="flex flex-col w-full p-6 bg-white rounded space-y-4">
               {/* Content for Tab 3 */}
-              <ToggleSwitchItinerary />
+              <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4"> 
+              <ToggleSwitchCustomSql />
+              </div>
+              <TextBoxSQL/>
             </div>
+            
           )}
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client';
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { deleteInvoice } from '@/app/lib/actions';
+import { deleteReport } from '@/app/lib/actions';
 
 export function CreateReport() {
   return (
@@ -14,12 +14,12 @@ export function CreateReport() {
     </Link>
   );
 }
-
-export function UpdateInvoice({ id }: { id: string }) {
+// THIS IS NOT WORKING YET
+export function UpdateReport({ id }: { id: string }) {
   return (
     <Link
-    href={`/dashboard/invoices/${id}/edit`}
-    className="p-2 hover:bg-purple-500"
+    href={`/home_account/reportdesign/${id}/edit`}
+    className="p-2 hover:text-purple-500"
     //className="rounded-md border p-2 hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
@@ -27,13 +27,13 @@ export function UpdateInvoice({ id }: { id: string }) {
   );
 }
 
-export function DeleteInvoice({ id }: { id: string }) {
-  const deleteInvoiceWithId = deleteInvoice.bind(null, id);
+export function DeleteReport({ id }: { id: string }) {
+  const deleteReportWithId = deleteReport.bind(null, id);
 
   return (
-    <form action={deleteInvoiceWithId}>
+    <form action={deleteReportWithId}>
 
-      <button className="p-2 hover:bg-purple-500">
+      <button className="p-2 hover:text-purple-500">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5" />
       </button>

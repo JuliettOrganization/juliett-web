@@ -33,6 +33,7 @@ export type Report = {
   date_concept: string;
   period: string;
   status: 'draft' | 'result';
+  tags:string;
   // In TypeScript, this is called a string union type.
   // It means that the "status" property can only be one of the two strings: 'pending' or 'paid'.
 
@@ -65,6 +66,7 @@ export type ReportsTable = {
   date_concept: string;
   period: string;
   status: 'draft' | 'result';
+  tags: string;
 };
 
 export type CustomersTableType = {
@@ -95,9 +97,9 @@ export type CustomerField = {
 
 
 
-export type InvoiceForm = {
-  id: string;
-  customer_id: string;
-  amount: number;
+export type ReportForm = {
+  reportid: string;
+  userid: string;
+  tags: string;
   status: 'pending' | 'paid';
 };

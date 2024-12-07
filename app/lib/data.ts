@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 import {
   CustomerField,
   CustomersTableType,
-  InvoiceForm,
+  ReportForm,
   ReportsTable,
   LatestInvoiceRaw,
   Revenue
@@ -88,6 +88,8 @@ export async function fetchCardData () {
 }
 
 const ITEMS_PER_PAGE = 6;
+
+
 export async function fetchFilteredReports  (
   query: string,
   currentPage: number,
@@ -103,14 +105,16 @@ export async function fetchFilteredReports  (
         description,
         date_concept,
         period,
-        status
+        status,
+        tags
       FROM master.report_manager
        where 
        report_manager.reportname ILIKE ${`%${query}%`} OR
         report_manager.description ILIKE ${`%${query}%`} OR
         report_manager.date_concept ILIKE ${`%${query}%`} OR
          report_manager.period ILIKE ${`%${query}%`} OR
-          report_manager.status ILIKE ${`%${query}%`} 
+          report_manager.status ILIKE ${`%${query}%`} OR
+          report_manager.tags ILIKE ${`%${query}%`} 
       ORDER BY reportid DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -138,28 +142,28 @@ export async function fetchReportsPages(query: string) {
   }
 }
 
-export async function fetchInvoiceById    (id: string) {
+export async function fetchReportById    (id: string) {
   try {
-    const data = await sql<InvoiceForm>`
+    const data = await sql<ReportForm>`
       SELECT
-        invoices.id,
-        invoices.customer_id,
-        invoices.amount,
-        invoices.status
-      FROM invoices
-      WHERE invoices.id = ${id};
+        report_manager.userid,
+        report_manager.reportid,
+        report_manager.tags,
+        report_manager.reportname
+      FROM master.report_manager
+      WHERE report_manager.reportid = ${id};
     `;
 
-    const invoice = data.rows.map((invoice) => ({
-      ...invoice,
+    const report = data.rows.map((report) => ({
+      ...report,
       // Convert amount from cents to dollars
-      amount: invoice.amount / 100,
+      amount: report.userid,
     }));
 
-    return invoice[0];
+    return report[0];
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoice.');
+    throw new Error('Failed to fetch report.');
   }
 }
 

@@ -72,10 +72,10 @@ export async function createInvoice(prevState: State, formData: FormData) {
   redirect('/home_account/invoices');
 }
 
-  const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+  const UpdateReport = FormSchema.omit({ id: true, date: true });
 
-  export async function updateInvoice(id: string, formData: FormData) {
-    const { customerId, amount, status } = UpdateInvoice.parse({
+  export async function updateReport(id: string, formData: FormData) {
+    const { customerId, amount, status } = UpdateReport.parse({
       customerId: formData.get('customerId'),
       amount: formData.get('amount'),
       status: formData.get('status'),
@@ -96,15 +96,15 @@ export async function createInvoice(prevState: State, formData: FormData) {
     redirect('/home_account/invoices');
   }
 
-  export async function deleteInvoice(id: string) {
-    throw new Error('Failed to Delete Invoice');
+  export async function deleteReport(id: string) {
+    throw new Error('Failed to Delete Report');
 
     try {
-      await sql`DELETE FROM invoices WHERE id = ${id}`;
-      revalidatePath('/home_account/invoices');
-      return { message: 'Deleted Invoice.' };
+      await sql`DELETE FROM master.report_manager WHERE reportid = ${id}`;
+      revalidatePath('/home_account/reportmanager');
+      return { message: 'Delete Report.' };
     } catch (error) {
-      return { message: 'Database Error: Failed to Delete Invoice.' };
+      return { message: 'Database Error: Failed to Delete Report.' };
     }
   }
 

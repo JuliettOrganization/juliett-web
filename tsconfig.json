@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "typeRoots": ["./node_modules/@types", "./app/types"],
     "plugins": [
       {
         "name": "next"
@@ -30,6 +31,6 @@
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.ts",
     "scripts/seed.js"
-  ],
+, "app/ui/home_account/reportdesign/filter-form-custom-sql.js", "app/ui/home_account/reportdesign/filter-form-custom-sql.js"  ],
   "exclude": ["node_modules"]
 }
