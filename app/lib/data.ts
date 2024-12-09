@@ -87,7 +87,7 @@ export async function fetchCardData () {
   }
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 20;
 
 
 export async function fetchFilteredReports  (
@@ -99,7 +99,7 @@ export async function fetchFilteredReports  (
   try {
     const reports = await sql<ReportsTable>`
       SELECT
-        userid,
+      
         reportid,
         reportname,
         description,
