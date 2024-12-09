@@ -1,4 +1,4 @@
-import ToggleSwitchItinerary from '@/app/ui/home_account/reportdesign/filter-form-toggle-exclude';
+import ToggleSwitchItinerary from '@/app/ui/home_account/reportdesign/3_tab2_filter-form-toggle-exclude';
  
 export default async function Page() { 
   return (

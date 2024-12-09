@@ -1,12 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import Form from '@/app/ui/home_account/reportdesign/create-form';
-import FilterForm from '@/app/ui/home_account/reportdesign/filter-form';
+import Form from '@/app/ui/home_account/reportdesign/1_main_info_form';
+import FilterForm from '@/app/ui/home_account/reportdesign/3_tab2_filter-form';
 import { ArrowUturnLeftIcon, RectangleGroupIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { ButtonSave } from '@/app/ui/button';
-import FieldButtons from '@/app/ui/home_account/reportdesign/FieldButtons';
-import SelectedFields from '@/app/ui/home_account/reportdesign/SelectedFields';
+import FieldButtons from '@/app/ui/home_account/reportdesign/3_tab1_FieldButtons';
+import SelectedFields from '@/app/ui/home_account/reportdesign/2_SelectedFields';
 import ClassMappingSelection from '@/app/ui/home_account/configuration/configuration-tab-classmapping_selection'; // Updated import
 import ClassMappingTable from '@/app/ui/home_account/configuration/configuration-tab-classmapping_table'; // Updated import
 // import AgencyGroup from '@/app/ui/home_account/configuration/configuration-tab-agencygroup'; // Updated import

@@ -97,14 +97,13 @@ export async function createInvoice(prevState: State, formData: FormData) {
   }
 
   export async function deleteReport(id: string) {
-    throw new Error('Failed to Delete Report');
-
     try {
       await sql`DELETE FROM master.report_manager WHERE reportid = ${id}`;
       revalidatePath('/home_account/reportmanager');
       return { message: 'Delete Report.' };
     } catch (error) {
       return { message: 'Database Error: Failed to Delete Report.' };
+     
     }
   }
 

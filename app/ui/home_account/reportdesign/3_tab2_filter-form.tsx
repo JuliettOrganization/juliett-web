@@ -3,24 +3,24 @@
 
 import { useActionState } from 'react';
 import { State } from '@/app/lib/actions';
-import CheckBoxGroupingAgency from '@/app/ui/home_account/reportdesign/filter-form-check-box-agency';
-import CheckBoxOperating from './filter-form-check-box-operating';
-import CheckBoxIssuing from './filter-form-check-box-issuing';
-import CheckBoxMarketing from './filter-form-check-box-marketing';
-import CheckBoxGeoTo from './filter-form-check-box-geo-to';
-import CheckBoxGeoFrom from './filter-form-check-box-geo-from';
-import RadioButtonListItinerary from './filter-form-radio-button-itinerary';
-import ToggleSwitchItinerary from './filter-form-toggle-exclude';
+import CheckBoxGroupingAgency from '@/app/ui/home_account/reportdesign/3_tab2_filter-form-check-box-agency';
+import CheckBoxOperating from './3_tab2_filter-form-check-box-operating';
+import CheckBoxIssuing from './3_tab2_filter-form-check-box-issuing';
+import CheckBoxMarketing from './3_tab2_filter-form-check-box-marketing';
+import CheckBoxGeoTo from './3_tab2_filter-form-check-box-geo-to';
+import CheckBoxGeoFrom from './3_tab2_filter-form-check-box-geo-from';
+import RadioButtonListItinerary from './3_tab2_filter-form-radio-button-itinerary';
+import ToggleSwitchItinerary from './3_tab2_filter-form-toggle-exclude';
 
 
 export default function FilterForm() {
 
   return (
     
-    <form >
+    <form className="flex flex-col overflow-x-auto">
       
        {/* AGENCY FILTERING*/}
-       <div className="flex flex-row rounded-lg  bg-white pl-4"> 
+       <div className="flex flex-row rounded-lg sm:w-[90vw] bg-white pl-4"> 
          <div className="flex flex-row rounded-lg bg-white w-56 items-center"> 
                 <label className="flex h-[70%] text-l items-center justify-center pr-4 text-purple-500 bg-white font-medium border-r-4 border-purple-700 w-96"> 
                 Agency Filtering
@@ -61,7 +61,7 @@ export default function FilterForm() {
          </div>
 
  {/* AIRLINE FILTERING*/}
- <div className="flex flex-row  bg-purple-200 pt-2 pb-2 pl-4"> 
+ <div className="flex flex-row sm:w-[90vw] bg-purple-200 pt-2 pb-2 pl-4"> 
          <div className="flex flex-row bg-purple-200 w-56 items-center "> 
                 <label className="flex h-[90%] text-l items-center justify-center pr-4 text-purple-500 bg-purple-200 font-medium border-r-4 border-purple-700 w-96"> 
                 Airline Filtering 
@@ -156,6 +156,13 @@ export default function FilterForm() {
          <CheckBoxOperating />
          </div>
          </div>
+         <div className="flex flex-grow w-full bg-purple-200"> 
+                <label className="ml-auto items-center text-purple-200 bg-purple-200"> 
+                 
+                </label> 
+            </div>
+
+
          </div>
 
 
@@ -258,13 +265,13 @@ export default function FilterForm() {
                 </label> 
             </div>
 
-         <div className="rounded-md bg-white">
+         <div className="rounded-md">
            
-         {/* OD CONCEPT RADIO BUTTON */}
+         {/* OD Filtering TOGGLE */}
 
-      <div className="flex flex-col rounded-md bg-white pt-4 pr-4 pl-6 pb-1 justify-start">
+      <div className="flex-col w-auto rounded-md bg-white pt-4 pr-4 pl-6 pb-1 justify-start">
           <label className="mb-2 block text-sm font-medium">
-          O&D Concept
+          O&D Filtering
           </label>
           <div className="relative">
           <ToggleSwitchItinerary/>

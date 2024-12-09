@@ -2,7 +2,7 @@
 
 
 import { useActionState } from 'react';
-import TagInput from '@/app/ui/home_account/reportdesign/TagInput';
+import TagInput from '@/app/ui/home_account/reportdesign/1_TagInput';
 import { State } from '@/app/lib/actions';
 
 export default function Form() {
@@ -12,7 +12,7 @@ export default function Form() {
   return (
     <form >
       
-      <div className="rounded-md bg-white border">
+      <div className="rounded-md border-none bg-white">
       <div className="flex flex-row rounded-md bg-white pt-4 pr-4 pl-6 pb-1 space-x-6">
 
          {/* Report Name */}
@@ -62,7 +62,7 @@ export default function Form() {
         {/* Tags */}
        
         <div className="mb-4">
-          <label htmlFor="description" className="mb-2 block text-sm font-medium">
+          <label htmlFor="tags" className="mb-2 block text-sm font-medium">
             Tags
           </label>
           
@@ -75,11 +75,11 @@ export default function Form() {
      
       </div>
      
-      <div className="flex flex-row pt-0 pr-4 pl-6 pb-4 rounded-md bg-white space-x-6">
+      <div className="flex flex-row flex-nowrap pt-0 pr-4 pl-6 pb-4 rounded-md  bg-white space-x-6">
 
          {/* Date Concept */}
-         <div className="mb-4">
-          <label htmlFor="DateConcept" className="mb-2 block text-sm font-medium">
+         <div className="mb-4 flex-nowrap">
+          <label htmlFor="DateConcept" className="mb-2 block text-sm font-medium w-40">
           Date Concept
           </label>
           <div className="relative">
@@ -131,7 +131,7 @@ export default function Form() {
 
  {/* Date Concept */}
  <div className="mb-4">
-          <label htmlFor="BenchmarkPeriod" className="mb-2 block text-sm font-medium">
+          <label htmlFor="BenchmarkPeriod" className="mb-2 block text-sm font-medium w-40">
           Benchmark Period
           </label>
           <div className="relative">

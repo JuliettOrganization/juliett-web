@@ -38,7 +38,7 @@ interface FieldButtonsProps {
 const FieldButtons: React.FC<FieldButtonsProps> = ({ addTag, fields, selectedFields }) => {
   return (
     <div className="rounded-lg items-center justify-center p-1 bg-white">
-      <div className="flex flex-wrap h-2/5 justify-center overflow-y-auto">
+      <div className="flex flex-wrap justify-center overflow-y-auto h-[40vh]">
         {fields.map((text, index) => (
           <FieldButton
             key={index}
