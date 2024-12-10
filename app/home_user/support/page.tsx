@@ -4,7 +4,7 @@ import { EnvelopeIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outli
 
 export default function SupportPage() {
   return (
-    <main className="fixed top-20 left-0 h-full w-full z-0 items-center justify-center min-h-screen bg-gray-100 bg-cover bg-center" style={{ backgroundImage: "url('/login_background.png')" }}>
+    <main className="fixed top-20 left-0 h-full w-full z-auto items-center justify-center min-h-screen bg-gray-100 bg-cover bg-center" style={{ backgroundImage: "url('/login_background.png')" }}>
       <div className="max-w-2xl mx-auto mt-20 p-10 rounded-xl bg-white shadow-lg bg-opacity-90">
         <div className="text-center">
           <ChatBubbleLeftRightIcon className="mx-auto mb-6 w-24 h-24 text-blue-600" />
