@@ -7,7 +7,7 @@ import { signOut } from '@/auth';
 export default function Nav() {
   return (
     <div className="topbar_flex space-x-24">
-      <Link href="/account_selection" >
+      <Link href="/home_user" >
       <div className="flex flex-row items-center"> 
       <div> 
         <p className="topbar_j_font"> J </p> </div>

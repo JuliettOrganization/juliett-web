@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { CardsSkeleton } from '@/app/ui/skeletons';
-import CardWrapper from '@/app/ui/account_selection/cards';
+import CardWrapper from '@/app/ui/home_user/cards';
  
 export default async function Page() { 
   return (
