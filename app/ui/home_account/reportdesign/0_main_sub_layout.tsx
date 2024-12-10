@@ -47,7 +47,7 @@ const CreateFormLayout: React.FC = () => {
   );
 
   return (
-    <main>
+    <main className="z-20">
       <LayoutRightPurplePanel fields={fields} removeField={removeField} />
       <LayoutMainInfoForm />
 

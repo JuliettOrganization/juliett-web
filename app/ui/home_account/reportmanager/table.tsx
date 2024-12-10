@@ -46,7 +46,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             {reports?.map((report) => (
-              <div key={report.reportid} className="mb-2 w-full rounded-md bg-black p-4">
+              <div key={report.reportid} className="mb-2 w-full rounded-md shadow p-4">
                 <div><p className="text-sm text-purple-500">{report.reportname}</p></div>
                 <div><ReportStatus status={report.status} /></div>
                 <div><p className="text-sm text-purple-500">{report.description}</p></div>
@@ -58,7 +58,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
                     <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
                   </button>
                   {activeMenu === report.reportid && (
-                    <div ref={menuRef} className="absolute right-full mr-2 bg-white shadow-lg rounded">
+                    <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 sm:right-full sm:mr-2 sm:w-auto">
                       <ul>
                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit Report</li>
                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Run Report</li>
@@ -100,7 +100,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
                         <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
                       </button>
                       {activeMenu === report.reportid && (
-                        <div ref={menuRef} className="absolute right-full mr-2 bg-white shadow-lg rounded">
+                        <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 sm:right-full sm:mr-2 sm:w-auto">
                           <ul>
                             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit Report</li>
                             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Run Report</li>

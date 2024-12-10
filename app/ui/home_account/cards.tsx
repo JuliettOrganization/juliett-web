@@ -50,7 +50,7 @@ export function Card({
   const Icon = iconMap[type];
 
   return (
-    <div className="rounded-xl bg-gray-50 p-2 hover:bg-purple-100 hover:text-purple-600">
+    <div className="rounded-xl shadow shadow-purple-100 p-2 hover:bg-purple-100 hover:text-purple-600">
       <Link href={path}
       >
       <div className="flex p-4 hover:bg-purple-100 hover:text-purple-600">

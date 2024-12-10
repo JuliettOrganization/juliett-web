@@ -1,3 +1,5 @@
+'use client';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 // Function to generate a random color
@@ -15,6 +17,14 @@ const getRandomColor = () => {
 };
 
 export default function ReportTags({ tags }: { tags: string[] }) {
+  const [tagColors, setTagColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Generate colors for each tag only once
+    const colors = tags.map(() => getRandomColor());
+    setTagColors(colors);
+  }, [tags]);
+
   return (
     <div className="inline-flex space-x-2">
       {tags.map((tag, index) => (
@@ -22,7 +32,7 @@ export default function ReportTags({ tags }: { tags: string[] }) {
           key={index}
           className={clsx(
             'inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold',
-            getRandomColor()
+            tagColors[index]
           )}
         >
           {tag}
