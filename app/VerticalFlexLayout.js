@@ -1,9 +1,11 @@
-// components/VerticalFlexLayout.js
+'use client';
 import styles from '@/app/ui/global_public.module.css';
 import Link from 'next/link';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
 
 const VerticalFlexLayout = () => {
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <div className={styles.container}>
     
@@ -37,11 +39,24 @@ const VerticalFlexLayout = () => {
 
                 <div >
                    
-                   <Link href="/contactus" 
-                   className="flex items-center gap-5 self-start rounded-lg bg-black px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base" > 
-                   <span>Contact us</span> 
-                   <ArrowRightIcon className="w-5 md:w-6" /> 
-                   </Link>
+                <Link
+              href="/contactus"
+              className="flex items-center gap-5 self-start rounded-lg bg-black px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {isHovered ? (
+                <>
+                  <EnvelopeIcon className="w-5 md:w-6" />
+                  <span>support@juliett.com</span>
+                </>
+              ) : (
+                <>
+                  <span>Contact us</span>
+                  <ArrowRightIcon className="w-5 md:w-6" />
+                </>
+              )}
+            </Link>
                    </div>
             </div>
       </div>

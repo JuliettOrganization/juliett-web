@@ -103,3 +103,19 @@ export type ReportForm = {
   tags: string;
   status: 'pending' | 'paid';
 };
+
+
+export type UsersTable = {
+  id: string, name: string, email: string, 
+  accountstatus: string, 
+  confirmationstatus: string ;
+  // createdtime: Date, 
+  // lastupdatedtime: Date
+};
+
+export type AccountsTable = {
+  accountid: string, accountname: string, billing: string, 
+  datasources: string, 
+  currencies: string ;
+
+};

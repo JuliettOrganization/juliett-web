@@ -5,9 +5,15 @@ import {
   ReportForm,
   ReportsTable,
   LatestInvoiceRaw,
-  Revenue
+  Revenue,
+  UsersTable,
+  AccountsTable
 } from './definitions';
 import { formatCurrency } from './utils';
+
+
+const ITEMS_PER_PAGE = 20;
+
 
 export async function fetchRevenue() {
   try {
@@ -87,7 +93,7 @@ export async function fetchCardData () {
   }
 }
 
-const ITEMS_PER_PAGE = 20;
+
 
 
 export async function fetchFilteredReports  (
@@ -223,3 +229,114 @@ export async function fetchFilteredCustomers(query: string) {
     throw new Error('Failed to fetch customer table.');
   }
 }
+
+
+
+
+export async function fetchFilteredUsers  (
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const users = await sql<UsersTable>`
+      SELECT
+       id,
+       name,
+       email,
+       accountstatus,
+       confirmationstatus
+      FROM public.users
+       where 
+       users.name ILIKE ${`%${query}%`} OR
+        users.email ILIKE ${`%${query}%`} OR
+        users.accountstatus ILIKE ${`%${query}%`} OR
+         users.confirmationstatus ILIKE ${`%${query}%`}
+      ORDER BY id DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return users.rows; 
+    // was invoices.rows
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch users.');
+  }
+}
+
+export async function fetchUsersPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM public.users
+       where 
+       users.name ILIKE ${`%${query}%`} OR
+        users.email ILIKE ${`%${query}%`} OR
+        users.accountstatus ILIKE ${`%${query}%`} OR
+         users.confirmationstatus ILIKE ${`%${query}%`}
+    
+  `;
+  const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+  return totalPages;
+} catch (error) {
+  console.error('Database Error:', error);
+  throw new Error('Failed to fetch total number of reports.');
+}
+}
+
+  export async function fetchFilteredAccounts  (
+    query: string,
+    currentPage: number,
+  ) {
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  
+    try {
+      const accounts = await sql<AccountsTable>`
+        SELECT
+         accountid,
+         accountname,
+         billing,
+         datasources,
+         currencies
+        FROM public.accounts
+         where 
+         accounts.accountname ILIKE ${`%${query}%`} OR
+          accounts.billing ILIKE ${`%${query}%`} OR
+          accounts.datasources ILIKE ${`%${query}%`} OR
+           accounts.currencies ILIKE ${`%${query}%`}
+        ORDER BY accountid DESC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+      `;
+  
+      return accounts.rows; 
+      
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch accounts.');
+    }
+  }
+  
+  export async function fetchAccountsPages(query: string) {
+    try {
+      const count = await sql`SELECT COUNT(*)
+      FROM public.accounts
+         where 
+       accounts.accountname ILIKE ${`%${query}%`} OR
+          accounts.billing ILIKE ${`%${query}%`} OR
+          accounts.datasources ILIKE ${`%${query}%`} OR
+           accounts.currencies ILIKE ${`%${query}%`}
+      
+    `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of reports.');
+  }
+}
+
+
+
+
+

@@ -20,7 +20,7 @@ export default async function CardWrapper() {
       {/* {The list  of cards will have to be dynamically taken from the database to get teh list of accounts the user shoudl have access to} */}
 
       <Card title="ABCD Travel Global" value={Basic_account} type='basic' path='/home_account'/>
-      <Card title="Admin" value={Admin_account} type='basic' path='/admin' />
+      <Card title="Admin" value={Admin_account} type='basic' path='/home_user/admin' />
     </>
   );
 }

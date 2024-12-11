@@ -9,8 +9,8 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
       const isOnAccount = nextUrl.pathname.startsWith('/home_account');
       const isOnAccountselection = nextUrl.pathname.startsWith('/home_user');
-      const isOnAdmin = nextUrl.pathname.startsWith('/admin');
-      if (isOnAccount || isOnAccountselection || isOnAdmin) {
+      
+      if (isOnAccount || isOnAccountselection) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {
