@@ -8,6 +8,7 @@ import FieldButtons from '@/app/ui/home_account/reportdesign/3_tab1_FieldButtons
 import ToggleSwitchCustomSql from './3_tab3_custom-sql-toggle';
 import TextBoxSQL from './3_tab3_custom-sql';
 import MainOptionsForm from './3_tab0_main_options';
+import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 
 const CreateFormLayout: React.FC = () => {
   const availableFields = [
