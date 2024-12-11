@@ -4,16 +4,16 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 export default function Page() {
   return (
-    <div className="flex items-center justify-center h-[80vh] bg-gray-300">
-        <div className="fixed top-20 left-0 w-full flex justify-start p-4 shadow bg-white z-10">
+    <div className="flex-col items-center justify-center h-[80vh] bg-gray-300">
+      <div className="flex w-64 left-0 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-purple-200 z-10">
     <Link href="/home_user" className="flex items-center space-x-2 text-purple-600">
     
       <ArrowLeftIcon className="w-6 h-6" />
       <span className="text-xl"> | </span>
-      <span className="hover:underline">Back to Home Page</span>
+      <span>Back to Home Page</span>
     </Link>
     </div>
-      <div className="max-w-2xl mx-auto p-10 rounded-xl bg-white shadow-lg">
+      <div className="max-w-2xl mx-auto mt-20 p-10 rounded-xl bg-white shadow-lg">
         <h1 className="text-3xl font-bold mb-8 text-center">Admin Dashboard</h1>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           <Link href="/home_user/admin/users" className="flex flex-col items-center p-6 bg-purple-100 rounded-lg shadow hover:bg-purple-200 transition">

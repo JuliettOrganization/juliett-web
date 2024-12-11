@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Image, { StaticImageData } from 'next/image'; 
 import profile from '@/public/profile.png';
+import Link from 'next/link';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 export default function ProfilePage() {
   const [name, setName] = useState('John Dutton');
@@ -25,7 +27,16 @@ export default function ProfilePage() {
 
   return (
     <main>
+         <div className="flex w-64 left-0 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-purple-200 z-10">
+    <Link href="/home_user" className="flex items-center space-x-2 text-purple-600">
+    
+      <ArrowLeftIcon className="w-6 h-6" />
+      <span className="text-xl"> | </span>
+      <span>Back to Home Page</span>
+    </Link>
+    </div>
       <div className="max-w-4xl mx-auto mt-20 p-10 rounded-xl bg-gray-50 shadow-sm">
+   
         <div className="text-center">
           <div className="relative w-64 h-64 mx-auto">
             <Image

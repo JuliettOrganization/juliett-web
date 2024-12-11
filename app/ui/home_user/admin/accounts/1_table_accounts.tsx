@@ -40,8 +40,8 @@ const AccountsTableClient: React.FC<AccountsTableClientProps> = ({ accounts }) =
             {accounts?.map((account) => (
               <div key={account.accountid} className="mb-2 w-full rounded-md shadow p-4">
                 <div><p className="text-sm text-purple-500">{account.accountname}</p></div>
-                <div><p className="text-sm text-purple-500"><DataSources dataSources={account.datasources} /></p></div>
-                <div><p className="text-sm text-purple-500"><Currencies Currencies={account.currencies}/></p></div>
+                <div><DataSources dataSources={account.datasources} /></div>
+                <div><Currencies Currencies={account.currencies}/></div>
                 <div><Billing status={account.billing} /></div>
                
                 <div className="flex justify-end gap-2 relative">

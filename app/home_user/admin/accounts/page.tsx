@@ -23,16 +23,17 @@ export default async function Page(props: {
   return (
     
     <div className="w-full">
-   <div className="fixed top-20 left-0 w-full flex justify-start p-4 shadow bg-white z-10">
+   <div className="flex w-64 left-0 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-purple-200 z-10">
     <Link href="/home_user/admin" className="flex items-center space-x-2 text-purple-600">
     
       <ArrowLeftIcon className="w-6 h-6" />
       <span className="text-xl"> | </span>
-      <span className="hover:underline">Back to Admin Page</span>
+      <span>Back to Admin Page</span>
     </Link>
     </div>
+    <div className="flex-col m-4 justify-center">
       <div className="flex w-full items-center justify-between">
-        <h1 className='mt-16 mb-4 text-xl md:text-4xl'>Account List</h1>
+        <h1 className='mt-3 text-xl md:text-4xl'>Account List</h1>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search accounts..." />
@@ -41,9 +42,11 @@ export default async function Page(props: {
       <Suspense key={query + currentPage} fallback={<ReportsTableSkeleton />}>
         <AccountsTableServer query={query} currentPage={currentPage} />
       </Suspense>
+      </div>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
     </div>
+    
   );
 }
