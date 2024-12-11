@@ -1,12 +1,10 @@
 'use client';
 import React from 'react';
 import TagInput from '@/app/ui/home_account/reportdesign/1_TagInput';
-import { State } from '@/app/lib/actions';
 
 export default function Form() {
   // Specify the type of the event parameter
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => { e.preventDefault(); };
-  const initialState: State = { message: null, errors: {} };
  
   return (
     <form onSubmit={handleSubmit}>

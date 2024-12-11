@@ -56,7 +56,7 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ groupingVal
 
 const CheckBoxGeoTo: React.FC = () => {
   const placeholderData = ['CDG', 'MAD', 'JFK','SYD', 'OSL', 'YUL'];
-  const [groupingValues, setGroupingValues] = useState<string[]>(placeholderData);
+  const [groupingValues] = useState<string[]>(placeholderData);
 
 
 //   THIS IS TO FETCH THE DATA FROM DB INF HARDCODIG THE GROUPIING VALUES

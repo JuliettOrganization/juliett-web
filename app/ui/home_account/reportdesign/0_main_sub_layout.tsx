@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import LayoutRightPurplePanel from './2_layout_right_purple_panel';
 import LayoutMainInfoForm from './1_layout_main_info_form';
 import FilterForm from '@/app/ui/home_account/reportdesign/3_tab2_filter-form';
-import { ArrowUturnLeftIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import FieldButtons from '@/app/ui/home_account/reportdesign/3_tab1_FieldButtons';
 import ToggleSwitchCustomSql from './3_tab3_custom-sql-toggle';
 import TextBoxSQL from './3_tab3_custom-sql';

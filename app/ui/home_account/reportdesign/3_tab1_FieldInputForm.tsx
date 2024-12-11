@@ -26,9 +26,6 @@ const FieldInputForm: React.FC = () => {
     }
   };
 
-  const removeField = (field: string) => {
-    setFields(fields.filter((t) => t !== field));
-  };
 
 
 

@@ -130,14 +130,20 @@ export async function fetchFilteredReports  (
 export async function fetchReportsPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
-    FROM master.report_manager
+    FROM master.report_manager where 
+       report_manager.reportname ILIKE ${`%${query}%`} OR
+        report_manager.description ILIKE ${`%${query}%`} OR
+        report_manager.date_concept ILIKE ${`%${query}%`} OR
+         report_manager.period ILIKE ${`%${query}%`} OR
+          report_manager.status ILIKE ${`%${query}%`} OR
+          report_manager.tags ILIKE ${`%${query}%`} 
     
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
-    // console.error('Database Error:', error);
+    console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of reports.');
   }
 }

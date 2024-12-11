@@ -56,7 +56,7 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ groupingVal
 
 const CheckBoxGroupingAgency: React.FC = () => {
   const placeholderData = ['Group ABD', 'Group GHD', 'Group JUS','Group dfc', 'Group ddd', 'Group dewe','Group vtrebyr', 'Group ddfcc','Group drftg','Group gtregtrv', 'Group vrvr','Group vtrvr', 'Group vtrvtr', 'Group JUvtretS'];
-  const [groupingValues, setGroupingValues] = useState<string[]>(placeholderData);
+  const [groupingValues] = useState<string[]>(placeholderData);
 
 
 //   THIS IS TO FETCH THE DATA FROM DB INF HARDCODIG THE GROUPIING VALUES

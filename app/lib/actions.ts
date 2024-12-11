@@ -62,7 +62,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
-    return {
+    return {error,
       message: 'Database Error: Failed to Create Invoice.',
     };
   }
@@ -90,7 +90,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
           WHERE id = ${id}
         `;
     } catch (error) {
-      return { message: 'Database Error: Failed to Update Invoice.' };
+      return { error, message: 'Database Error: Failed to Update Invoice.' };
     }
     revalidatePath('/home_account/invoices');
     redirect('/home_account/invoices');
@@ -102,7 +102,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
       revalidatePath('/home_account/reportmanager');
       return { message: 'Delete Report.' };
     } catch (error) {
-      return { message: 'Database Error: Failed to Delete Report.' };
+      return { error, message: 'Database Error: Failed to Delete Report.' };
      
     }
   }

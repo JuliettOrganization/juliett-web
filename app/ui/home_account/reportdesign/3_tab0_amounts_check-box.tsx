@@ -44,7 +44,7 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ groupingVal
 
 const CheckBoxAmount: React.FC = () => {
   const placeholderData = ['Gross', 'Net', 'YQ', 'YR'];
-  const [groupingValues, setGroupingValues] = useState<string[]>(placeholderData);
+  const [groupingValues] = useState<string[]>(placeholderData);
 
   return <GroupingValuesFilter groupingValues={groupingValues} />;
 };

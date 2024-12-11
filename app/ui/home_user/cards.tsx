@@ -1,11 +1,8 @@
 import {ArrowRightCircleIcon} from '@heroicons/react/24/outline';
-import { lusitana } from '@/app/ui/fonts';
-import { fetchCardData } from '@/app/lib/data';
 const iconMap = {
   basic: ArrowRightCircleIcon
 };
 import Link from 'next/link';
-import clsx from 'clsx';
 
 
 export default async function CardWrapper() {
@@ -17,11 +14,7 @@ export default async function CardWrapper() {
   // } = await fetchCardData();
   const Basic_account = 'This is an normal account.';
     const Admin_account = 'This is the Admin page.';
-    const status_loading = 'Be aware of the latest data loaded in your system.';
-    const scheduler = 'Schedule your report to receive them by email or through sftp on a regular basis.';
-    const config = 'Customize your own groupings, airline class mapping and more.';
-    const profile = 'Customize your profle and user experience.';
-    
+
   return (
     <>
       {/* {The list  of cards will have to be dynamically taken from the database to get teh list of accounts the user shoudl have access to} */}

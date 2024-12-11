@@ -1,9 +1,9 @@
 'use server';
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { signOut } from '@/auth';
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
     await signOut();
     return NextResponse.json({ message: 'Signed out successfully' }, { status: 200 });

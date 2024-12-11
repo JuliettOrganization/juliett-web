@@ -62,7 +62,7 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ groupingVal
 
 const CheckBoxTransactionType: React.FC = () => {
   const placeholderData = ['Ticket', 'Refund', 'ADM', 'ACM', 'EMDS', 'EMDA', 'Others'];
-  const [groupingValues, setGroupingValues] = useState<string[]>(placeholderData);
+  const [groupingValues] = useState<string[]>(placeholderData);
 
 //   THIS IS TO FETCH THE DATA FROM DB INF HARDCODIG THE GROUPIING VALUES
 //   useEffect(() => {
