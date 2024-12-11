@@ -1,6 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import {  NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import { auth, signIn, signOut }  from '@/auth'; // Ensure this path is correct
 import path from 'path';
 import fs from 'fs';
 

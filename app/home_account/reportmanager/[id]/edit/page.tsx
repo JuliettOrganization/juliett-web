@@ -21,7 +21,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           { label: 'Reports', href: '/home_account/report_manager' },
           {
             label: 'Edit Report',
-            href: `//home_account/report_manager/${id}/edit`,
+            href: `/home_account/report_manager/${id}/edit`,
             active: true,
           },
         ]}

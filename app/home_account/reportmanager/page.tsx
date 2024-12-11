@@ -2,7 +2,6 @@ import Pagination from '@/app/ui/home_account/reportmanager/pagination';
 import Search from '@/app/ui/search';
 import { ReportsTableServer } from '@/app/ui/home_account/reportmanager/ReportsTableServer';
 import { CreateReport } from '@/app/ui/home_account/reportmanager/buttons';
-import { lusitana } from '@/app/ui/fonts';
 import { ReportsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchReportsPages } from '@/app/lib/data';

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import TagInput from '@/app/ui/home_account/reportdesign/1_TagInput';
 import { State } from '@/app/lib/actions';
 

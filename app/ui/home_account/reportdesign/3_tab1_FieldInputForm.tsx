@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import FieldButtons from './3_tab1_FieldButtons';
-import SelectedFields from './2_SelectedFields';
+
 
 const FieldInputForm: React.FC = () => {
   const availableFields = [ 'agency code (booking)', 'agency code (issuing)', 
