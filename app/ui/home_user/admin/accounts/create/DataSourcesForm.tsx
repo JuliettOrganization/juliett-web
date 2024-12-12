@@ -1,21 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { Combobox } from '@headlessui/react';
+import { useState, useEffect } from 'react';
+import { Combobox, ComboboxInput, ComboboxButton, ComboboxOptions, ComboboxOption } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { ComboboxInput } from '@headlessui/react';
-import {ComboboxButton} from '@headlessui/react';
-import { ComboboxOptions } from '@headlessui/react';
-import { ComboboxOption } from '@headlessui/react';
 
 const dataSources = [
   'ABD_3', 'HUN_8', 'USA_1', 'CAN_2', 'MEX_3', 'BRA_4', 'ARG_5', 'CHL_6', 'COL_7', 'PER_8',
   'VEN_9', 'URU_10', 'PAR_11', 'BOL_12', 'ECU_13', 'GTM_14', 'SLV_15', 'HND_16', 'NIC_17', 'CRI_18'
 ];
 
-export default function DataSourcesForm() {
+export default function DataSourcesForm({ onChange }: { onChange: (sources: string[]) => void }) {
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
   const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    onChange(selectedSources);
+  }, [selectedSources]);
 
   const filteredSources =
     query === ''
@@ -24,8 +24,10 @@ export default function DataSourcesForm() {
           source.toLowerCase().includes(query.toLowerCase())
         );
 
-  const handleSelect = (sources: string[]) => {
-    setSelectedSources(sources);
+  const handleSelect = (source: string) => {
+    if (!selectedSources.includes(source)) {
+      setSelectedSources([...selectedSources, source]);
+    }
   };
 
   const handleRemove = (source: string) => {
@@ -35,10 +37,10 @@ export default function DataSourcesForm() {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-[45vw]">
       <h2 className="text-2xl text-purple-500 font-bold mb-4">Data Sources</h2>
-      <form className="space-y-4">
+      <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">Please select sources</label>
-          <Combobox value={selectedSources} onChange={handleSelect} multiple>
+          <Combobox value={selectedSources} onChange={setSelectedSources} multiple>
             <div className="relative mt-1">
               <ComboboxInput
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -71,7 +73,7 @@ export default function DataSourcesForm() {
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              focus ? 'text-white' : 'text-indigo-600'
+                                focus ? 'text-white' : 'text-indigo-600'
                             }`}
                           >
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
@@ -85,25 +87,25 @@ export default function DataSourcesForm() {
             </div>
           </Combobox>
         </div>
-      </form>
-      <div className="mt-4">
-        <h3 className="text-sm font-medium text-gray-700">Selected Data Sources</h3>
-        <div className="mt-2 pl-2 flex flex-wrap border border-gray-200 min-h-36 items-center space-x-2">
-          {selectedSources.map((source) => (
-            <span
-              key={source}
-              className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-700"
-            >
-              {source}
-              <button
-                type="button"
-                className="ml-2 text-indigo-500 hover:text-indigo-700"
-                onClick={() => handleRemove(source)}
+        <div className="mt-4">
+          <h3 className="text-lg font-medium text-gray-700">Selected Data Sources</h3>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {selectedSources.map((source) => (
+              <span
+                key={source}
+                className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-700"
               >
-                &times;
-              </button>
-            </span>
-          ))}
+                {source}
+                <button
+                  type="button"
+                  className="ml-2 text-indigo-500 hover:text-indigo-700"
+                  onClick={() => handleRemove(source)}
+                >
+                  &times;
+                </button>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>

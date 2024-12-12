@@ -24,8 +24,8 @@ const getTagColor = (tag: string) => {
   return colors[index];
 };
 
-export default function DataSources({ dataSources }: { dataSources: string }) {
-  const tags = dataSources.split(';').map(tag => tag.trim());
+export default function DataSources({ dataSources }: { dataSources: string | null }) {
+  const tags = dataSources ? dataSources.split(';').map(tag => tag.trim()).filter(tag => tag !== '') : [];
 
   return (
     <div className="inline-flex flex-wrap gap-1">

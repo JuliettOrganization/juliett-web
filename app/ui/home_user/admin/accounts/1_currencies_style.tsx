@@ -24,8 +24,8 @@ const getTagColor = (tag: string) => {
   return colors[index];
 };
 
-export default function Currencies({ Currencies }: { Currencies: string }) {
-  const tags = Currencies.split(';').map(tag => tag.trim());
+export default function Currencies({ Currencies }: { Currencies: string | null }) {
+  const tags = Currencies ? Currencies.split(';').map(tag => tag.trim()).filter(tag => tag !== '') : [];
 
   return (
     <div className="inline-flex flex-wrap gap-1">
