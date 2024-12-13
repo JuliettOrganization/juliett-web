@@ -18,7 +18,7 @@ interface Account {
   billing: string;
   datasources: string;
   currencies: string;
-  users: User[] | null; // Allow users to be null
+  users: string; // Allow users to be null - no needed here  
 }
 
 interface AccountsTableClientProps {
