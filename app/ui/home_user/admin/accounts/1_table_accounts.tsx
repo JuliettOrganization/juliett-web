@@ -98,7 +98,7 @@ const AccountsTableClient: React.FC<AccountsTableClientProps> = ({ accounts }) =
                     <EllipsisVerticalIcon className="h-6 w-6 z-20 text-gray-700" />
                   </button>
                   {activeMenu === account.accountid && (
-                    <div ref={menuRef} className="absolute right-0 mr-2 z-50 bg-white shadow-lg rounded w-48">
+                    <div ref={menuRef} className="absolute right-0 mr-2 z-10 bg-white shadow-lg rounded w-48">
                       <ul>
                         <li
                           className="px-4 py-2 z-50 bg-white hover:bg-gray-100 cursor-pointer"
@@ -141,10 +141,10 @@ const AccountsTableClient: React.FC<AccountsTableClientProps> = ({ accounts }) =
                   <td className="whitespace-nowrap px-4 py-3"><Users users={Array.isArray(account.users) ? account.users.map(user => user.email).join('; ') : 'No users'} /></td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3 relative">
                     <button onClick={() => toggleMenu(account.accountid)}>
-                      <EllipsisVerticalIcon className="h-6 w-6 z-20 text-gray-700" />
+                      <EllipsisVerticalIcon className="h-6 w-6 z-10 text-gray-700" />
                     </button>
                     {activeMenu === account.accountid && (
-                      <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48">
+                      <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-20">
                         <ul>
                           <li
                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer"

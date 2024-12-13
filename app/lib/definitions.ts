@@ -109,6 +109,7 @@ export type UsersTable = {
   id: string, name: string, email: string, 
   accountstatus: string, 
   confirmationstatus: string ;
+  accountnames: string;
   // createdtime: Date, 
   // lastupdatedtime: Date
 };
@@ -117,7 +118,6 @@ export type AccountsTable = {
   accountid: string, accountname: string, billing: string, 
   datasources: string, 
   currencies: string , users:string;
-
 };
 export type AccountForm = {
   accountid: string, accountname: string, billing: string, 

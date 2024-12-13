@@ -242,19 +242,28 @@ export async function fetchFilteredUsers  (
 
   try {
     const users = await sql<UsersTable>`
-      SELECT
-       id,
-       name,
-       email,
-       accountstatus,
-       confirmationstatus
-      FROM public.users
-       where 
-       users.name ILIKE ${`%${query}%`} OR
-        users.email ILIKE ${`%${query}%`} OR
-        users.accountstatus ILIKE ${`%${query}%`} OR
-         users.confirmationstatus ILIKE ${`%${query}%`}
-      ORDER BY id DESC
+   SELECT
+        u.id,
+        u.name,
+        u.email,
+        u.accountstatus,
+        u.confirmationstatus,
+        COALESCE(string_agg(a.accountname, '; '), '') AS accountnames
+      FROM public.users u
+      LEFT JOIN LATERAL (
+        SELECT accountname
+        FROM public.accounts,
+        jsonb_array_elements(accounts.users) AS userj
+        WHERE userj->>'id' = u.id::text
+      ) a ON true
+      WHERE 
+        u.name ILIKE ${`%${query}%`} OR
+        u.email ILIKE ${`%${query}%`} OR
+        u.accountstatus ILIKE ${`%${query}%`} OR
+        u.confirmationstatus ILIKE ${`%${query}%`}
+      GROUP BY u.id, u.name, u.email, u.accountstatus, u.confirmationstatus
+      HAVING COALESCE(string_agg(a.accountname, '; '), '') ILIKE ${`%${query}%`}
+      ORDER BY u.email
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
@@ -268,15 +277,31 @@ export async function fetchFilteredUsers  (
 
 export async function fetchUsersPages(query: string) {
   try {
-    const count = await sql`SELECT COUNT(*)
-    FROM public.users
-       where 
-       users.name ILIKE ${`%${query}%`} OR
-        users.email ILIKE ${`%${query}%`} OR
-        users.accountstatus ILIKE ${`%${query}%`} OR
-         users.confirmationstatus ILIKE ${`%${query}%`}
-    
-  `;
+    const count = await sql` 
+    SELECT COUNT(*)
+      FROM (
+        SELECT DISTINCT u.id
+        FROM public.users u
+        LEFT JOIN LATERAL (
+          SELECT accountname
+          FROM public.accounts,
+          LATERAL jsonb_array_elements(accounts.users) AS userj
+          WHERE userj->>'id' = u.id::text
+        ) a ON true
+        WHERE 
+          u.name ILIKE ${`%${query}%`} OR
+          u.email ILIKE ${`%${query}%`} OR
+          u.accountstatus ILIKE ${`%${query}%`} OR
+          u.confirmationstatus ILIKE ${`%${query}%`} OR
+          EXISTS (
+            SELECT 1
+            FROM public.accounts,
+            LATERAL jsonb_array_elements(accounts.users) AS userj
+            WHERE userj->>'id' = u.id::text
+            AND accountname ILIKE ${`%${query}%`}
+          )
+      ) subquery
+    `;
   const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
   return totalPages;
 } catch (error) {
