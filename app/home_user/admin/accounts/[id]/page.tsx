@@ -14,6 +14,7 @@ export default function Page() {
     initialSelectedFile: null,
     initialSelectedCurrencies: [],
     initialSelectedSources: [],
+    initialSelectedUsers: [],
   });
   const [loading, setLoading] = useState(true);
 
@@ -37,6 +38,7 @@ export default function Page() {
             initialSelectedFile: data.selectedfile,
             initialSelectedCurrencies: data.selectedcurrencies.split(';'),
             initialSelectedSources: data.datasources.split(';'),
+            initialSelectedUsers: data.users,
           });
         } else {
           console.error('Failed to fetch account details');
@@ -67,6 +69,7 @@ export default function Page() {
       initialSelectedFile={initialValues.initialSelectedFile}
       initialSelectedCurrencies={initialValues.initialSelectedCurrencies}
       initialSelectedSources={initialValues.initialSelectedSources}
+      initialSelectedUsers={initialValues.initialSelectedUsers}
     />
   );
 }

@@ -121,9 +121,10 @@ import { v4 as uuidv4 } from 'uuid';
     currencies: z.string().nullable(),
       // currencies: z.string().nullable(),
       datasources: z.string().nullable(),
+      users: z.string().nullable(),
   });
   // const CreateAccount = FormSchema.omit({ accountid: true });
-  const CreateAccount = FormSchema;
+  const saveAccount = FormSchema;
   export type State = {
     errors?: {
       accountid?: string[];
@@ -131,19 +132,20 @@ import { v4 as uuidv4 } from 'uuid';
       billing?: string[];
       currencies?: string[];
       datasources?: string[];
+      users?: string[];
     };
     message?: string | null;
   };
 
   export async function SaveAccount(prevState: State, formData: FormData) {
     // Validate form using Zod
-    const validatedFields = CreateAccount.safeParse({
+    const validatedFields = saveAccount.safeParse({
       accountid: formData.get('accountId'),
       name: formData.get('accountName'),
       billing: formData.get('billing') === 'true',
       currencies: formData.get('selectedCurrencies'),
       datasources: formData.get('dataSources'),
-    
+      users: formData.get('users') 
     });
 
 
@@ -156,7 +158,7 @@ import { v4 as uuidv4 } from 'uuid';
     }
      
     // Prepare data for insertion into the database
-    const { accountid,name, billing,currencies,datasources  } = validatedFields.data;
+    const { accountid,name, billing,currencies,datasources,users } = validatedFields.data;
     const billingStatus = billing ? 'yes' : 'no';
 
     //const { name, billing, currencies,datasources } = validatedFields.data;
@@ -174,21 +176,21 @@ import { v4 as uuidv4 } from 'uuid';
       // Update the existing account
       await sql`
         UPDATE public.accounts
-        SET accountname = ${name}, billing = ${billingStatus}, currencies = ${currencies}, datasources = ${datasources}
+        SET accountname = ${name}, billing = ${billingStatus}, currencies = ${currencies}, datasources = ${datasources},users = ${users}
         WHERE accountid = ${accountid}
       `;
     } else {
       // Insert a new account
       await sql`
-        INSERT INTO public.accounts (accountid, accountname, billing, currencies, datasources)
-        VALUES (${accountid}, ${name}, ${billingStatus}, ${currencies}, ${datasources})
+        INSERT INTO public.accounts (accountid, accountname, billing, currencies, datasources,users)
+        VALUES (${accountid}, ${name}, ${billingStatus}, ${currencies}, ${datasources},${users})
       `;
     }
     } catch (error) {
       // If a database error occurs, return a more specific error.
       return {
-        errors: { general: ['Database Error: Failed to Create Account.'] },
-        message: 'Database Error: Failed to Create Account.',
+        errors: { general: ['Database Error: Failed to Save Account.'] },
+        message: 'Database Error: Failed to Save Account.',
       };
     }
   
@@ -197,7 +199,7 @@ import { v4 as uuidv4 } from 'uuid';
    
   
     // Return success message
-    return { message: 'Account created successfully' };
+    return { message: 'Account saved successfully' };
   }
 
 

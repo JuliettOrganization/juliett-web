@@ -298,13 +298,17 @@ export async function fetchUsersPages(query: string) {
          accountname,
          billing,
          datasources,
-         currencies
+         currencies,
+         users
         FROM public.accounts
-         where 
-         accounts.accountname ILIKE ${`%${query}%`} OR
-          accounts.billing ILIKE ${`%${query}%`} OR
-          accounts.datasources ILIKE ${`%${query}%`} OR
-           accounts.currencies ILIKE ${`%${query}%`}
+        LEFT JOIN LATERAL jsonb_array_elements(accounts.users) AS usersj ON true
+    WHERE 
+      accounts.accountname ILIKE ${`%${query}%`} OR
+      accounts.billing ILIKE ${`%${query}%`} OR
+      accounts.datasources ILIKE ${`%${query}%`} OR
+      accounts.currencies ILIKE ${`%${query}%`} OR
+      (usersj IS NOT NULL AND usersj->>'email' ILIKE ${`%${query}%`})
+
         ORDER BY accountid DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
@@ -321,12 +325,13 @@ export async function fetchUsersPages(query: string) {
     try {
       const count = await sql`SELECT COUNT(*)
       FROM public.accounts
-         where 
-       accounts.accountname ILIKE ${`%${query}%`} OR
-          accounts.billing ILIKE ${`%${query}%`} OR
-          accounts.datasources ILIKE ${`%${query}%`} OR
-           accounts.currencies ILIKE ${`%${query}%`}
-      
+      LEFT JOIN LATERAL jsonb_array_elements(accounts.users) AS usersj ON true
+    WHERE 
+      accounts.accountname ILIKE ${`%${query}%`} OR
+      accounts.billing ILIKE ${`%${query}%`} OR
+      accounts.datasources ILIKE ${`%${query}%`} OR
+      accounts.currencies ILIKE ${`%${query}%`} OR
+      (usersj IS NOT NULL AND usersj->>'email' ILIKE ${`%${query}%`})
     `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
@@ -347,7 +352,8 @@ export async function fetchAccountById    (id: string) {
          accounts.accountname,
          accounts.billing,
          accounts.datasources,
-         accounts.currencies
+         accounts.currencies,
+          accounts.users
         FROM public.accounts
          where accounts.accountid = ${id};
     `;

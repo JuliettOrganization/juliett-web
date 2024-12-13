@@ -116,7 +116,7 @@ export type UsersTable = {
 export type AccountsTable = {
   accountid: string, accountname: string, billing: string, 
   datasources: string, 
-  currencies: string ;
+  currencies: string , users:string;
 
 };
 export type AccountForm = {

@@ -12,6 +12,7 @@ export default function Page() {
         initialSelectedFile={null}
         initialSelectedCurrencies={['USD', 'EUR']}
         initialSelectedSources={[]}
+        initialSelectedUsers={[]}
       />
     </Suspense>
   );

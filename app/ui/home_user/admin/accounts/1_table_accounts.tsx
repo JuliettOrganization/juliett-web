@@ -5,9 +5,24 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'; // <-- Impor
 import Billing from '@/app/ui/home_user/admin/accounts/1_accountbilling';
 import DataSources from '@/app/ui/home_user/admin/accounts/1_datasources_style';
 import Currencies from '@/app/ui/home_user/admin/accounts/1_currencies_style';
+import Users from '@/app/ui/home_user/admin/accounts/1_users_style';
+
+interface User {
+  id: string;
+  email: string;
+}
+
+interface Account {
+  accountid: string;
+  accountname: string;
+  billing: string;
+  datasources: string;
+  currencies: string;
+  users: User[] | null; // Allow users to be null
+}
 
 interface AccountsTableClientProps {
-  accounts: Array<{ accountid: string, accountname: string, billing: string, datasources: string, currencies: string }>;
+  accounts: Account[];
 }
 
 const AccountsTableClient: React.FC<AccountsTableClientProps> = ({ accounts }) => {
@@ -77,7 +92,7 @@ const AccountsTableClient: React.FC<AccountsTableClientProps> = ({ accounts }) =
                 <div><DataSources dataSources={account.datasources} /></div>
                 <div><Currencies Currencies={account.currencies} /></div>
                 <div><Billing status={account.billing} /></div>
-               
+                <div><Users users={Array.isArray(account.users) ? account.users.map(user => user.email).join('; ') : 'No users'} /></div>
                 <div className="flex justify-end gap-2 relative">
                   <button onClick={() => toggleMenu(account.accountid)}>
                     <EllipsisVerticalIcon className="h-6 w-6 z-20 text-gray-700" />
@@ -112,6 +127,7 @@ const AccountsTableClient: React.FC<AccountsTableClientProps> = ({ accounts }) =
                 <th scope="col" className="px-4 py-5 font-medium">Data Sources</th>
                 <th scope="col" className="px-4 py-5 font-medium">Currencies</th>
                 <th scope="col" className="px-4 py-5 font-medium">Billing</th>
+                <th scope="col" className="px-4 py-5 font-medium">Users</th>
                 <th scope="col" className="relative py-3 pl-6 pr-3"><span className="sr-only">Actions</span></th>
               </tr>
             </thead>
@@ -122,6 +138,7 @@ const AccountsTableClient: React.FC<AccountsTableClientProps> = ({ accounts }) =
                   <td className="whitespace-nowrap px-4 py-3"><DataSources dataSources={account.datasources} /></td>
                   <td className="whitespace-nowrap px-4 py-3"><Currencies Currencies={account.currencies} /></td>
                   <td className="whitespace-nowrap px-4 py-3"><Billing status={account.billing} /></td>
+                  <td className="whitespace-nowrap px-4 py-3"><Users users={Array.isArray(account.users) ? account.users.map(user => user.email).join('; ') : 'No users'} /></td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3 relative">
                     <button onClick={() => toggleMenu(account.accountid)}>
                       <EllipsisVerticalIcon className="h-6 w-6 z-20 text-gray-700" />

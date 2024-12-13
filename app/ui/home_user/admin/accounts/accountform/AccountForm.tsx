@@ -1,10 +1,19 @@
 'use client';
 
 import { Suspense, useState } from 'react';
+
+
+interface User {
+  id: string;
+  email: string;
+}
+
 import Link from 'next/link';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import MainInformationForm from '@/app/ui/home_user/admin/accounts/accountform/MainInformationForm';
 import DataSourcesForm from '@/app/ui/home_user/admin/accounts/accountform/DataSourcesForm';
+import Users from '@/app/ui/home_user/admin/accounts/accountform/Users';
+
 
 interface AccountFormProps {
   initialAccountId?: string;
@@ -13,6 +22,7 @@ interface AccountFormProps {
   initialSelectedFile?: File | null;
   initialSelectedCurrencies?: string[];
   initialSelectedSources?: string[];
+  initialSelectedUsers?: User[];
 }
 
 export default function AccountForm({
@@ -22,6 +32,8 @@ export default function AccountForm({
   initialSelectedFile = null,
   initialSelectedCurrencies = [],
   initialSelectedSources = [],
+  initialSelectedUsers = [],
+
 }: AccountFormProps) {
   const [mainInfo, setMainInfo] = useState({
     accountId: initialAccountId,
@@ -31,6 +43,7 @@ export default function AccountForm({
     selectedFile: initialSelectedFile,
   });
   const [dataSources, setDataSources] = useState<string[]>(initialSelectedSources);
+  const [users, setUsers] = useState<User[]>(initialSelectedUsers);
   const [errors, setErrors] = useState<any>(null);
 
   const handleMainInfoChange = (info: any) => {
@@ -42,6 +55,10 @@ export default function AccountForm({
 
   const handleDataSourcesChange = (sources: string[]) => {
     setDataSources(sources);
+  };
+
+  const handleUsersChange = (selectedUsers: User[]) => {
+    setUsers(selectedUsers);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -61,8 +78,11 @@ export default function AccountForm({
     const dataSourcesString = dataSources.join(';');
     formData.append('dataSources', dataSourcesString);
 
+      // Concatenate Users into a single string with semicolon-separated values
+      formData.append('users', JSON.stringify(users));
+
     try {
-      const response = await fetch('/api/account/createnewaccount', {
+      const response = await fetch('/api/account/saveAccount', {
         method: 'POST',
         body: formData,
       });
@@ -119,12 +139,21 @@ export default function AccountForm({
                 initialSelectedCurrencies={initialSelectedCurrencies}
               />
             </Suspense>
+            <div className='flex flex-col space-y-6'>
             <Suspense fallback={<div>Loading...</div>}>
               <DataSourcesForm
                 onChange={handleDataSourcesChange}
                 initialSelectedSources={initialSelectedSources}
               />
             </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Users
+              onChange={handleUsersChange}
+              initialSelectedUsers={initialSelectedUsers}
+                
+              />
+            </Suspense>
+            </div>
           </div>
           {errors && (
             <div className="mt-4 text-red-500">
