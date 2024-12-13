@@ -9,8 +9,16 @@ const dataSources = [
   'VEN_9', 'URU_10', 'PAR_11', 'BOL_12', 'ECU_13', 'GTM_14', 'SLV_15', 'HND_16', 'NIC_17', 'CRI_18'
 ];
 
-export default function DataSourcesForm({ onChange }: { onChange: (sources: string[]) => void }) {
-  const [selectedSources, setSelectedSources] = useState<string[]>([]);
+interface DataSourcesFormProps {
+  onChange: (sources: string[]) => void;
+  initialSelectedSources?: string[];
+}
+
+export default function DataSourcesForm({
+  onChange,
+  initialSelectedSources = [],
+}: DataSourcesFormProps) {
+  const [selectedSources, setSelectedSources] = useState<string[]>(initialSelectedSources);
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -88,7 +96,7 @@ export default function DataSourcesForm({ onChange }: { onChange: (sources: stri
           </Combobox>
         </div>
         <div className="mt-4">
-          <h3 className="text-lg font-medium text-gray-700">Selected Data Sources</h3>
+          <h3 className="text-sm mt-9 font-medium text-gray-700">Selected Data Sources</h3>
           <div className="mt-2 flex flex-wrap gap-2">
             {selectedSources.map((source) => (
               <span

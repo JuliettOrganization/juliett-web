@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, useEffect , useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
 import { Switch } from '@headlessui/react';
 import { Combobox, ComboboxInput, ComboboxButton, ComboboxOptions, ComboboxOption } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -11,22 +13,75 @@ const currencies = [
   'DKK', 'PLN', 'TWD', 'THB', 'MYR'
 ];
 
-export default function MainInformationForm({ onChange }: { onChange: (info: any) => void }) {
-  const [billing, setBilling] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [selectedCurrencies, setSelectedCurrencies] = useState<string[]>([]);
-  const [query, setQuery] = useState('');
-  const [accountName, setAccountName] = useState('');
-  const onChangeRef = useRef(onChange);
+interface MainInformationFormProps {
+  onChange: (info: any) => void;
+  initialAccountName?: string;
+  initialBilling?: boolean;
+  initialSelectedFile?: File | null;
+  initialSelectedCurrencies?: string[];
+}
+
+export default function MainInformationForm({
+  onChange,
+  initialAccountName = '',
+  initialBilling = false,
+  initialSelectedFile = null,
+  initialSelectedCurrencies = [],
+}: MainInformationFormProps) {
+  const pathname = usePathname();
+  const idFromUrl = pathname.split('/').pop();
+  const [accountId, setAccountId] = useState<string | null>(idFromUrl || null);
+
   useEffect(() => {
-    onChangeRef.current({
-      accountName,
-      billing,
-      selectedCurrencies,
-      selectedFile,
-    });
-  }, [accountName, billing, selectedCurrencies, selectedFile]);
+    const generateUniqueUuid = async () => {
+      let newUuid = uuidv4();
+      let isUnique = false;
+
+      while (!isUnique) {
+        const response = await fetch('/api/account/checkUuid', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uuid: newUuid }),
+        });
+
+        const result = await response.json();
+        if (!result.exists) {
+          isUnique = true;
+        } else {
+          newUuid = uuidv4();
+        }
+      }
+
+      setAccountId(newUuid);
+    };
+
+    if (!idFromUrl && pathname.includes('/create')) {
+      generateUniqueUuid();
+    }
+  }, [pathname, idFromUrl]);
+
+  const [billing, setBilling] = useState(initialBilling);
+  const [selectedFile, setSelectedFile] = useState<File | null>(initialSelectedFile);
+  const [preview, setPreview] = useState<string | null>(initialSelectedFile ? URL.createObjectURL(initialSelectedFile) : null);
+  const [selectedCurrencies, setSelectedCurrencies] = useState<string[]>(initialSelectedCurrencies);
+  const [query, setQuery] = useState('');
+  const [accountName, setAccountName] = useState(initialAccountName);
+
+  const onChangeRef = useRef(onChange);
+
+  useEffect(() => {
+    if (accountId) {
+      onChangeRef.current({
+        accountId,
+        accountName,
+        billing,
+        selectedCurrencies,
+        selectedFile,
+      });
+    }
+  }, [accountId, accountName, billing, selectedCurrencies, selectedFile]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -56,7 +111,17 @@ export default function MainInformationForm({ onChange }: { onChange: (info: any
   return (
     <div className="bg-white p-6 rounded-lg shadow-md text-purple-500 w-[45vw]">
       <h2 className="text-2xl font-bold mb-4">Main Information</h2>
-      <div className="space-y-4">
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Account ID</label>
+          <input
+            type="text"
+            name="accountId"
+            value={accountId || ''}
+            readOnly
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-100"
+          />
+        </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Account Name</label>
           <input

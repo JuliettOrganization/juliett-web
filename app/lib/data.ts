@@ -7,7 +7,8 @@ import {
   LatestInvoiceRaw,
   Revenue,
   UsersTable,
-  AccountsTable
+  AccountsTable,
+  AccountForm
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -336,6 +337,31 @@ export async function fetchUsersPages(query: string) {
   }
 }
 
+
+
+export async function fetchAccountById    (id: string) {
+  try {
+    const data = await sql<AccountForm>`
+       SELECT
+         accounts.accountid,
+         accounts.accountname,
+         accounts.billing,
+         accounts.datasources,
+         accounts.currencies
+        FROM public.accounts
+         where accounts.accountid = ${id};
+    `;
+
+    const account = data.rows.map((account) => ({
+      ...account,
+    }));
+
+    return account[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch account.');
+  }
+}
 
 
 

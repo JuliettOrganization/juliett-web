@@ -119,3 +119,8 @@ export type AccountsTable = {
   currencies: string ;
 
 };
+export type AccountForm = {
+  accountid: string, accountname: string, billing: string, 
+  datasources: string, 
+  currencies: string ;
+};
