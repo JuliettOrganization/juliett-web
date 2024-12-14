@@ -185,8 +185,11 @@ import { AuthError } from 'next-auth';
       `;
     }
     } catch (error) {
+      console.error('Database error:', error); // Log the error to the console
+
       // If a database error occurs, return a more specific error.
       return {
+        
         errors: { general: ['Database Error: Failed to Save Account.'] },
         message: 'Database Error: Failed to Save Account.',
       };

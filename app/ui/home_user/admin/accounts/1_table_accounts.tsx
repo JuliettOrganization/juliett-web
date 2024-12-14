@@ -7,10 +7,10 @@ import DataSources from '@/app/ui/home_user/admin/accounts/1_datasources_style';
 import Currencies from '@/app/ui/home_user/admin/accounts/1_currencies_style';
 import Users from '@/app/ui/home_user/admin/accounts/1_users_style';
 
-interface User {
-  id: string;
-  email: string;
-}
+// interface User {
+//   id: string;
+//   email: string;
+// }
 
 interface Account {
   accountid: string;
@@ -21,13 +21,17 @@ interface Account {
   users: string; // Allow users to be null - no needed here  
 }
 
+interface ErrorState {
+  general?: string[];
+}
+
 interface AccountsTableClientProps {
   accounts: Account[];
 }
 
 const AccountsTableClient: React.FC<AccountsTableClientProps> = ({ accounts }) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [errors, setErrors] = useState<any>(null);
+  const [errors, setErrors] = useState<ErrorState | null>(null);
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();

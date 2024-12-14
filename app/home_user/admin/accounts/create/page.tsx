@@ -13,21 +13,23 @@ interface AccountFormProps {
   initialBilling: boolean;
   initialSelectedFile: File | null;
   initialSelectedCurrencies: string[];
-  initialSelectedSources: string[]; 
-  initialSelectedUsers: User[]; 
+  initialSelectedSources: string[];
+  initialSelectedUsers: User[];
 }
+
+const initialAccountFormValues: AccountFormProps = {
+  initialAccountName: 'Default Account Name',
+  initialBilling: true,
+  initialSelectedFile: null,
+  initialSelectedCurrencies: ['USD', 'EUR'],
+  initialSelectedSources: [],
+  initialSelectedUsers: [],
+};
 
 export default function Page() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <AccountForm
-        initialAccountName="Default Account Name"
-        initialBilling={true}
-        initialSelectedFile={null}
-        initialSelectedCurrencies={['USD', 'EUR']}
-        initialSelectedSources={[]}
-        initialSelectedUsers={[]}
-      />
+      <AccountForm {...initialAccountFormValues} />
     </Suspense>
   );
 }

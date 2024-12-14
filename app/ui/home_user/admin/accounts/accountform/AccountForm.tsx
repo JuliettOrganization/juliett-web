@@ -25,6 +25,18 @@ interface AccountFormProps {
   initialSelectedUsers?: User[];
 }
 
+interface Errors {
+  [key: string]: string[];
+}
+interface MainInfo {
+  accountId: string | null;
+  accountName: string;
+  billing: boolean;
+  selectedCurrencies: string[];
+  selectedFile: File | null;
+}
+
+
 export default function AccountForm({
   initialAccountId = '',
   initialAccountName = '',
@@ -35,8 +47,8 @@ export default function AccountForm({
   initialSelectedUsers = [],
 
 }: AccountFormProps) {
-  const [mainInfo, setMainInfo] = useState({
-    accountId: initialAccountId,
+  const [mainInfo, setMainInfo] = useState<MainInfo>({
+    accountId: initialAccountId || null,
     accountName: initialAccountName,
     billing: initialBilling,
     selectedCurrencies: initialSelectedCurrencies,
@@ -44,13 +56,10 @@ export default function AccountForm({
   });
   const [dataSources, setDataSources] = useState<string[]>(initialSelectedSources);
   const [users, setUsers] = useState<User[]>(initialSelectedUsers);
-  const [errors, setErrors] = useState<any>(null);
+  const [errors, setErrors] = useState<Errors | null>(null);
 
-  const handleMainInfoChange = (info: any) => {
-    setMainInfo((prevInfo) => ({
-      ...prevInfo,
-      ...info,
-    }));
+  const handleMainInfoChange = (info: MainInfo) => {
+    setMainInfo(info);
   };
 
   const handleDataSourcesChange = (sources: string[]) => {
@@ -66,7 +75,9 @@ export default function AccountForm({
     const formData = new FormData(event.currentTarget);
 
     // Append mainInfo fields to formData
-    formData.append('accountId', mainInfo.accountId);
+    if (mainInfo.accountId) {
+      formData.append('accountId', mainInfo.accountId);
+    }
     formData.append('accountName', mainInfo.accountName);
     formData.append('billing', mainInfo.billing.toString());
     formData.append('selectedCurrencies', mainInfo.selectedCurrencies.join(';'));
@@ -88,7 +99,7 @@ export default function AccountForm({
       });
 
       if (response.ok) {
-        const result = await response.json();
+        await response.json();
         console.log('Account created successfully');
         window.location.href = '/home_user/admin/accounts';
       } else {

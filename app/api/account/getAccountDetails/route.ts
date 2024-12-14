@@ -28,6 +28,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Account not found' }, { status: 404 });
     }
   } catch (error) {
+    console.error('Database error:', error); // Log the error to the console
     return NextResponse.json({ error: 'Database error' }, { status: 500 });
   }
 }

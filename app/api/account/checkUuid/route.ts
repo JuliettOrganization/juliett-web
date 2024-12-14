@@ -15,6 +15,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ exists: false });
     }
   } catch (error) {
+    console.error('Database error:', error); // Log the error to the console
+
     return NextResponse.json({ error: 'Database error' }, { status: 500 });
   }
 }
