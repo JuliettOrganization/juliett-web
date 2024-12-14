@@ -3,22 +3,20 @@ import Search from '@/app/ui/search';
 import { ReportsTableServer } from '@/app/ui/home_account/reportmanager/ReportsTableServer';
 import { CreateReport } from '@/app/ui/home_account/reportmanager/buttons';
 import { ReportsTableSkeleton } from '@/app/ui/skeletons';
-import { Suspense } from 'react';
+import { Suspense, use } from 'react';
 import { fetchReportsPages } from '@/app/lib/data';
 
-interface SearchParams {
-  query?: string;
-  page?: string;
-}
+type SearchParams = Promise<{ query?: string; page?: string }>;
 
 interface PageProps {
-  searchParams?: SearchParams;
+  searchParams: SearchParams;
 }
 
-export default async function Page({ searchParams }: PageProps) {
-  const query = searchParams?.query || '';
-  const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchReportsPages(query);
+export default function Page({ searchParams }: PageProps) {
+  const params = use(searchParams);
+  const query = params.query || '';
+  const currentPage = Number(params.page) || 1;
+  const totalPages = use(fetchReportsPages(query));
 
   return (
     <div className="w-full">
