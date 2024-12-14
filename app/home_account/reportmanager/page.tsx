@@ -6,13 +6,16 @@ import { ReportsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchReportsPages } from '@/app/lib/data';
 
-export default async function Page(props: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-}) {
-  const searchParams = await props.searchParams;
+interface SearchParams {
+  query?: string;
+  page?: string;
+}
+
+interface PageProps {
+  searchParams?: SearchParams;
+}
+
+export default async function Page({ searchParams }: PageProps) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchReportsPages(query);
