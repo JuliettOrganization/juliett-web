@@ -134,7 +134,7 @@ export async function fetchFilteredReports  (
   }
 }
 
-export async function fetchReportsPages(query: string) {
+export async function fetchReportsPages(query: string): Promise<number> {
   try {
     const count = await sql`SELECT COUNT(*)
     FROM master.report_manager where 
