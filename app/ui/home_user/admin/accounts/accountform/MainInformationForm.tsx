@@ -14,7 +14,13 @@ const currencies = [
 ];
 
 interface MainInformationFormProps {
-  onChange: (info: any) => void;
+  onChange: (info: {
+    accountId: string | null;
+    accountName: string;
+    billing: boolean;
+    selectedCurrencies: string[];
+    selectedFile: File | null;
+  }) => void;
   initialAccountName?: string;
   initialBilling?: boolean;
   initialSelectedFile?: File | null;

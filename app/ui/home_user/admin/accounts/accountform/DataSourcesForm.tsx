@@ -32,11 +32,11 @@ export default function DataSourcesForm({
           source.toLowerCase().includes(query.toLowerCase())
         );
 
-  const handleSelect = (source: string) => {
-    if (!selectedSources.includes(source)) {
-      setSelectedSources([...selectedSources, source]);
-    }
-  };
+  // const handleSelect = (source: string) => {
+  //   if (!selectedSources.includes(source)) {
+  //     setSelectedSources([...selectedSources, source]);
+  //   }
+  // };
 
   const handleRemove = (source: string) => {
     setSelectedSources(selectedSources.filter((s) => s !== source));
