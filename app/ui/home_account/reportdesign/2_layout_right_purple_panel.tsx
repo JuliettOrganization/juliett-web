@@ -7,7 +7,7 @@ import { ButtonSave } from '@/app/ui/button';
 
 const LayoutRightPurplePanel: React.FC<{ fields: string[], removeField: (field: string) => void }> = ({ fields, removeField }) => {
   return (
-    <div className="fixed top-20 right-0 w-48 h-full z-10 bg-purple-700">
+    <div className="fixed top-20 right-0 w-38 md:w-48 h-full z-10 bg-gray-400">
       <div className="mt-1 flex flex-row text-white font-bold text-2xl p-4 gap-4 items-center">
         <RectangleGroupIcon className="w-7 md:w-9" />
         <p>Group By</p>

@@ -11,7 +11,7 @@ const RadioButtonListItinerary: React.FC = () => {
               id="ticket-based"
               name="option"
               value="Grouping 1"
-              className="peer cursor-pointer text-purple-600"
+              className="peer cursor-pointer text-green-500"
               defaultChecked
             />
             <label htmlFor="ticket-based" className="ml-2 text-sm cursor-pointer">
@@ -24,7 +24,7 @@ const RadioButtonListItinerary: React.FC = () => {
               id="coupon-based"
               name="option"
               value="Grouping 2"
-              className="peer cursor-pointer text-purple-600"
+              className="peer cursor-pointer text-green-500"
             />
             <label htmlFor="coupon-based" className="ml-2 text-sm cursor-pointer">
               Coupon based
@@ -36,7 +36,7 @@ const RadioButtonListItinerary: React.FC = () => {
               id="stopover-based"
               name="option"
               value="Grouping 3"
-              className="peer cursor-pointer text-purple-600"
+              className="peer cursor-pointer text-green-500"
             />
             <label htmlFor="stopover-based" className="ml-2 text-sm cursor-pointer">
               Stopover based

@@ -18,7 +18,7 @@ export default function FilterForm() {
        {/* AGENCY FILTERING*/}
        <div className="flex flex-row rounded-lg sm:w-[90vw] bg-white pl-4"> 
          <div className="flex flex-row rounded-lg bg-white w-56 items-center"> 
-                <label className="flex h-[70%] text-l items-center justify-center pr-4 text-purple-500 bg-white font-medium border-r-4 border-purple-700 w-96"> 
+                <label className="flex h-[70%] text-l items-center justify-center pr-4 text-black font-bold bg-white border-r-4 border-gray-700 w-96"> 
                 Agency Filtering
                 </label> 
             </div>
@@ -57,15 +57,15 @@ export default function FilterForm() {
          </div>
 
  {/* AIRLINE FILTERING*/}
- <div className="flex flex-row sm:w-[90vw] bg-purple-200 pt-2 pb-2 pl-4"> 
-         <div className="flex flex-row bg-purple-200 w-56 items-center "> 
-                <label className="flex h-[90%] text-l items-center justify-center pr-4 text-purple-500 bg-purple-200 font-medium border-r-4 border-purple-700 w-96"> 
+ <div className="flex flex-row sm:w-[90vw] bg-gray-200 pt-2 pb-2 pl-4"> 
+         <div className="flex flex-row bg-gray-200 w-56 items-center "> 
+                <label className="flex h-[90%] text-l items-center justify-center pr-4 text-black bg-gray-200 font-bold border-r-4 border-gray-700 w-96"> 
                 Airline Filtering 
                 </label> 
             </div>
  <div className="rounded-md">
          
-      <div className="flex flex-row  bg-purple-200  pt-4 pr-4 pl-6 pb-1 space-x-6">
+      <div className="flex flex-row  bg-gray-200  pt-4 pr-4 pl-6 pb-1 space-x-6">
     
          <div className="mb-4">
           <label htmlFor="Issuing" className="mb-2 block text-sm font-medium w-64">
@@ -95,7 +95,7 @@ export default function FilterForm() {
          
          </div>
 
-         <div className="flex flex-row  bg-purple-200  pt-0 pr-4 pl-6 pb-1 space-x-6">
+         <div className="flex flex-row  bg-gray-200  pt-0 pr-4 pl-6 pb-1 space-x-6">
     
          <div className="mb-4">
           <label className="mb-2 block text-sm font-medium w-64">
@@ -125,7 +125,7 @@ export default function FilterForm() {
          
          </div>
 
-         <div className="flex flex-row bg-purple-200 pt-0 pr-4 pl-6 pb-1 space-x-6">
+         <div className="flex flex-row bg-gray-200 pt-0 pr-4 pl-6 pb-1 space-x-6">
     
          <div className="mb-4">
           <label className="mb-2 block text-sm font-medium w-64">
@@ -152,8 +152,8 @@ export default function FilterForm() {
          <CheckBoxOperating />
          </div>
          </div>
-         <div className="flex flex-grow w-full bg-purple-200"> 
-                <label className="ml-auto items-center text-purple-200 bg-purple-200"> 
+         <div className="flex flex-grow w-full bg-gray-200"> 
+                <label className="ml-auto items-center text-gray-200 bg-gray-200"> 
                  
                 </label> 
             </div>
@@ -165,7 +165,7 @@ export default function FilterForm() {
          {/* GEO FILTERING*/}
          <div className="flex flex-row rounded-lg bg-white pt-2 pb-2 pl-4"> 
          <div className="flex flex-row bg-white w-56 items-center"> 
-                <label className="flex h-[80%] text-l items-center text-center pr-4 text-purple-500 bg-white font-medium border-r-4 border-purple-700 w-96"> 
+                <label className="flex h-[80%] text-l items-center text-center pr-4 text-black bg-white font-bold border-r-4 border-gray-700 w-96"> 
                 Origin & Destination Filtering 
                 </label> 
             </div>
@@ -236,7 +236,7 @@ export default function FilterForm() {
 
         {/* SEPARATION UI */}
          <div className="flex flex-row bg-white w-20 items-center"> 
-                <label className="flex h-[80%] text-l items-center text-center pr-4 text-purple-500 bg-white font-medium border-r-4 border-gray-400 w-96"> 
+                <label className="flex h-[80%] text-l items-center text-center pr-4 text-gray-500 bg-white font-medium border-r-4 border-gray-400 w-96"> 
                 
                 </label> 
             </div>
@@ -256,7 +256,7 @@ export default function FilterForm() {
           </div>  
             {/* SEPARATION UI */}
          <div className="flex flex-row bg-white w-20 items-center"> 
-                <label className="flex h-[80%] text-l items-center text-center pr-4 text-purple-500 bg-white font-medium border-r-4 border-gray-400 w-96"> 
+                <label className="flex h-[80%] text-l items-center text-center pr-4 text-gray-500 bg-white font-medium border-r-4 border-gray-400 w-96"> 
                 
                 </label> 
             </div>
@@ -270,7 +270,7 @@ export default function FilterForm() {
           O&D Filtering
           </label>
           <div className="relative">
-          <ToggleSwitchItinerary/>
+          <ToggleSwitchItinerary onChange={(info) => console.log(info)} />
           </div>   
  
        

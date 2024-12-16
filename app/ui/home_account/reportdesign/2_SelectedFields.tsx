@@ -15,12 +15,12 @@ const SelectedFields: React.FC<SelectedFieldsProps> = ({ fields, removeField }) 
             {fields.map((field, index) => (
               <span
                 key={index}
-                className="flex flex-row bg-purple-200 text-gray-800 justify-center rounded-full text-xs items-center w-full box-border">
+                className="flex flex-row bg-gray-200 text-gray-800 justify-center rounded-full text-xs items-center w-full box-border">
                   <div   className="text-gray-800 pl-2 py-1 mr-2 ml-1 text-xs items-center w-full box-border">{field}</div>
                 
                 <button
                   type="button"
-                  className="flex text-white bg-purple-800 justify-center rounded-full h-4 w-4 mr-1 items-center text-sm hover:text-red-400"
+                  className="flex text-white bg-gray-700 justify-center rounded-full h-4 w-4 mr-1 items-center text-sm hover:text-red-400"
                   
                   onClick={() => removeField(field)}
                 >

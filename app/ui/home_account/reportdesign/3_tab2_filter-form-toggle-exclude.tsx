@@ -1,24 +1,38 @@
+'use client';
 import React from 'react';
+import { Switch } from '@headlessui/react';
+import { useState } from 'react';
 
-const ToggleSwitchItinerary: React.FC = () => {
+interface SwitchExcludeProp {
+  onChange: (info: {
+    exclude: boolean;
+  }) => void;
+  initialExclude?: boolean;
+}
+
+ export default function ToggleSwitchItinerary ({ onChange,
+ 
+  initialExclude = false, }: SwitchExcludeProp) {
+  const [exclude, setExclude] = useState(initialExclude);
+
   return (
-    <div className="flex h-full  bg-white space-x-6  peer-checked:bg-green-500">
-      <label className="group w-60 h-15 bg-gray-200 relative rounded-full select-none cursor-pointer space-x-6  peer-checked:bg-green-500 flex dark:bg-gray-800">
-        <input 
-        className="peer rounded-full h-6 w-12 bg-red-500 border-white cursor-pointer text-green-500 peer-checked:text-green-500" 
-        type="checkbox" 
-        hidden />
-        <div className="peer w-30 h-full bg-red-500 rounded-full transition-all shadow-md absolute  group-hover:shadow-xl peer-checked:bg-green-500 peer-checked:ml-30"></div>
-        <span className="transition relative w-30 h-full flex items-center justify-center font-bold text-white peer-checked:text-green-500">
-          Include
-        </span>
-        <span className="transition relative w-30 h-full flex items-center justify-center font-bold text-red-500 peer-checked:text-white">
-          Exclude
-        </span>
-      </label>
-    </div>
+    <div className="flex items-center">
+    <label className="block text-sm font-medium text-gray-700 mr-4">Exclude</label>
+    <Switch
+      checked={exclude}
+      onChange={setExclude}
+      className={`${exclude ? 'bg-red-600' : 'bg-gray-300'} relative inline-flex h-6 w-11 items-center rounded-full`}
+    >
+      <span className="sr-only">exclude</span>
+      <span
+        className={`${exclude ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`}
+      />
+    </Switch>
+  </div>
   );
 };
 
-export default ToggleSwitchItinerary;
+
+
+ 
 

@@ -17,9 +17,9 @@ const FieldButton: React.FC<FieldButtonProps> = ({ text, onClick, selectedFields
     <button
       onClick={() => onClick(text)}
       className={clsx(
-        'rounded-full items-center border border-purple-500 hover:bg-purple-500 text-black hover:text-white p-1 text-[12px] m-2 w-52 h-8 truncate whitespace-nowrap overflow-hidden',
+        'rounded-full items-center border border-gray-400 hover:bg-gray-500 text-gray-600 shadow hover:text-white p-1 text-[12px] m-2 w-52 h-8 truncate whitespace-nowrap overflow-hidden',
         {
-          'bg-purple-600 text-white': isSelected,
+          'bg-gray-400 text-white shadow': isSelected,
         },
       )}
       title={text}

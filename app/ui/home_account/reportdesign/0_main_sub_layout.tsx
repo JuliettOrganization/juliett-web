@@ -9,6 +9,8 @@ import ToggleSwitchCustomSql from './3_tab3_custom-sql-toggle';
 import TextBoxSQL from './3_tab3_custom-sql';
 import MainOptionsForm from './3_tab0_main_options';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 
 const CreateFormLayout: React.FC = () => {
   const availableFields = [
@@ -48,74 +50,62 @@ const CreateFormLayout: React.FC = () => {
   return (
     <main className="z-20">
       <LayoutRightPurplePanel fields={fields} removeField={removeField} />
+      <div className="flex flex-col lg:mr-48 mr-44 ml-0 mt-0 h-full border-none marker:overflow-y-auto">
       <LayoutMainInfoForm />
 
-      <div className="flex flex-col mt-10 mr-48 h-full border-none marker:overflow-y-auto">
-        <div className="flex space-x-1">
-          <button
-            onClick={() => setActiveTab(0)}
-            className={`px-4 py-2 ${activeTab === 0 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white text-purple-500' : 'rounded-t-lg bg-gray-200'}`}
-          >
-            Main Options
-          </button>
-          <button
-            onClick={() => setActiveTab(1)}
-            className={`px-4 py-2 ${activeTab === 1 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white text-purple-500' : 'rounded-t-lg bg-gray-200'}`}
-          >
-            Field Selection
-          </button>
-          <button
-            onClick={() => setActiveTab(2)}
-            className={`px-4 py-2 ${activeTab === 2 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white text-purple-500' : 'rounded-t-lg bg-gray-200'}`}
-          >
-            Filters
-          </button>
-          <button
-            onClick={() => setActiveTab(3)}
-            className={`px-4 py-2 ${activeTab === 3 ? 'rounded-t-lg border-b-4 border-purple-500 bg-white text-purple-500' : 'rounded-t-lg bg-gray-200'}`}
-          >
-             Custom Filters
-          </button>
-        </div>
-
-        <div className="bg-white rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-lg overflow-y-auto">
+      
+        <Tabs defaultValue="main-options" className="w-full">
+          <TabsList>
+        <TabsTrigger value="main-options" onClick={() => setActiveTab(0)}>Main Options</TabsTrigger>
+        <TabsTrigger value="field-selection" onClick={() => setActiveTab(1)}>Field Selection</TabsTrigger>
+        <TabsTrigger value="filters" onClick={() => setActiveTab(2)}>Filters</TabsTrigger>
+        <TabsTrigger value="custom-filters" onClick={() => setActiveTab(3)}>Custom Filters</TabsTrigger>
+          </TabsList>
+          <TabsContent value="main-options">
         {activeTab === 0 && (
-            <div className="flex flex-col w-full p-6 bg-white rounded space-y-4">
-             
-                <MainOptionsForm />
-           
+          <div className="p-4 bg-white rounded-lg">
+            <MainOptionsForm />
+          </div>
+        )}
+          </TabsContent>
+          <TabsContent value="field-selection">
+        {activeTab === 1 && (
+          <div className="p-4 bg-white rounded-lg shadow-md">
+            <div className="bg-white rounded-lg">
+          <div className="flex flex-row rounded-md p-4 justify-start text-xl font-bold space-x-6">Field Selection</div>
+          <div className="relative pr-6 pl-6 flex flex-1 flex-shrink-0">
+            <input
+              type="text"
+              placeholder="Click on fields below to include them on the report Group By. Type here to search fields..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+            />
+            <MagnifyingGlassIcon className="absolute left-8 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+          </div>
+          <FieldButtons addTag={addTag} fields={filteredFields} selectedFields={fields} />
             </div>
-          )}
-         
-          {activeTab === 1 && (
-            <div>
-              <div className="relative p-4 flex flex-1 flex-shrink-0">
-                <input
-                  type="text"
-                  placeholder="Click on fields below to include them on the report Group By. Type here to search fields..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                />
-                <MagnifyingGlassIcon className="absolute left-8 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-              </div>
-              <FieldButtons addTag={addTag} fields={filteredFields} selectedFields={fields}/>
+          </div>
+        )}
+          </TabsContent>
+          <TabsContent value="filters">
+        {activeTab === 2 && (
+          <div className="p-4 bg-white rounded-lg shadow-md">
+            <FilterForm />
+          </div>
+        )}
+          </TabsContent>
+          <TabsContent value="custom-filters">
+        {activeTab === 3 && (
+          <div className="p-4 bg-white rounded-lg shadow-md">
+            <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4">
+          <ToggleSwitchCustomSql />
             </div>
-          )}
-          {activeTab === 2 && (
-            <div className="w-full bg-white rounded-tr-lg rounded-br-lg rounded-bl-lg">
-              <FilterForm />
-            </div>
-          )}
-          {activeTab === 3 && (
-            <div className="flex flex-col w-full p-6 bg-white rounded space-y-4">
-              <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4">
-                <ToggleSwitchCustomSql />
-              </div>
-              <TextBoxSQL />
-            </div>
-          )}
-        </div>
+            <TextBoxSQL />
+          </div>
+        )}
+          </TabsContent>
+        </Tabs>
       </div>
     </main>
   );
