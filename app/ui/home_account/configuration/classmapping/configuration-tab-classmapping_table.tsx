@@ -1,4 +1,6 @@
+'use client';
 import React, { useState } from 'react';
+
 
 const rbds = [
   '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
@@ -27,24 +29,24 @@ const ClassMappingTable: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-md bg-purple-200 p-2 h-[50vh] w-full">
-      <div className="flex flex-row items-center rounded-md bg-purple-200 p-2 w-full space-x-8 justify-start">
+    <div className="flex flex-col shadow border border-gray-200 items-center justify-center rounded-md p-2 h-[50vh] w-full">
+      <div className="flex flex-row items-center rounded-md p-2 w-full space-x-8 justify-end">
         <button 
-          className="mb-4 px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-purple-600"
+          className="mb-4 w-36 px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-600"
         >
           Cancel
         </button>
         <button 
           onClick={handleSave} 
-          className="mb-4 px-4 py-2 bg-black text-white rounded-full hover:bg-purple-600"
+          className="mb-4 w-36 px-4 py-2 bg-black text-white rounded-full hover:bg-blue-600"
         >
           Save
         </button>
       </div>
-      <div className="rounded-md bg-white border w-full h-full p-4 overflow-hidden">
+      <div className="rounded-md bg-white w-full h-full p-2 overflow-hidden">
         <div className="overflow-auto h-full">
-          <table className="min-w-full bg-white relative">
-            <thead className="bg-purple-500 text-white sticky top-0 z-10">
+          <table className="min-w-full bg-white rounded-lg relative">
+            <thead className="bg-gray-500 rounded-lg text-white sticky top-0 z-10">
               <tr>
                 <th className="py-2 px-4 border-b w-[10%]">RBD</th>
                 <th className="py-2 px-4 border-b w-[22.5%]">Economy</th>
@@ -65,7 +67,7 @@ const ClassMappingTable: React.FC = () => {
                         value={classType}
                         checked={selectedClass[rbd] === classType}
                         onChange={() => handleRadioChange(rbd, classType)}
-                        className="cursor-pointer text-purple-500"
+                        className="cursor-pointer text-blue-500"
                       />
                     </td>
                   ))}

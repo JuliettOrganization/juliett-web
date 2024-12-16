@@ -1,4 +1,3 @@
-import ConfigurationLayout from '@/app/ui/home_account/configuration/configuration_main'
 
 
 export default async function Page() { 
@@ -11,7 +10,7 @@ export default async function Page() {
         </div> 
         <div className='md:text-base'>
         <div >
-        <ConfigurationLayout />
+
    </div> 
 
       </div>
