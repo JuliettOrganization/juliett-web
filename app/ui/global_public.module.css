@@ -44,7 +44,7 @@ color: white; }
   flex: 2;
   background-color: rgb(4, 4, 4,0);
   font-size: 3.5rem;
-  color: white; 
+  color: gray-500; 
 }
 
 .rightPanel {

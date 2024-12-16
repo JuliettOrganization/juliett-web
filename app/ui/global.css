@@ -40,10 +40,10 @@ input[type='number']::-webkit-outer-spin-button {
 
 
 .topbar_uliett_font { 
-    @apply text-2xl text-white md:text-3xl md:leading-normal hover:text-green-500; }
+    @apply text-2xl text-white md:text-3xl md:leading-normal hover:text-gray-300; }
    
 .topbar_j_font { 
-      @apply text-3xl text-white font-bold md:text-5xl md:leading-normal hover:text-green-500; }
+      @apply text-3xl text-white font-bold md:text-5xl md:leading-normal hover:text-gray-300; }
 
 .topbar_nav_font { 
     @apply  text-white md:leading-normal; }

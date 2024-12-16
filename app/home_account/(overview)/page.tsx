@@ -15,11 +15,11 @@ export default async function Page() {
             <div className="h-10"></div>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-left">
+            <div className="flex w-[70vw]">
             <Suspense fallback={<CardsSkeleton />}>
               <CardWrapper />
             </Suspense>
-          </div>
+            </div>
           <div className="h-10"></div>
         </div>
       </div>

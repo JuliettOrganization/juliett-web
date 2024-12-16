@@ -10,10 +10,10 @@ export default function Page() {
       
       <div className="topbar_flex">
       <div className="flex flex-row items-center"> 
-<div> 
-  <p className="topbar_j_font"> J </p> </div>
+{/* <div> 
+  <p className="topbar_j_font"> J </p> </div> */}
   <div> 
-  <p className="topbar_uliett_font"> ULIETT </p> </div></div>
+  <p className="topbar_uliett_font"> JULIETT </p> </div></div>
       </div>
       <VerticalFlexLayout />
       <div className="fixed bottom-0 left-0 w-full h-30 flex items-center bg-black p-4"
