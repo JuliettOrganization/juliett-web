@@ -12,7 +12,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuAction
+
 
 } from "@/components/ui/sidebar"
 
@@ -41,6 +41,7 @@ const items = [
 
 ]
 
+
 export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" >
@@ -60,6 +61,7 @@ export function AppSidebar() {
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
+
                   {/* <SidebarMenuAction className="peer-data-[active=true]/menu-button:opacity-100" /> */}
                 </SidebarMenuItem>
               ))}
