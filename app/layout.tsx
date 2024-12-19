@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'JULIETT',
   description: 'The official JULIETT WEBSITE',
-  metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
+  // metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
 import '@/app/ui/global.css';

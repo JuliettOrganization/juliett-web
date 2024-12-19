@@ -1,10 +1,10 @@
 'use client';
 import ClassMappingSelection from '@/app/ui/home_account/configuration/classmapping/configuration-tab-classmapping_selection'; // Updated import
 import ClassMappingTable from '@/app/ui/home_account/configuration/classmapping/configuration-tab-classmapping_table'; // Updated import
-
+import '@/app/ui/global_public.module.css'; // Updated import
 export default function Page() { 
     return (
-      <main>
+      <main >
        <div className="rounded-xl border-none p-2 ml-2 w-full"> 
         <div className='space-y-2 ml-8 w-full' >
         <div className='mb-4 text-xl md:text-4xl w-full'>

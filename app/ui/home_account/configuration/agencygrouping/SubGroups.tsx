@@ -59,11 +59,11 @@ const SubGroups: React.FC<SubGroupsProps> = ({
       </ul>
       {selectedGroup && selectedGroup !== 'Not Allocated' && (
         <button
-          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded flex items-center justify-center md:w-auto w-10"
-          onClick={() => setIsSubGroupDialogOpen(true)}
-        >
-          <span className="hidden md:inline">Add Subgroup</span>{' '}
-          <PlusIcon className="h-5 md:ml-4"/>
+            className="mt-4 flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                onClick={() => setIsSubGroupDialogOpen(true)}
+              >
+                <span className="hidden md:block">Add SubGroup</span>{' '}
+                <PlusIcon className="h-5 md:ml-4"/>
         </button>
       )}
     </div>

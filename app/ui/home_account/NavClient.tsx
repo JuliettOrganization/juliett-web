@@ -29,7 +29,7 @@ export default function NavClient() {
       </div>
 
       {isMenuOpen && (
-        <div className="absolute top-20 left-0 w-full bg-black text-white flex flex-col items-center space-y-4 py-4 xl:hidden">
+        <div className="fixed w-full left-0 ml-0 right-0 top-20 bg-black text-white space-y-4 py-4 xl:hidden">
           <NavLinks />
         </div>
       )}

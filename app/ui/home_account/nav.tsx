@@ -6,7 +6,7 @@ import NavClient from './NavClient';
 
 export default function Nav() {
   return (
-    <div className="topbar_flex space-x-24 justify-between items-center h-20 px-4 bg-black text-white">
+    <div className="topbar_flex xl:space-x-24 justify-between items-center h-20 px-4 bg-black text-white">
       <Link href="/home_user">
         <div className="flex flex-row items-center">
           {/* <div>

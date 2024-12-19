@@ -2,26 +2,24 @@
 'use client';
 import React, { useState } from 'react';
 import SubGroups from '@/app/ui/home_account/configuration/agencygrouping/SubGroups';
+import AgencyGroups from '@/app/ui/home_account/configuration/agencygrouping/AgencyGroups';
 import AgencyCodes from '@/app/ui/home_account/configuration/agencygrouping/AgencyCodes';
 import AddGroupDialog from '@/app/ui/home_account/configuration/agencygrouping/AddGroupDialog';
 import AddSubGroupDialog from '@/app/ui/home_account/configuration/agencygrouping/AddSubGroupDialog';
 import DeleteConfirmationDialog from '@/app/ui/home_account/configuration/agencygrouping/DeleteConfirmationDialog';
-import PopupNotification from '@/app/ui/home_account/configuration/agencygrouping/PopupNotification';
+import PopupNotification from '@/app/ui/PopupNotification';
 import { initialAgencyCodes } from '@/app/api/configuration/accountGrouping/initialAgencyCode/route';
 import { groups } from '@/app/api/configuration/accountGrouping/groups/route';
 import { subGroups } from '@/app/api/configuration/accountGrouping/subGroups/route';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import '@/app/ui/global_public.module.css';
+import { initialAgencyCodesWithAssignments } from '@/app/api/configuration/accountGrouping/initialAgencyCodesWithAssignments/route';
 
 export default function AgencyGroupingPage() {
   const [agencyGroups, setAgencyGroups] = useState(groups);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const [subGroupsState, setSubGroupsState] = useState<{ [key: string]: string[] }>(subGroups);
   const [selectedSubGroup, setSelectedSubGroup] = useState<string | null>(null);
-  const [agencyCodes, setAgencyCodes] = useState<{ [key: string]: { [key: string]: string } }>({
-    'Group 1': { ...initialAgencyCodes },
-    'Group 2': { ...initialAgencyCodes },
-    'Group 3': { ...initialAgencyCodes },
-  });
+  const [agencyCodes, setAgencyCodes] = useState<{ [key: string]: { [key: string]: string } }>(initialAgencyCodesWithAssignments);
   const [searchQuery, setSearchQuery] = useState('');
   const [isGroupDialogOpen, setIsGroupDialogOpen] = useState(false);
   const [isSubGroupDialogOpen, setIsSubGroupDialogOpen] = useState(false);
@@ -138,66 +136,46 @@ export default function AgencyGroupingPage() {
     }
   };
 
+  // <div className="w-full">
+  // <div className="flex w-full items-center justify-between">
+  //   <h1 className='mb-4 text-xl md:text-4xl'>Report List</h1>
+  // </div>
+
   return (
-    <main className="p-10 w-[80vw]">
+    <div className="w-full"> 
+    <div className="w-full p-8 justify-between">
       <PopupNotification message={popupMessage} />
-      <div className="flex flex-row space-x-4 mb-4 items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold mb-8">AGENCY GROUPING</h1>
+      <div>
+          <h1 className="mb-4 text-4xl">Agency Grouping</h1>
         </div>
+      <div className="flex flex-row space-x-4 mb-4 items-center justify-end">
+      
         <div className="flex flex-row space-x-4">
           <button
-            className="flex h-10 w-36 bg-black text-white items-center justify-center rounded-full"
-            onClick={handleSave}
+        className="flex h-10 w-36 bg-black text-white items-center justify-center rounded-full"
+        onClick={handleSave}
           >
-            Save
+        Save
           </button>
           <button
-            className="flex h-10 w-36 items-center justify-center rounded-full bg-gray-100 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-            onClick={handleCancel}
+        className="flex h-10 w-36 items-center justify-center rounded-full bg-gray-100 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+        onClick={handleCancel}
           >
-            Cancel
+        Cancel
           </button>
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-8 w-full">
         {/* Agency Groups */}
-        <div className="bg-white p-4 rounded-lg shadow-md flex-1">
-          <h2 className="text-2xl font-semibold mb-4">Agency Groups</h2>
-          <ul className="space-y-2">
-            {agencyGroups.map((group) => (
-              <li
-                key={group}
-                className={`p-2 rounded cursor-pointer flex items-center justify-between ${
-                  selectedGroup === group ? 'bg-gray-600 text-white' : 'bg-gray-100'
-                }`}
-                onClick={() => {
-                  setSelectedGroup(group);
-                  setSelectedSubGroup(null);
-                }}
-              >
-                {group}
-                <button
-                  className="ml-2 text-white bg-black rounded-full flex items-center justify-center w-5 h-5 p-1 hover:bg-gray-500"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeleteItem({ type: 'group', name: group });
-                    setIsDeleteDialogOpen(true);
-                  }}
-                >
-                  <XMarkIcon className="h-4 w-4" />
-                </button>
-              </li>
-            ))}
-          </ul>
-          <button
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded flex items-center justify-center md:w-auto w-10"
-            onClick={() => setIsGroupDialogOpen(true)}
-          >
-            <span className="hidden md:inline">Add Group</span>
-            <span className="md:hidden">+</span>
-          </button>
-        </div>
+        <AgencyGroups
+          agencyGroups={agencyGroups}
+          selectedGroup={selectedGroup}
+          setSelectedGroup={setSelectedGroup}
+          setSelectedSubGroup={setSelectedSubGroup}
+          setDeleteItem={setDeleteItem}
+          setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+          setIsGroupDialogOpen={setIsGroupDialogOpen}
+        />
 
         {/* Subgroups */}
         <SubGroups
@@ -242,6 +220,7 @@ export default function AgencyGroupingPage() {
         setIsOpen={setIsDeleteDialogOpen}
         confirmDelete={confirmDelete}
       />
-    </main>
+        </div>
+        </div>
   );
 }

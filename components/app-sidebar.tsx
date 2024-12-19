@@ -1,5 +1,6 @@
 'user client';
 import { Building2, Network, Plane, Route } from "lucide-react"
+import { useSidebar } from "@/components/ui/sidebar"
 // import { Globe, Send, Building2, Route } from "lucide-react"
 
 import {
@@ -12,8 +13,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-
-
+  
 } from "@/components/ui/sidebar"
 
 // Menu items.
@@ -43,10 +43,25 @@ const items = [
 
 
 export function AppSidebar() {
+  const {
+    state,
+    open,
+    setOpen,
+    openMobile,
+    setOpenMobile,
+    isMobile,
+    toggleSidebar,
+  } = useSidebar()
+
+
+
+
   return (
-    <Sidebar collapsible="icon" >
-        <SidebarHeader>_____</SidebarHeader>
-        <SidebarHeader>_____</SidebarHeader>
+    <Sidebar collapsible="icon">
+      
+        <SidebarHeader><p className="text-transparent">______</p></SidebarHeader>
+        <SidebarHeader><p className="text-transparent">______</p></SidebarHeader>
+        
         {/* <SidebarHeader></SidebarHeader> */}
       <SidebarContent>
         <SidebarGroup>
