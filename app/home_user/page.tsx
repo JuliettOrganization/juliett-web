@@ -2,9 +2,6 @@ import { Suspense } from 'react';
 import { CardsSkeleton } from '@/app/ui/skeletons';
 import CardWrapper from '@/app/ui/home_user/cards';
 import {auth} from '@/auth';
-
-
-
  
 export default async function Page() {
  const session = await auth();

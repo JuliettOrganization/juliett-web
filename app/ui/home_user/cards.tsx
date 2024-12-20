@@ -1,6 +1,9 @@
+'use client';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
+import { useState, useEffect } from 'react';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
 
 // Import images directly
 import image1 from '@/public/accounts/image3.jpg';
@@ -30,7 +33,10 @@ export default function CardWrapper() {
     // Add more cards as needed
   ];
 
+  
+
   return (
+
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[80vw]">
       {cards.map((card, index) => (
         <Card key={index} {...card} />
@@ -53,9 +59,21 @@ export function Card({
   image: StaticImageData;
 }) {
   const Icon = iconMap[type];
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setLoading(false); // Stop loading when the component mounts or updates
+  }, []);
+
+  const handleClick = () => {
+    setLoading(true);
+  };
   return (
-    <Link href={path} className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <>
+      {loading && <LoadingSpinner />}
+    <Link href={path} className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+    onClick={handleClick}
+    >
       <Image src={image} alt={title} width={400} height={200} className="w-full h-48 object-cover" />
       <div className="p-4 border-b">
         <div className="flex items-center space-x-2">
@@ -72,5 +90,6 @@ export function Card({
         </div>
       </div>
     </Link>
+    </>
   );
 }

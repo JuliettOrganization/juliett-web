@@ -5,15 +5,18 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import profile from '@/public/profile.jpg'; // Ensure the image path is correct
 import Link from 'next/link';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
+import { usePathname } from 'next/navigation';
 
 const NavHomeUserClient = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
   const handleClickOutside = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setIsMenuOpen(false);
@@ -21,13 +24,19 @@ const NavHomeUserClient = () => {
   };
 
   useEffect(() => {
+    setLoading(false); // Stop loading when the component mounts or updates
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [pathname]);
+
+  const handleClick = () => {
+    setLoading(true);
+  };
 
   const handleSignOut = async () => {
+    setLoading(true);
     try {
       const response = await fetch('/api/signOut', { method: 'POST' });
       if (response.ok) {
@@ -44,6 +53,8 @@ const NavHomeUserClient = () => {
     }
   };
 return (
+  <>
+      {loading && <LoadingSpinner />}
   <div className="flex justify-end relative">
       <button
         className="flex items-center gap-2 p-4 text-l font-medium text-white hover:text-gray-300"
@@ -70,27 +81,29 @@ return (
           ref={menuRef}
           className="absolute text-black z-50 mt-20 mr-14 w-48 bg-white shadow-lg rounded-lg"
         >
-          <ul>
+      
+      <ul>
+        <li className="px-4 py-2 hover:bg-gray-100 hover:rounded-t-lg cursor-pointer">
+          <Link href="/home_user/profile" onClick={handleClick}>Profile</Link>
+        </li>
+        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+          <Link href="/home_user/documentation" onClick={handleClick}>Documentation</Link>
+        </li>
+        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+          <Link href="/home_user/support" onClick={handleClick}>Support</Link>
+        </li>
+        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+          <Link href="/home_user/admin" onClick={handleClick}>Admin (admin users only)</Link>
+        </li>
+        <li className="px-4 py-2 hover:bg-red-100 hover:rounded-b-lg cursor-pointer">
+          <button type="button" onClick={handleSignOut}>Sign out</button>
+        </li>
+      </ul>
   
-            <li className="px-4 py-2 hover:bg-gray-100 hover:rounded-t-lg cursor-pointer">
-              <Link href="/home_user/profile">Profile</Link>  
-            </li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-              <Link href="/home_user/documentation">Documentation</Link>
-            </li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-              <Link href="/home_user/support">Support</Link>
-            </li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-              <Link href="/home_user/admin">Admin (admin users only)</Link>
-            </li>
-            <li className="px-4 py-2 hover:bg-red-100 hover:rounded-b-lg cursor-pointer">
-              <button type="button" onClick={handleSignOut}>Sign out</button>
-            </li>
-          </ul>
         </div>
       )}
     </div>
+      </>
   );
 };
 

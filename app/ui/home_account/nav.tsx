@@ -1,24 +1,40 @@
+'use client';
 import Link from 'next/link';
-import { PowerIcon } from '@heroicons/react/24/outline';
-import { signOut } from '@/auth';
+// import { PowerIcon } from '@heroicons/react/24/outline';
+// import { signOut } from '@/auth';
 import NavHomeUserClient from '../NavHomeUserClient';
+import { useState, useEffect } from 'react';
 import NavClient from './NavClient';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
 
 export default function Nav() {
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(false); // Stop loading when the component mounts or updates
+  }, []);
+
+  const handleClick = () => {
+    setLoading(true);
+  };
   return (
-    <div className="topbar_flex xl:space-x-24 justify-between items-center h-20 px-4 bg-black text-white">
+    <div className="topbar_flex justify-between items-center h-20 px-4 bg-black text-white">
+     <>
+      {loading && <LoadingSpinner />}
       <Link href="/home_user">
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center" onClick={handleClick}>
           {/* <div>
             <p className="topbar_j_font">J</p>
           </div>*/}
-          <div> 
+          <div>
             <p className="topbar_uliett_font">JULIETT</p>
           </div>
         </div>
       </Link>
+    </>
 
-      <NavClient />
+    <div className="flex-grow flex justify-center">
+        <NavClient />
+      </div>
 
       <div className="flex items-center space-x-4">
         <NavHomeUserClient />

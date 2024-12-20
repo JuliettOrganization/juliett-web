@@ -6,7 +6,7 @@ export async function POST(request: Request) {
 
   try {
     const accountDetails = await sql`
-      SELECT accountid, accountname, billing, file as selectedfile, currencies as selectedcurrencies, datasources
+      SELECT accountid, accountname, billing, file as selectedfile, currencies as selectedcurrencies, datasources, users
       FROM public.accounts
       WHERE accountid = ${id}
     `;
@@ -23,6 +23,7 @@ export async function POST(request: Request) {
         selectedfile: account.selectedfile,
         selectedcurrencies: account.selectedcurrencies,
         datasources: account.datasources,
+        users: account.users
       });
     } else {
       return NextResponse.json({ error: 'Account not found' }, { status: 404 });

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
@@ -32,11 +41,11 @@ input[type='number']::-webkit-outer-spin-button {
   display: flex; 
   align-items: center; 
   padding: 1rem; /* Tailwind CSS p-4 means 1rem */ 
-  background-color: rgba(0, 0, 0,0.8) ; }
+  background-color: rgba(0, 0, 0,1) ; }
 
   .topbar_backgroundColor
   { 
-    background-color: rgba(0, 0, 0,0.8); }
+    background-color: rgba(0, 0, 0,1); }
 
 
 .topbar_uliett_font { 

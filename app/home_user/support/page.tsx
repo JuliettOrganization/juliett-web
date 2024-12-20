@@ -6,9 +6,9 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 export default function SupportPage() {
   return (
-    <main className="fixed top-20 left-0 h-full w-full z-auto items-center justify-center min-h-screen bg-gray-100 bg-cover bg-center" style={{ backgroundImage: "url('/login_background.png')" }}>
-      <div className="flex w-64 left-0 m-4 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-purple-200 z-10">
-    <Link href="/home_user" className="flex items-center space-x-2 text-purple-600">
+    <main className="fixed top-20 left-0 h-full w-full z-auto items-center justify-center min-h-screen bg-gray-100 bg-cover bg-center" style={{ backgroundImage: "url('/accounts/image2.jpg')" }}>
+      <div className="flex w-64 left-0 m-4 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-gray-300 z-10">
+    <Link href="/home_user" className="flex items-center space-x-2 text-black-600">
     
       <ArrowLeftIcon className="w-6 h-6" />
       <span className="text-xl"> | </span>

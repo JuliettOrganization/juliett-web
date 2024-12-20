@@ -5,17 +5,17 @@ import CardWrapper from '@/app/ui/home_account/cards';
 export default async function Page() {
   return (
     <main >
-      <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8  bg-gray-300">
-        <div className="rounded-xl p-10 shadow-sm">
+      <div className="w-full h-full p-4 sm:p-6 lg:p-8 justify-center bg-gray-300">
+        <div className="p-10">
           <div className="space-y-1">
-            <div className="mb-4 text-xl md:text-4xl">HOME</div>
+            <div className="mb-4 text-4xl">ACCOUNT HOME</div>
             <div className="mb-4 text-gray-500 text-sm md:text-base">
               Welcome. What are you up to today?
             </div>
             <div className="h-10"></div>
           </div>
 
-            <div className="flex w-[70vw]">
+            <div className="flex w-full">
             <Suspense fallback={<CardsSkeleton />}>
               <CardWrapper />
             </Suspense>

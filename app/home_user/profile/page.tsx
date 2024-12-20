@@ -2,16 +2,19 @@
 
 import { useState } from 'react';
 import Image, { StaticImageData } from 'next/image'; 
-import profile from '@/public/profile.png';
+import profile from '@/public/profile.jpg';
 import Link from 'next/link';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import PopupNotification from '@/app/ui/PopupNotification';
+
 
 export default function ProfilePage() {
-  const [name, setName] = useState('John Dutton');
-  const [email] = useState('john.dutton@example.com'); // Removed setEmail since we won't be changing this
+  const [name, setName] = useState('Jane Dutton');
+  const [email] = useState('jane.dutton@example.com'); // Removed setEmail since we won't be changing this
   const [country, setCountry] = useState('United States');
   const [language, setLanguage] = useState('English');
   const [profilePic, setProfilePic] = useState<string | StaticImageData>(profile);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -25,17 +28,24 @@ export default function ProfilePage() {
     }
   };
 
+  const handleSave = () => {
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 3000); // Hide the popup after 3 seconds
+  };
+
   return (
     <main>
-         <div className="flex w-64 left-0 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-purple-200 z-10">
-    <Link href="/home_user" className="flex items-center space-x-2 text-purple-600">
+         <div className="flex w-64 left-0 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-gray-300 z-10">
+    <Link href="/home_user" className="flex items-center space-x-2 text-black">
     
       <ArrowLeftIcon className="w-6 h-6" />
       <span className="text-xl"> | </span>
       <span>Back to Home Page</span>
     </Link>
     </div>
-      <div className="max-w-4xl mx-auto mt-20 p-10 rounded-xl bg-gray-50 shadow-sm">
+      <div className="max-w-4xl mx-auto mt-16 p-10 rounded-xl bg-gray-50 shadow-sm">
    
         <div className="text-center">
           <div className="relative w-64 h-64 mx-auto">
@@ -99,12 +109,15 @@ export default function ProfilePage() {
               </div>
               <div className="mt-6">
                 <button
+                onClick={handleSave}
                   type="submit"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                  className="w-full inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                 >
                   Save Changes
                 </button>
               </div>
+              <PopupNotification message={showPopup ? "Profile saved successfully!" : null} />
+
             </div>
           </form>
         </div>

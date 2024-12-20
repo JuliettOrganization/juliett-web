@@ -1,6 +1,8 @@
+'use client';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-
+import { useState, useEffect } from 'react';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
 const iconMap = {
   basic: ArrowRightCircleIcon
 };
@@ -38,8 +40,21 @@ export function CardComponent({
 }) {
   const Icon = iconMap[type];
 
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(false); // Stop loading when the component mounts or updates
+  }, []);
+
+  const handleClick = () => {
+    setLoading(true);
+  };
+
   return (
-    <Link href={path} className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <>
+    {loading && <LoadingSpinner />}
+    <Link href={path} className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+    onClick={handleClick}>
       <div className="p-4 border-b">
         <div className="flex items-center space-x-2">
           <Icon className="w-8 h-8 text-gray-500" />
@@ -55,5 +70,6 @@ export function CardComponent({
         </div>
       </div>
     </Link>
+     </>
   );
 }

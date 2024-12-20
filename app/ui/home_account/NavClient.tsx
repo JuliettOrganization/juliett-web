@@ -13,7 +13,7 @@ export default function NavClient() {
 
   return (
     <>
-      <div className="flex justify-start xl:flex-grow">
+      <div className="flex justify-center xl:flex-grow">
         <div className="hidden xl:flex">
           <NavLinks />
         </div>

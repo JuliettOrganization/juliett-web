@@ -32,7 +32,7 @@ const AgencyCodes: React.FC<AgencyCodesProps> = ({
   const uniqueNotAllocatedCodes = Array.from(new Set(getNotAllocatedCodes()));
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md flex-1">
+    <div className="bg-white p-4 rounded-t-lg shadow-md flex-1">
       <h2 className="text-2xl font-semibold mb-4">Agency Codes</h2>
       <input
         type="text"

@@ -5,7 +5,7 @@ import VerticalFlexLayout from '@/app/VerticalFlexLayout';
 export default function Page() {
   
   return (
-    <main  className={styles.backgrounds}>   {/* This is the backround picture */}
+    <main className="fixed top-0 left-0 h-full w-full z-auto items-center justify-center min-h-screen bg-gray-100 bg-cover bg-center" style={{ backgroundImage: "url('/accounts/image2.jpg')" }}>
   
       
       <div className="topbar_flex">
@@ -17,7 +17,7 @@ export default function Page() {
       </div>
       <VerticalFlexLayout />
       <div className="fixed bottom-0 left-0 w-full h-30 flex items-center bg-black p-4"
-      style={{ backgroundColor: 'rgba(0, 0, 0,0.8)' }}>
+      style={{ backgroundColor: 'rgba(0, 0, 0,1)' }}>
   <p className="text-m text-white md:text-m bg-white-500 md:leading-normal "
   
   > © Copyright 2025 JULIETT

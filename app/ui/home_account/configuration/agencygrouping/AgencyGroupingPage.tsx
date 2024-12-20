@@ -1,6 +1,5 @@
-
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SubGroups from '@/app/ui/home_account/configuration/agencygrouping/SubGroups';
 import AgencyGroups from '@/app/ui/home_account/configuration/agencygrouping/AgencyGroups';
 import AgencyCodes from '@/app/ui/home_account/configuration/agencygrouping/AgencyCodes';
@@ -8,18 +7,19 @@ import AddGroupDialog from '@/app/ui/home_account/configuration/agencygrouping/A
 import AddSubGroupDialog from '@/app/ui/home_account/configuration/agencygrouping/AddSubGroupDialog';
 import DeleteConfirmationDialog from '@/app/ui/home_account/configuration/agencygrouping/DeleteConfirmationDialog';
 import PopupNotification from '@/app/ui/PopupNotification';
-import { initialAgencyCodes } from '@/app/api/configuration/accountGrouping/initialAgencyCode/route';
-import { groups } from '@/app/api/configuration/accountGrouping/groups/route';
-import { subGroups } from '@/app/api/configuration/accountGrouping/subGroups/route';
 import '@/app/ui/global_public.module.css';
-import { initialAgencyCodesWithAssignments } from '@/app/api/configuration/accountGrouping/initialAgencyCodesWithAssignments/route';
 
+const LoadingSpinner = () => (
+  <div className="w-full flex justify-center items-center h-screen">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-6 border-b-6 border-black"></div>
+  </div>
+);
 export default function AgencyGroupingPage() {
-  const [agencyGroups, setAgencyGroups] = useState(groups);
+  const [agencyGroups, setAgencyGroups] = useState<string[]>([]);
+  const [subGroupsState, setSubGroupsState] = useState<{ [key: string]: string[] }>({});
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
-  const [subGroupsState, setSubGroupsState] = useState<{ [key: string]: string[] }>(subGroups);
   const [selectedSubGroup, setSelectedSubGroup] = useState<string | null>(null);
-  const [agencyCodes, setAgencyCodes] = useState<{ [key: string]: { [key: string]: string } }>(initialAgencyCodesWithAssignments);
+  const [agencyCodes, setAgencyCodes] = useState<{ [key: string]: { [key: string]: string } }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [isGroupDialogOpen, setIsGroupDialogOpen] = useState(false);
   const [isSubGroupDialogOpen, setIsSubGroupDialogOpen] = useState(false);
@@ -28,21 +28,53 @@ export default function AgencyGroupingPage() {
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deleteItem, setDeleteItem] = useState<{ type: 'group' | 'subgroup'; name: string } | null>(null);
+  const [initialAgencyCodes, setinitialAgencyCodes] = useState<{ [key: string]: string }>({});
+  const [loading, setLoading] = useState(true);
 
-  const handleAddGroup = () => {
-    if (newGroupName) {
-      setAgencyGroups([...agencyGroups, newGroupName]);
-      setSubGroupsState({ ...subGroupsState, [newGroupName]: [] });
-      setAgencyCodes({
-        ...agencyCodes,
-        [newGroupName]: { ...initialAgencyCodes },
-      });
-      setNewGroupName('');
-      setIsGroupDialogOpen(false);
-      setPopupMessage('Group added successfully!');
-      setTimeout(() => setPopupMessage(null), 3000);
-    }
-  };
+  useEffect(() => {
+    // Fetch groups from the API
+    fetch('/api/configuration/agencyGrouping/groups')
+      .then((response) => response.json())
+      .then((data) => setAgencyGroups(data))
+      .catch((error) => console.error('Error fetching groups:', error))
+     
+
+    // Fetch subGroups from the API
+    fetch('/api/configuration/agencyGrouping/subGroups')
+      .then((response) => response.json())
+      .then((data) => setSubGroupsState(data))
+      .catch((error) => console.error('Error fetching subGroups:', error))
+      
+
+        // Fetch initialAgencyCodesWithAssignments from the API
+        fetch('/api/configuration/agencyGrouping/initialAgencyCodesWithAssignments')
+        .then((response) => response.json())
+        .then((data) => setAgencyCodes(data))
+        .catch((error) => console.error('Error fetching initialAgencyCodesWithAssignments:', error))
+        
+
+      // Fetch initialAgencyCodes from the API
+    fetch('/api/configuration/agencyGrouping/initialAgencyCodes')
+    .then((response) => response.json())
+    .then((data) => setinitialAgencyCodes(data))
+    .catch((error) => console.error('Error fetching initialAgencyCodes:', error))
+    .finally(() => setLoading(false));
+}, []);
+
+const handleAddGroup = () => {
+  if (newGroupName) {
+    setAgencyGroups([...agencyGroups, newGroupName]);
+    setSubGroupsState({ ...subGroupsState, [newGroupName]: [] });
+    setAgencyCodes({
+      ...agencyCodes,
+      [newGroupName]: { ...initialAgencyCodes },
+    });
+    setNewGroupName('');
+    setIsGroupDialogOpen(false);
+    setPopupMessage('Group added successfully!');
+    setTimeout(() => setPopupMessage(null), 3000);
+  }
+};
 
   const handleDeleteGroup = (group: string) => {
     setAgencyGroups(agencyGroups.filter((g) => g !== group));
@@ -136,10 +168,9 @@ export default function AgencyGroupingPage() {
     }
   };
 
-  // <div className="w-full">
-  // <div className="flex w-full items-center justify-between">
-  //   <h1 className='mb-4 text-xl md:text-4xl'>Report List</h1>
-  // </div>
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="w-full"> 

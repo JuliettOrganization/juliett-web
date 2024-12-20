@@ -3,7 +3,8 @@
   background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */  
 
 .backgrounds {
-  background-image: url('/login_background.png'); 
+  /* background-image: url('/login_background.png');  */
+  background-image: url('/accounts/image2.jpg'); 
   background-size: cover; 
   background-position: center; 
   background-repeat: no-repeat; /* You can adjust to repeat if needed */ 
@@ -55,6 +56,35 @@ color: white; }
   font-weight: bold; /* Optional: Makes the text bold */
 }
 
+
+/* LOADING SPINNER */
+
+
+/* Dual Ring Spinner
+.dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.dual-ring:after {
+  content: " J ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #2d16b1;
+  border-color: #ba5151  #40c7ae ;
+  animation: dual-ring-spin 1.2s linear infinite;
+}
+@keyframes dual-ring-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} */
 
 /* Popup Notification Styles */
 .popup-notification {

@@ -66,13 +66,13 @@ export default function LoginForm() {
         <Button className="mt-4 w-full" aria-disabled={isPending}>
           Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
-        <div className="flex h-5 items-center justify-center mt-4 mb-0 pt-2">
-          <a href="#" className="text-xs items-start mb-0 justify-center text-blue-600 hover:underline">
+        <div className="flex h-5 items-center justify-center mt-4 mb-2 pt-2">
+          <a href="#" className="text-xs items-start mb-4 justify-center text-blue-600 hover:underline">
             Reset password
           </a>
         </div>
         <div
-          className="flex h-2 items-end space-x-1"
+          className="flex h-2 items-end space-x-1 "
           aria-live="polite"
           aria-atomic="true"
         >
