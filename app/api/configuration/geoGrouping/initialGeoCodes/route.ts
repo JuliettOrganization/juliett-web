@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 
-export const initialGeoCodes = {
+export async function GET() {
+    try {
+
+ const initialGeoCodes = {
  'FR - France': 'Not Allocated',
   'GB - United Kingdom': 'Not Allocated',
   'DE - Germany': 'Not Allocated',
@@ -89,7 +92,9 @@ export const initialGeoCodes = {
   'EH - Western Sahara': 'Not Allocated',
  
 };
-
-export async function GET() {
-  return NextResponse.json(initialGeoCodes);
+return NextResponse.json(initialGeoCodes);
+} catch (error) {
+  console.error('Database error:', error); // Log the error to the console
+  return NextResponse.json({ error: 'Database error' }, { status: 500 });
+}
 }

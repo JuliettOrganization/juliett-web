@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 
-export const initialAirlineCodes = {
+
+export async function GET() {
+    try {
+ const initialAirlineCodes = {
   'AF - Air France': 'Not Allocated',
   'BA - British Airways': 'Not Allocated',
   'LH - Lufthansa': 'Not Allocated',
@@ -72,7 +75,9 @@ export const initialAirlineCodes = {
   'MA - Malev Hungarian Airlines': 'Not Allocated',
  
 };
-
-export async function GET() {
-  return NextResponse.json(initialAirlineCodes);
+return NextResponse.json(initialAirlineCodes);
+} catch (error) {
+  console.error('Database error:', error); // Log the error to the console
+  return NextResponse.json({ error: 'Database error' }, { status: 500 });
+}
 }
