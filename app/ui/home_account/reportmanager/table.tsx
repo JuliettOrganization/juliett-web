@@ -5,16 +5,44 @@ import ReportStatus from '@/app/ui/home_account/reportmanager/status';
 import ReportTags from '@/app/ui/home_account/reportmanager/tags';
 import { deleteReport } from '@/app/lib/actions'; // <-- Import deleteReport
 
+interface Report {
+  reportid: number;
+  reportname: string;
+  description: string;
+  date_concept: string;
+  period: string;
+  status: string;
+  tags: string;
+}
+
 interface ReportsTableClientProps {
-  reports: Array<{ reportid: string, reportname: string, status: string, description: string, date_concept: string, period: string, tags: string }>;
+  reports: Report[];
 }
 
 const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [sortedReports, setSortedReports] = useState(reports);
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Report; direction: 'ascending' | 'descending' } | null>(null);
 
-  const toggleMenu = (reportId: string) => {
-    setActiveMenu(activeMenu === reportId ? null : reportId);
+  const handleSort = (key: keyof Report) => {
+    let direction: 'ascending' | 'descending' = 'ascending';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+
+    const sorted = [...reports].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+
+    setSortedReports(sorted);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -40,12 +68,22 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
     }
   };
 
+  const getSortIcon = (key: keyof Report) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return null;
+    }
+    if (sortConfig.direction === 'ascending') {
+      return <span>&uarr;</span>; // Up arrow
+    }
+    return <span>&darr;</span>; // Down arrow
+  };
+
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
-            {reports?.map((report) => (
+            {sortedReports.map((report) => (
               <div key={report.reportid} className="mb-2 w-full rounded-md shadow p-4">
                 <div><p className="text-sm text-purple-500">{report.reportname}</p></div>
                 <div><ReportStatus status={report.status} /></div>
@@ -54,68 +92,83 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
                 <div><p className="text-sm text-purple-500">{report.period}</p></div>
                 <div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div>
                 <div className="flex justify-end gap-2 relative">
-                  <button onClick={() => toggleMenu(report.reportid)}>
+                  <button onClick={() => setActiveMenu(report.reportid.toString())}>
                     <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
                   </button>
-                  {activeMenu === report.reportid && (
-                    <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 sm:right-full sm:mr-2 sm:w-auto">
+                  {activeMenu === report.reportid.toString() && (
+                    <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 sm:right-full sm:mr-2 sm:w-auto z-50">
                       <ul>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit Report</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Run Report</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Schedule Report</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Clone Report</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid)}>Delete Report</li>
+                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Edit Report</li>
+                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Run Report</li>
+                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Schedule Report</li>
+                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Clone Report</li>
+                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Download Report</li>
+                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid.toString())}>Delete Report</li>
                       </ul>
                     </div>
                   )}
                 </div>
               </div>
-            ))}
+            ))} 
           </div>
-
-          <table className="hidden min-w-full text-gray-900 md:table">
-            <thead className="rounded-lg text-left text-sm font-normal">
-              <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Report Name</th>
-                <th scope="col" className="px-4 py-5 font-medium">Status</th>
-                <th scope="col" className="px-4 py-5 font-medium">Description</th>
-                <th scope="col" className="px-3 py-5 font-medium">Period Concept</th>
-                <th scope="col" className="px-3 py-5 font-medium">Period</th>
-                <th scope="col" className="px-3 py-5 font-medium">Tags</th>
-                <th scope="col" className="relative py-3 pl-6 pr-3"><span className="sr-only">Edit</span></th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {reports?.map((report) => (
-                <tr key={report.reportid} className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
-                  <td className="whitespace-nowrap px-4 py-3 sm:pl-6">{report.reportname}</td>
-                  <td className="whitespace-nowrap px-4 py-3"><ReportStatus status={report.status} /></td>
-                  <td className="whitespace-nowrap px-4 py-3">{report.description}</td>
-                  <td className="whitespace-nowrap px-3 py-3">{report.date_concept}</td>
-                  <td className="whitespace-nowrap px-3 py-3">{report.period}</td>
-                  <td className="whitespace-nowrap px-4 py-3"><ReportTags tags={report.tags ? report.tags.split(';') : []} /></td>
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex justify-end gap-3 relative">
-                      <button onClick={() => toggleMenu(report.reportid)}>
+          <div className="hidden md:block">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th onClick={() => handleSort('reportname')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                    Report Name {getSortIcon('reportname')}
+                  </th>
+                  <th onClick={() => handleSort('status')} className="px-4 py-5 text-xs text-left font-medium cursor-pointer tracking-wider">
+                    Status {getSortIcon('status')}
+                  </th>
+                  <th onClick={() => handleSort('description')} className="px-4 py-5 text-xs text-left font-medium cursor-pointer tracking-wider">
+                    Description {getSortIcon('description')}
+                  </th>
+                  <th onClick={() => handleSort('date_concept')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                    Date Concept {getSortIcon('date_concept')}
+                  </th>
+                  <th onClick={() => handleSort('period')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                    Period {getSortIcon('period')}
+                  </th>
+                  <th onClick={() => handleSort('tags')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                    Tags {getSortIcon('tags')}
+                  </th>
+                  <th className="relative px-6 py-3">
+                    <span className="sr-only">Actions</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {sortedReports.map((report) => (
+                  <tr key={report.reportid}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.reportname}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><ReportStatus status={report.status} /></td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.description}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.date_concept}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.period}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><ReportTags tags={report.tags ? report.tags.split(';') : []} /></td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium relative">
+                      <button onClick={() => setActiveMenu(report.reportid.toString())}>
                         <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
                       </button>
-                      {activeMenu === report.reportid && (
-                        <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 sm:right-full sm:mr-2 sm:w-auto">
+                      {activeMenu === report.reportid.toString() && (
+                        <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 sm:right-full sm:mr-2 sm:w-auto z-50">
                           <ul>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit Report</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Run Report</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Schedule Report</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Clone Report</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid)}>Delete Report</li>
+                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Edit Report</li>
+                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Run Report</li>
+                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Schedule Report</li>
+                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Clone Report</li>
+                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Download Report</li>
+                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid.toString())}>Delete Report</li>
                           </ul>
                         </div>
                       )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

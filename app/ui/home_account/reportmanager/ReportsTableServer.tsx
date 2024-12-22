@@ -1,8 +1,46 @@
-import { fetchFilteredReports } from '@/app/lib/data';
+'use client';
+import React, { useState, useEffect } from 'react';
 import ReportsTableClient from './table';
 
-export async function ReportsTableServer({ query, currentPage }: { query: string; currentPage: number }) {
-  const reports = await fetchFilteredReports(query, currentPage);
-  
-  return <ReportsTableClient reports={reports} />;
+interface ReportsTableServerProps {
+  query: string;
+  currentPage: number;
 }
+
+const ReportsTableServer: React.FC<ReportsTableServerProps> = ({ query, currentPage }) => {
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`/api/reportmanager/fetchFilteredReports?query=${encodeURIComponent(query)}&page=${currentPage}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch reports');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setReports(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching reports:', error);
+        setError(error.message);
+        setLoading(false);
+      });
+  }, [query, currentPage]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return <ReportsTableClient reports={reports} />;
+};
+
+export default ReportsTableServer;

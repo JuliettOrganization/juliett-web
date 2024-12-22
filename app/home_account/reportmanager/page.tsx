@@ -1,6 +1,6 @@
 import Pagination from '@/app/ui/home_account/reportmanager/pagination';
 import Search from '@/app/ui/search';
-import { ReportsTableServer } from '@/app/ui/home_account/reportmanager/ReportsTableServer';
+import ReportsTableServer from '@/app/ui/home_account/reportmanager/ReportsTableServer';
 import { CreateReport } from '@/app/ui/home_account/reportmanager/buttons';
 import { ReportsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense, use } from 'react';
