@@ -2,7 +2,7 @@
 import React from 'react';
 import TagInput from '@/app/ui/home_account/reportdesign/1_TagInput';
 
-export default function Form() {
+export default function ReportMainInfo() {
   return (
     <div className="p-4">
       <div className="rounded-md  border-none bg-white p-4">

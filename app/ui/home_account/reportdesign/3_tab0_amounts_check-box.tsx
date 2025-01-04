@@ -1,39 +1,39 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface GroupingValuesFilterProps {
-  groupingValues: string[];
+  amountTypes: string[];
+  selectedAmounts: string[];
+  setSelectedAmounts: (amounts: string[]) => void;
 }
 
-const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ groupingValues }) => {
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ amountTypes, selectedAmounts, setSelectedAmounts }) => {
+  const handleCheckboxChange = (amount: string) => {
+    const updatedAmounts = selectedAmounts.includes(amount)
+      ? selectedAmounts.filter((a) => a !== amount)
+      : [...selectedAmounts, amount];
 
-  const handleCheckboxChange = (group: string) => {
-    setSelectedGroups((prevSelected) =>
-      prevSelected.includes(group)
-        ? prevSelected.filter((g) => g !== group)
-        : [...prevSelected, group]
-    );
+    setSelectedAmounts(updatedAmounts);
   };
 
   return (
     <div className="mb-4 mr-2 w-128">
       <label htmlFor="Amounts" className="mb-2 block text-sm font-medium">
-        Amounts to be incuded
+        Amounts to be included
       </label>
       <div className="flex flex-row space-x-2">
-        {groupingValues.map((group, index) => (
+        {amountTypes.map((amount, index) => (
           <div key={index} className="flex items-center p-2">
             <input
-              id={`group-${index}`}
+              id={`amount-${index}`}
               name="Amounts"
               type="checkbox"
-              checked={selectedGroups.includes(group)}
-              onChange={() => handleCheckboxChange(group)}
+              checked={selectedAmounts.includes(amount)}
+              onChange={() => handleCheckboxChange(amount)}
               className="mr-2 cursor-pointer rounded border-gray-200 text-purple-600 focus:ring-purple-500"
             />
-            <label htmlFor={`group-${index}`} className="text-sm text-gray-700">
-              {group}
+            <label htmlFor={`amount-${index}`} className="text-sm text-gray-700">
+              {amount}
             </label>
           </div>
         ))}
@@ -42,11 +42,16 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ groupingVal
   );
 };
 
-const CheckBoxAmount: React.FC = () => {
-  const placeholderData = ['Gross', 'Net', 'YQ', 'YR'];
-  const [groupingValues] = useState<string[]>(placeholderData);
+interface CheckBoxAmountProps {
+  selectedAmounts: string[];
+  setSelectedAmounts: (amounts: string[]) => void;
+}
 
-  return <GroupingValuesFilter groupingValues={groupingValues} />;
+const CheckBoxAmount: React.FC<CheckBoxAmountProps> = ({ selectedAmounts, setSelectedAmounts }) => {
+  const placeholderData = ['Gross Amount', 'Net Amount', 'Tax Amount', 'Commission Amount'];
+  const [amountTypes] = useState<string[]>(placeholderData);
+
+  return <GroupingValuesFilter amountTypes={amountTypes} selectedAmounts={selectedAmounts} setSelectedAmounts={setSelectedAmounts} />;
 };
 
 export default CheckBoxAmount;

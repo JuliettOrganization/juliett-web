@@ -143,7 +143,9 @@ export async function fetchReportsPages(query: string): Promise<number> {
         report_manager.date_concept ILIKE ${`%${query}%`} OR
          report_manager.period ILIKE ${`%${query}%`} OR
           report_manager.status ILIKE ${`%${query}%`} OR
-          report_manager.tags ILIKE ${`%${query}%`} 
+          report_manager.tags ILIKE ${`%${query}%`} OR
+                    to_char(report_manager.updated, 'YYYY-MM-DD hh:mm:ss') ILIKE ${`%${query}%`}
+
     
   `;
 

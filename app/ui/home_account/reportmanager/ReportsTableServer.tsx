@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import ReportsTableClient from './table';
+import LoadingSpinner from '@/app/ui/LoadingSpinner'; 
 
 interface ReportsTableServerProps {
   query: string;
@@ -14,7 +15,7 @@ const ReportsTableServer: React.FC<ReportsTableServerProps> = ({ query, currentP
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/reportmanager/fetchFilteredReports?query=${encodeURIComponent(query)}&page=${currentPage}`)
+    fetch(`/api/home_account/reportmanager/fetchFilteredReports?query=${encodeURIComponent(query)}&page=${currentPage}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch reports');
@@ -33,7 +34,7 @@ const ReportsTableServer: React.FC<ReportsTableServerProps> = ({ query, currentP
   }, [query, currentPage]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />; // Use your spinner component
   }
 
   if (error) {

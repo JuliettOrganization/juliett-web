@@ -34,7 +34,6 @@ const NavHomeUserClient = () => {
   const handleClick = () => {
     setLoading(true);
   };
-
   const handleSignOut = async () => {
     setLoading(true);
     try {
@@ -51,13 +50,14 @@ const NavHomeUserClient = () => {
     } catch (error) {
       console.error('Error:', error);
     }
+    setIsMenuOpen(false);
   };
 return (
   <>
       {loading && <LoadingSpinner />}
   <div className="flex justify-end relative">
       <button
-        className="flex items-center gap-2 p-4 text-l font-medium text-white hover:text-gray-300"
+        className="flex items-center gap-2 p-0 text-l font-medium text-white hover:text-gray-300"
         onClick={toggleMenu}
       >
         <div className="relative w-14 h-14">
@@ -74,7 +74,7 @@ return (
           <span className="hidden md:block">Jane Dutton</span>
           <span className="hidden md:block text-xs text-left text-gray-400">jane.dutton@travelggroup.com</span>
         </div>
-        <ChevronDownIcon className="w-5 h-5 text-justify-start text-white hidden sm:block"/>
+        <ChevronDownIcon className="w-5 h-5 text-justify-start text-white"/>
       </button>
       {isMenuOpen && (
         <div

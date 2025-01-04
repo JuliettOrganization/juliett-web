@@ -13,6 +13,7 @@ interface Report {
   period: string;
   status: string;
   tags: string;
+  last_updated: string;
 }
 
 interface ReportsTableClientProps {
@@ -79,37 +80,37 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
   };
 
   return (
-    <div className="mt-6 flow-root">
-      <div className="inline-block min-w-full align-middle">
+    <div className="mt-6 flow-root w-full">
+      <div className="inline-block w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             {sortedReports.map((report) => (
               <div key={report.reportid} className="mb-2 w-full rounded-md shadow p-4">
-                <div><p className="text-sm text-purple-500">{report.reportname}</p></div>
+                <div><p className="text-sm text-gray-500">{report.reportname}</p></div>
                 <div><ReportStatus status={report.status} /></div>
-                <div><p className="text-sm text-purple-500">{report.description}</p></div>
+                <div><p className="text-sm text-gray-500">{report.description}</p></div>
                 <div><p className="text-sm text-gray-500">{report.date_concept}</p></div>
-                <div><p className="text-sm text-purple-500">{report.period}</p></div>
+                <div><p className="text-sm text-gray-500">{report.period}</p></div>
                 <div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div>
                 <div className="flex justify-end gap-2 relative">
                   <button onClick={() => setActiveMenu(report.reportid.toString())}>
                     <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
                   </button>
                   {activeMenu === report.reportid.toString() && (
-                    <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 sm:right-full sm:mr-2 sm:w-auto z-50">
+                    <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
                       <ul>
-                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Edit Report</li>
-                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Run Report</li>
-                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Schedule Report</li>
-                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Clone Report</li>
-                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Download Report</li>
-                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid.toString())}>Delete Report</li>
+                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Edit</li>
+                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Run</li>
+                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Schedule</li>
+                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Clone</li>
+                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Download</li>
+                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid.toString())}>Delete</li>
                       </ul>
                     </div>
                   )}
                 </div>
               </div>
-            ))} 
+            ))}
           </div>
           <div className="hidden md:block">
             <table className="min-w-full divide-y divide-gray-200">
@@ -133,6 +134,9 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
                   <th onClick={() => handleSort('tags')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
                     Tags {getSortIcon('tags')}
                   </th>
+                  <th onClick={() => handleSort('last_updated')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                    Last Updated {getSortIcon('last_updated')}
+                  </th>
                   <th className="relative px-6 py-3">
                     <span className="sr-only">Actions</span>
                   </th>
@@ -147,19 +151,20 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.date_concept}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.period}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><ReportTags tags={report.tags ? report.tags.split(';') : []} /></td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.last_updated}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium relative">
                       <button onClick={() => setActiveMenu(report.reportid.toString())}>
                         <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
                       </button>
                       {activeMenu === report.reportid.toString() && (
-                        <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 sm:right-full sm:mr-2 sm:w-auto z-50">
+                        <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
                           <ul>
-                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Edit Report</li>
-                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Run Report</li>
-                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Schedule Report</li>
-                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Clone Report</li>
-                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer">Download Report</li>
-                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid.toString())}>Delete Report</li>
+                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Edit</li>
+                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Run</li>
+                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Schedule</li>
+                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Clone</li>
+                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Download</li>
+                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid.toString())}>Delete</li>
                           </ul>
                         </div>
                       )}

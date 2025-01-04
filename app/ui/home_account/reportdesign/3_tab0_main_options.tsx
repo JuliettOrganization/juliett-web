@@ -1,12 +1,30 @@
 'use client';
-
+import React, { useEffect } from 'react';
 import CheckBoxTransactionType from "@/app/ui/home_account/reportdesign/3_tab0_transaction_type_check-box";
 import CheckBoxAmount from "@/app/ui/home_account/reportdesign/3_tab0_amounts_check-box";
 
+interface MainOptionsFormProps {
+  currency: string;
+  setCurrency: (currency: string) => void;
+  selectedTransactionTypes: string[];
+  setSelectedTransactionTypes: (transactionTypes: string[]) => void;
+  selectedAmounts: string[];
+  setSelectedAmounts: (amounts: string[]) => void;
+}
 
-export default function MainOptionsForm() {
+export default function MainOptionsForm({
+  currency,
+  setCurrency,
+  selectedTransactionTypes,
+  setSelectedTransactionTypes,
+  selectedAmounts,
+  setSelectedAmounts,
+}: MainOptionsFormProps) {
+  useEffect(() => {
+    // Any necessary side effects can be handled here
+  }, [currency, selectedTransactionTypes, selectedAmounts]);
 
- 
+
   return (
     <div className="space-y-2 p-4 rounded-lg">
       
@@ -21,10 +39,11 @@ export default function MainOptionsForm() {
           </label>
           <div className="relative ">
           <select
-              id="Currency"
-              name="Currency"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500 bg-white"
-              defaultValue="EUR"
+          id="Currency"
+          name="Currency"
+          className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500 bg-white"
+          value={currency}
+          onChange={(e) => setCurrency(e.target.value)}
             >
               {/* this list of currencies should come from the exchange rate master table which is the same for all users/accounts */}
               <option value="EUR" className="bg-white text-black">EUR</option>
@@ -39,22 +58,20 @@ export default function MainOptionsForm() {
         </div>
         {/* TransactionType */}
 <div>
-            <CheckBoxTransactionType />
+<CheckBoxTransactionType
+              selectedTransactionTypes={selectedTransactionTypes}
+              setSelectedTransactionTypes={setSelectedTransactionTypes}
+            />
             </div>
 
       
         
          {/* Date Concept */}
   
-         <div><CheckBoxAmount /></div>
-  
-
-        
-        
-
-     
-      
-       
+         <div><CheckBoxAmount  
+        selectedAmounts={selectedAmounts}
+        setSelectedAmounts={setSelectedAmounts}
+              /></div>
       </div>
       
       </div>

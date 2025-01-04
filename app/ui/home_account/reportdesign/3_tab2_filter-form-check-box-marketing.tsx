@@ -41,7 +41,8 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ groupingVal
         <div className="max-h-60 overflow-y-auto">
           {groupingValues.map((group, index) => (
             <div key={index} className="flex items-center p-2">
-              <input id={`group-${index}`} name="AgencyGroup" type="checkbox" checked={selectedGroups.includes(group)} onChange={() => handleCheckboxChange(group)} className="mr-2 cursor-pointer rounded border-gray-200 text-purple-600 focus:ring-purple-500" />
+              <input id={`group-${index}`} name="AgencyGroup" type="checkbox" checked={selectedGroups.includes(group)} onChange={() => handleCheckboxChange(group)} 
+              className="mr-2 cursor-pointer rounded border-gray-200 text-blue-600 focus:ring-blue-500" />
               <label htmlFor={`group-${index}`} className="text-sm text-gray-700">
                 {group}
               </label>

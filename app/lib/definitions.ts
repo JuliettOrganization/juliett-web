@@ -66,8 +66,9 @@ export type ReportsTable = {
   updated: Date;
   date_concept: string;
   period: string;
-  status: 'draft' | 'result';
+  status: 'draft' | 'result' | 'running';
   tags: string;
+  last_update: string;
 };
 
 export type CustomersTableType = {

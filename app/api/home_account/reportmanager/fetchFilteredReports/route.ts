@@ -18,7 +18,8 @@ export async function GET(request: Request) {
         date_concept,
         period,
         status,
-        tags
+        tags,
+         to_char(updated, 'YYYY-MM-DD hh:mm:ss') as last_updated
       FROM master.report_manager
       WHERE 
         report_manager.reportname ILIKE ${`%${query}%`} OR
@@ -26,7 +27,8 @@ export async function GET(request: Request) {
         report_manager.date_concept ILIKE ${`%${query}%`} OR
         report_manager.period ILIKE ${`%${query}%`} OR
         report_manager.status ILIKE ${`%${query}%`} OR
-        report_manager.tags ILIKE ${`%${query}%`}
+        report_manager.tags ILIKE ${`%${query}%`} OR
+                    to_char(report_manager.updated, 'YYYY-MM-DD hh:mm:ss') ILIKE ${`%${query}%`}
       ORDER BY reportid DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;

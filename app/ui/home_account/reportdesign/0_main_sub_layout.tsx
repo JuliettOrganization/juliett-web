@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import LayoutRightPurplePanel from './2_layout_right_purple_panel';
 import LayoutMainInfoForm from './1_layout_main_info_form';
-import FilterForm from '@/app/ui/home_account/reportdesign/3_tab2_filter-form';
+import FilterForm  from '@/app/ui/home_account/reportdesign/3_tab2_filter-form';
 import FieldButtons from '@/app/ui/home_account/reportdesign/3_tab1_FieldButtons';
 import ToggleSwitchCustomSql from './3_tab3_custom-sql-toggle';
 import TextBoxSQL from './3_tab3_custom-sql';
@@ -32,6 +32,12 @@ const CreateFormLayout: React.FC = () => {
   const [fields, setFields] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeTab, setActiveTab] = useState<number>(0);
+  const [currency, setCurrency] = useState('EUR');
+  const [transactionType, setTransactionType] = useState<string[]>([]);
+  const [amounts, setAmounts] = useState<string[]>([]);
+  const [selectedGroupingValuesIssuing, setSelectedGroupingValuesIssuing] = useState<string[]>([]);
+  const [selectedGroupingIssuing, setSelectedGroupingIssuing] = useState<string>('None');
+
 
   const addTag = (field: string) => {
     if (!fields.includes(field)) {
@@ -47,9 +53,46 @@ const CreateFormLayout: React.FC = () => {
     field.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  //SAVE BUTTON HANDLE SAVE BEGIN
+  const handleSave = async () => {
+    const reportData = {
+      // Consolidate all the necessary data from LayoutRightPurplePanel, LayoutMainInfoForm, and Tabs
+      // Example:
+      currency,
+      fields,
+      transactionType,
+      amounts,
+      selectedGroupingValuesIssuing,
+      selectedGroupingIssuing
+
+      // Add other necessary state or props here
+    };
+
+    try {
+      const response = await fetch('/api/home_account/reportdesign/saveReport', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reportData }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save report');
+      }
+
+      const result = await response.json();
+      alert(result.message);
+    } catch (error) {
+      console.error('Error saving report:', error);
+      alert('Failed to save report');
+    }
+  };
+  //SAVE BUTTON HANDLE SAVE END
+
   return (
     <main className="z-20">
-      <LayoutRightPurplePanel fields={fields} removeField={removeField} />
+      <LayoutRightPurplePanel handleSave={handleSave} fields={fields} removeField={removeField} />
       <div className="flex flex-col lg:mr-48 mr-44 ml-0 mt-0 h-full border-none marker:overflow-y-auto">
       <LayoutMainInfoForm />
 
@@ -64,8 +107,15 @@ const CreateFormLayout: React.FC = () => {
           <TabsContent value="main-options">
         {activeTab === 0 && (
           <div className="p-4 bg-white rounded-lg">
-            <MainOptionsForm />
-          </div>
+                  <MainOptionsForm
+                  currency={currency}
+                  setCurrency={setCurrency}
+                  selectedTransactionTypes={transactionType}
+                  setSelectedTransactionTypes={setTransactionType}
+                  selectedAmounts={amounts}
+                  setSelectedAmounts={setAmounts}
+                />
+                </div>
         )}
           </TabsContent>
           <TabsContent value="field-selection">
@@ -91,7 +141,13 @@ const CreateFormLayout: React.FC = () => {
           <TabsContent value="filters">
         {activeTab === 2 && (
           <div className="p-4 bg-white rounded-lg shadow-md">
-            <FilterForm />
+            <FilterForm 
+                selectedGroupingIssuing={selectedGroupingIssuing}
+                setSelectedGroupingIssuing={setSelectedGroupingIssuing}
+                selectedGroupingValuesIssuing={selectedGroupingValuesIssuing}
+                setSelectedGroupingValuesIssuing={setSelectedGroupingValuesIssuing}
+            
+            />
           </div>
         )}
           </TabsContent>

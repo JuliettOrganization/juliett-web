@@ -7,9 +7,52 @@ import CheckBoxGeoTo from './3_tab2_filter-form-check-box-geo-to';
 import CheckBoxGeoFrom from './3_tab2_filter-form-check-box-geo-from';
 import RadioButtonListItinerary from './3_tab2_filter-form-radio-button-itinerary';
 import ToggleSwitchItinerary from './3_tab2_filter-form-toggle-exclude';
+import { useEffect, useState } from 'react';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
 
 
-export default function FilterForm() {
+interface FilterFormProps {
+  selectedGroupingIssuing: string;
+  setSelectedGroupingIssuing: (value: string) => void;
+  selectedGroupingValuesIssuing: string[];
+  setSelectedGroupingValuesIssuing: (values: string[]) => void;
+}
+
+const FilterForm: React.FC<FilterFormProps> = ({ 
+  selectedGroupingIssuing,
+  setSelectedGroupingIssuing,
+  selectedGroupingValuesIssuing,
+  setSelectedGroupingValuesIssuing}) => {
+  const [airlineGroupingsIssuing, setAirlineGroupingsIssuing] = useState<string[]>([]);
+  const [airlineGroupingsMarketing, setAirlineGroupingsMarketing] = useState<string[]>([]);
+  const [airlineGroupingsOperating, setAirlineGroupingsOperating] = useState<string[]>([]);
+  const [loadingIssuing, setLoadingIssuing] = useState<boolean>(false);
+  const [loadingMarketing, setLoadingMarketing] = useState<boolean>(false);
+  const [loadingOperating, setLoadingOperating] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoadingIssuing(true);
+    fetch('/api/home_account/reportdesign/airlinefilter/airlineGrouping')
+      .then(response => response.json())
+      .then(data => setAirlineGroupingsIssuing(data))
+      .catch(error => console.error('Error fetching airline groupings:', error))
+      .finally(() => setLoadingIssuing(false));
+
+      setLoadingIssuing(true);
+      fetch('/api/home_account/reportdesign/airlinefilter/airlineGrouping')
+      .then(response => response.json())
+      .then(data => setAirlineGroupingsMarketing(data))
+      .catch(error => console.error('Error fetching airline groupings:', error))
+      .finally(() => setLoadingMarketing(false));
+
+      setLoadingOperating(true);
+      fetch('/api/home_account/reportdesign/airlinefilter/airlineGrouping')
+      .then(response => response.json())
+      .then(data => setAirlineGroupingsOperating(data))
+      .catch(error => console.error('Error fetching airline groupings:', error))
+      .finally(() => setLoadingOperating(false));
+
+  }, []);
 
   return (
     
@@ -72,27 +115,35 @@ export default function FilterForm() {
           Issuing Airline Group Type
           </label>
           <div className="relative">
-            <select
+          <select
               id="Issuing"
               name="Issuing"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue="None"
+              value={selectedGroupingIssuing}
+              onChange={(e) => setSelectedGroupingIssuing(e.target.value)}
             >
-
-                 {/* THIS SHOULD COME FROM DATABASE BASED ON USER/ACCOUNT GROUPINGS */}
-           <option value="None" className="bg-white"></option>
-           <option value="Grouping 1" className="bg-white">Airline Country</option>
-           <option value="Grouping 2" className="bg-white">Airline Name</option>
+              <option value="None" className="bg-white"></option>
+              {loadingIssuing ? (
+                   
+                   <option value="loading" disabled>
+                   Loading...
+                 </option>
+                  
+                  ) : (
+              airlineGroupingsIssuing.map((grouping, index) => (
+                <option key={index} value={grouping} className="bg-white">{grouping}</option>
+              )))}
             </select>
           </div>
         </div>
 
          {/* Grouping values filtering */}
     
-         <CheckBoxIssuing />
-      
-
-         
+         <CheckBoxIssuing 
+         selectedGroupingValuesIssuing={selectedGroupingValuesIssuing}
+        setSelectedGroupingValuesIssuing={setSelectedGroupingValuesIssuing}
+        selectedGroupingIssuing={selectedGroupingIssuing}
+        />
          </div>
 
          <div className="flex flex-row  bg-gray-200  pt-0 pr-4 pl-6 pb-1 space-x-6">
@@ -111,8 +162,16 @@ export default function FilterForm() {
 
                  {/* THIS SHOULD COME FROM DATABASE BASED ON USER/ACCOUNT GROUPINGS */}
                  <option value="None" className="bg-white"></option>
-           <option value="Grouping 1" className="bg-white">Airline Country</option>
-           <option value="Grouping 2" className="bg-white">Airline Name</option>
+          
+                 {loadingMarketing ? (
+                   
+                   <option value="loading" disabled>
+                   Loading...
+                 </option>
+                   
+                  ) : (airlineGroupingsMarketing.map((grouping, index) => (
+              <option key={index} value={grouping} className="bg-white">{grouping}</option>
+            )))}
             </select>
           </div>
         </div>
@@ -141,8 +200,16 @@ export default function FilterForm() {
 
                  {/* THIS SHOULD COME FROM DATABASE BASED ON USER/ACCOUNT GROUPINGS */}
                  <option value="None" className="bg-white"></option>
-           <option value="Grouping 1" className="bg-white">Airline Country</option>
-           <option value="Grouping 2" className="bg-white">Airline Name</option>
+                 {loadingOperating ? (
+                   
+                   <option value="loading" disabled>
+                   Loading...
+                 </option>
+                   
+                  ) : (
+                 airlineGroupingsOperating.map((grouping, index) => (
+              <option key={index} value={grouping} className="bg-white">{grouping}</option>
+            )))}
             </select>
           </div>
         </div>
@@ -282,5 +349,6 @@ export default function FilterForm() {
      
    
   );
-}
+};
+export default FilterForm;
 

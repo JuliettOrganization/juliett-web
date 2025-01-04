@@ -17,7 +17,7 @@ export default function Nav() {
     setLoading(true);
   };
   return (
-    <div className="topbar_flex justify-between items-center h-20 px-4 bg-black text-white">
+    <div className="topbar_flex justify-between items-center h-20 px-2 bg-black text-white">
      <>
       {loading && <LoadingSpinner />}
       <Link href="/home_user">
@@ -36,7 +36,7 @@ export default function Nav() {
         <NavClient />
       </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center justify-between space-x-2">
         <NavHomeUserClient />
         {/* <form action={async () => { 'use server'; await signOut(); }}>
           <button className="flex items-center gap-2 p-4 text-l font-medium hover:text-blue-600">

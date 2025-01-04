@@ -5,7 +5,13 @@ import Link from 'next/link';
 import SelectedFields from '@/app/ui/home_account/reportdesign/2_SelectedFields';
 import { ButtonSave } from '@/app/ui/button';
 
-const LayoutRightPurplePanel: React.FC<{ fields: string[], removeField: (field: string) => void }> = ({ fields, removeField }) => {
+interface LayoutRightPurplePanelProps {
+  fields: string[];
+  removeField: (field: string) => void;
+  handleSave: () => void;
+}
+
+const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields, removeField, handleSave }) => {
   return (
     <div className="fixed top-20 right-0 w-38 md:w-48 h-full z-10 bg-gray-400">
       <div className="mt-1 flex flex-row text-white font-bold text-2xl p-4 gap-4 items-center">
@@ -23,7 +29,7 @@ const LayoutRightPurplePanel: React.FC<{ fields: string[], removeField: (field: 
         >
           Cancel
         </Link>
-        <ButtonSave className="flex h-10 items-center justify-center rounded-full" type="submit">
+        <ButtonSave onClick={handleSave} className="flex h-10 items-center justify-center rounded-full" type="submit">
           Save Report
         </ButtonSave>
         <ButtonSave className="flex h-10 items-center justify-center rounded-full" type="submit">
