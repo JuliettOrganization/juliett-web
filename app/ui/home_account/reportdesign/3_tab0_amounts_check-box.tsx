@@ -30,7 +30,7 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ amountTypes
               type="checkbox"
               checked={selectedAmounts.includes(amount)}
               onChange={() => handleCheckboxChange(amount)}
-              className="mr-2 cursor-pointer rounded border-gray-200 text-purple-600 focus:ring-purple-500"
+              className="mr-2 cursor-pointer rounded border-gray-200 text-blue-600 focus:ring-blue-500"
             />
             <label htmlFor={`amount-${index}`} className="text-sm text-gray-700">
               {amount}

@@ -1,74 +1,144 @@
 'use client';
-import React, { useState } from 'react';
-import { ChevronDownIcon } from '@heroicons/react/24/outline'; // <-- Import Heroicon
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
 
 interface GroupingValuesFilterProps {
-  groupingValues: string[];
+  groupingValuesOperating: string[];
+  selectedGroupingValuesOperating: string[];
+  setSelectedGroupingValuesOperating: (values: string[]) => void;
+  loadingOperating: boolean;
+  isDropdownOpenOperating: boolean;
+  toggleDropdownOperating: () => void;
 }
 
-const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ groupingValues }) => {
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({
+  groupingValuesOperating,
+  selectedGroupingValuesOperating,
+  setSelectedGroupingValuesOperating,
+  loadingOperating,
+  isDropdownOpenOperating,
+  toggleDropdownOperating,
+}) => {
+  const handleCheckboxChange = (value: string) => {
+    const updatedValues = selectedGroupingValuesOperating.includes(value)
+      ? selectedGroupingValuesOperating.filter((v) => v !== value)
+      : [...selectedGroupingValuesOperating, value];
 
-  const handleCheckboxChange = (group: string) => {
-    setSelectedGroups((prevSelected) =>
-      prevSelected.includes(group)
-        ? prevSelected.filter((g) => g !== group)
-        : [...prevSelected, group]
-    );
+    setSelectedGroupingValuesOperating(updatedValues);
   };
-
-  const toggleDropdown = () => { setIsDropdownOpen(!isDropdownOpen); };
 
   return (
     <div className="mb-4 mr-2 relative w-128">
-    <label htmlFor="AgencyGroup" className="mb-2 block text-sm font-medium">
-      Operating Airline
-    </label>
-    <div className="flex flex-row w-full items-center peer cursor-pointer bg-white rounded-md border border-gray-200 pt-2 pb-1 pl-2 mr-2 ml-auto text-sm text-left outline-2 placeholder:text-gray-500">
-      <button type="button" onClick={toggleDropdown}
-        className="flex flex-row w-full text-ellipsis overflow-hidden whitespace-nowrap space-x-3">
-        <span className="truncate">
-          {selectedGroups.length > 0 ? selectedGroups.join(', ') : 'Select Grouping'}
-        </span>
-        <div className="flex flex-grow"></div>
-        <ChevronDownIcon className="ml-auto mr-6 h-6 w-6 pr-2 text-bold text-gray-700 items-center justify-end" />
-      </button>
-    </div>
-  
-    {isDropdownOpen && (
-      <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg">
-        <div className="max-h-60 overflow-y-auto">
-          {groupingValues.map((group, index) => (
-            <div key={index} className="flex items-center p-2">
-              <input id={`group-${index}`} name="AgencyGroup" type="checkbox" checked={selectedGroups.includes(group)} onChange={() => handleCheckboxChange(group)} className="mr-2 cursor-pointer rounded border-gray-200 text-purple-600 focus:ring-purple-500" />
-              <label htmlFor={`group-${index}`} className="text-sm text-gray-700">
-                {group}
-              </label>
-            </div>
-          ))}
-        </div>
+      <label htmlFor="AirlineGroupingsOperating" className="mb-2 block text-sm font-medium">
+      Value Filtering
+      </label>
+      <div className="flex flex-row w-full items-center peer cursor-pointer bg-white rounded-md border border-gray-200 pt-2 pb-1 pl-2 mr-2 ml-auto text-sm text-left outline-2 placeholder:text-gray-500">
+        <button type="button" onClick={toggleDropdownOperating} className="flex flex-row w-full text-ellipsis overflow-hidden whitespace-nowrap space-x-3">
+          <span className="truncate">
+            {selectedGroupingValuesOperating.length > 0 ? selectedGroupingValuesOperating.join(', ') : 'Select Grouping'}
+          </span> 
+          <div className="flex flex-grow"></div>
+          <ChevronDownIcon className="ml-auto mr-6 h-6 w-6 pr-2 text-bold text-gray-700 items-center justify-end" />
+        </button>
       </div>
-    )}
-  </div>
-   );
+
+      {isDropdownOpenOperating && (
+        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg h-min-40">
+          <div className="max-h-60 overflow-y-auto">
+            {loadingOperating ? (
+              <LoadingSpinner />
+            ) : (
+              groupingValuesOperating.map((value, index) => (
+                <div key={index} className="flex items-center p-2">
+                  <input
+                    id={`group-${index}`}
+                    name="AirlineGroupingsOperating"
+                    type="checkbox"
+                    checked={selectedGroupingValuesOperating.includes(value)}
+                    onChange={() => handleCheckboxChange(value)}
+                    className="mr-2 cursor-pointer rounded border-gray-200 text-blue-600 focus:ring-blue-500"
+                  />
+                  <label htmlFor={`group-${index}`} className="text-sm text-gray-700">
+                    {value}
+                  </label>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
-const CheckBoxOperating: React.FC = () => {
-  const placeholderData = ['Air France - AF', 'Lufthansa - LH', 'American Airlines - AA','Iberia - IB', 'Emirates - EK', 'Air Canada - AC'];
-  const [groupingValues] = useState<string[]>(placeholderData);
+interface CheckBoxOperatingProps {
+  selectedGroupingValuesOperating: string[];
+  setSelectedGroupingValuesOperating: (values: string[]) => void;
+  selectedGroupingOperating: string;
+  isDropdownOpenOperating: boolean;
+  toggleDropdownOperating: () => void;
+}
 
+const CheckBoxOperating: React.FC<CheckBoxOperatingProps> = ({
+  selectedGroupingValuesOperating,
+  setSelectedGroupingValuesOperating,
+  selectedGroupingOperating,
+  isDropdownOpenOperating,
+  toggleDropdownOperating,
+}) => {
+  const [groupingValuesOperating, setGroupingValuesOperating] = useState<string[]>([]);
+  const [loadingOperating, setLoadingOperating] = useState<boolean>(false);
+  const prevSelectedGroupingOperating = useRef<string>(selectedGroupingOperating);
 
-//   THIS IS TO FETCH THE DATA FROM DB INF HARDCODIG THE GROUPIING VALUES
-//   useEffect(() => {
-//     // Fetch actual data from DB
-//     fetch('/api/grouping-values')
-//       .then(response => response.json())
-//       .then(data => setGroupingValues(data))
-//       .catch(error => console.error('Error fetching grouping values:', error));
-//   }, []);
+  useEffect(() => {
+    if (selectedGroupingOperating !== '' && selectedGroupingOperating !== prevSelectedGroupingOperating.current) {
+      setLoadingOperating(true);
+      setSelectedGroupingValuesOperating([]); // Reinitialize checked boxes only if selectedGroupingOperating has changed
+      // Fetch actual data from DB
+      fetch(`/api/home_account/reportdesign/airlinefilter/airlineGroupingValues?selectedGrouping=${selectedGroupingOperating}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setGroupingValuesOperating(data);
+          } else {
+            console.error('Unexpected response format:', data);
+          }
+        })
+        .catch((error) => console.error('Error fetching grouping values:', error))
+        .finally(() => setLoadingOperating(false));
+      prevSelectedGroupingOperating.current = selectedGroupingOperating;
+    }
+  }, [selectedGroupingOperating, setSelectedGroupingValuesOperating]);
 
-  return <GroupingValuesFilter groupingValues={groupingValues} />;
+  useEffect(() => {
+    if (isDropdownOpenOperating) {
+      setLoadingOperating(true);
+      // Fetch actual data from DB
+      fetch(`/api/home_account/reportdesign/airlinefilter/airlineGroupingValues?selectedGrouping=${selectedGroupingOperating}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setGroupingValuesOperating(data);
+          } else {
+            console.error('Unexpected response format:', data);
+          }
+        })
+        .catch((error) => console.error('Error fetching grouping values:', error))
+        .finally(() => setLoadingOperating(false));
+    }
+  }, [isDropdownOpenOperating, selectedGroupingOperating]);
+
+  return (
+    <GroupingValuesFilter
+      groupingValuesOperating={groupingValuesOperating}
+      selectedGroupingValuesOperating={selectedGroupingValuesOperating}
+      setSelectedGroupingValuesOperating={setSelectedGroupingValuesOperating}
+      loadingOperating={loadingOperating}
+      isDropdownOpenOperating={isDropdownOpenOperating}
+      toggleDropdownOperating={toggleDropdownOperating}
+    />
+  );
 };
 
 export default CheckBoxOperating;

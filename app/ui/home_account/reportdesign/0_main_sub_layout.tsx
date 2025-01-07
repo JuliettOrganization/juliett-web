@@ -11,6 +11,15 @@ import MainOptionsForm from './3_tab0_main_options';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+const defaultDateConcept = 'Issue Date';
+const defaultDateFrom = '2025-01-01';
+const defaultDateTo = '2025-12-31';
+const defaultBenchmarkPeriod = 'Yes';
+const defaultBenchmarkDateFrom = '2024-01-01';
+const defaultBenchmarkDateTo = '2024-12-31';
+const defaultODconcept = 'Ticket based';
+const defaultODfiltering = 'Include';
+
 
 const CreateFormLayout: React.FC = () => {
   const availableFields = [
@@ -29,16 +38,59 @@ const CreateFormLayout: React.FC = () => {
     'ticket number (refunded)', 'ticket number (TDNR)', 'tour code', 'transaction code',
     'yq amount (local currency)', 'yr amount (local currency)',
   ];
+  
+  const [reportName, setReportName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [dateConcept, setDateConcept] = useState<string>(defaultDateConcept);
+  const [dateFrom, setDateFrom] = useState<string>(defaultDateFrom);
+  const [dateTo, setDateTo] = useState<string>(defaultDateTo);
+  const [benchmarkPeriod, setBenchmarkPeriod] = useState<string>(defaultBenchmarkPeriod);
+  const [benchmarkDateFrom, setBenchmarkDateFrom] = useState<string>(defaultBenchmarkDateFrom);
+  const [benchmarkDateTo, setBenchmarkDateTo] = useState<string>(defaultBenchmarkDateTo);
+
+
   const [fields, setFields] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [currency, setCurrency] = useState('EUR');
+  const [currency, setCurrency] = useState('');
   const [transactionType, setTransactionType] = useState<string[]>([]);
   const [amounts, setAmounts] = useState<string[]>([]);
+
+  const [selectedGroupingValuesAgency, setSelectedGroupingValuesAgency] = useState<string[]>([]);
   const [selectedGroupingValuesIssuing, setSelectedGroupingValuesIssuing] = useState<string[]>([]);
-  const [selectedGroupingIssuing, setSelectedGroupingIssuing] = useState<string>('None');
+  const [selectedGroupingValuesMarketing, setSelectedGroupingValuesMarketing] = useState<string[]>([]);
+  const [selectedGroupingValuesOperating, setSelectedGroupingValuesOperating] = useState<string[]>([]);
+  const [selectedGroupingValuesGeoFrom, setSelectedGroupingValuesGeoFrom] = useState<string[]>([]);
+  const [selectedGroupingValuesGeoTo, setSelectedGroupingValuesGeoTo] = useState<string[]>([]);
 
+  const [selectedGroupingAgency, setSelectedGroupingAgency] = useState<string>('');
+  const [selectedGroupingIssuing, setSelectedGroupingIssuing] = useState<string>('');
+  const [selectedGroupingMarketing, setSelectedGroupingMarketing] = useState<string>('');
+  const [selectedGroupingOperating, setSelectedGroupingOperating] = useState<string>('');
+  const [selectedGroupingGeoFrom, setSelectedGroupingGeoFrom] = useState<string>('');
+  const [selectedGroupingGeoTo, setSelectedGroupingGeoTo] = useState<string>('');
 
+  const [isDropdownOpenAgency, setIsDropdownOpenAgency] = useState<boolean>(false);
+  const [isDropdownOpenIssuing, setIsDropdownOpenIssuing] = useState<boolean>(false);
+  const [isDropdownOpenMarketing, setIsDropdownOpenMarketing] = useState<boolean>(false);
+  const [isDropdownOpenOperating, setIsDropdownOpenOperating] = useState<boolean>(false);
+  const [isDropdownOpenGeoFrom, setIsDropdownOpenGeoFrom] = useState<boolean>(false);
+  const [isDropdownOpenGeoTo, setIsDropdownOpenGeoTo] = useState<boolean>(false);
+
+  const toggleDropdownAgency = () => {setIsDropdownOpenAgency(!isDropdownOpenAgency);};
+  const toggleDropdownIssuing = () => {setIsDropdownOpenIssuing(!isDropdownOpenIssuing);};
+  const toggleDropdownMarketing = () => {setIsDropdownOpenMarketing(!isDropdownOpenMarketing);};
+  const toggleDropdownOperating = () => {setIsDropdownOpenOperating (!isDropdownOpenOperating);};
+  const toggleDropdownGeoFrom = () => {setIsDropdownOpenGeoFrom (!isDropdownOpenGeoFrom);};
+  const toggleDropdownGeoTo = () => {setIsDropdownOpenGeoTo (!isDropdownOpenGeoTo);};
+
+  const [ODconcept, setODconcept] = useState<string>(defaultODconcept);
+  const [ODfiltering, setODfiltering] = useState<string>(defaultODfiltering);
+
+  const [sqlCode, setSqlCode] = useState<string>('');
+  const [isCustomSqlActive, setIsCustomSqlActive] = useState<boolean>(false);
+  
   const addTag = (field: string) => {
     if (!fields.includes(field)) {
       setFields([...fields, field]);
@@ -58,12 +110,34 @@ const CreateFormLayout: React.FC = () => {
     const reportData = {
       // Consolidate all the necessary data from LayoutRightPurplePanel, LayoutMainInfoForm, and Tabs
       // Example:
+      reportName,
+      description,
+      tags,
+      dateConcept,
+      dateFrom,
+      dateTo,
+      benchmarkPeriod,
+      benchmarkDateFrom,
+      benchmarkDateTo,
       currency,
       fields,
       transactionType,
       amounts,
+      selectedGroupingValuesAgency,
+      selectedGroupingAgency,
       selectedGroupingValuesIssuing,
-      selectedGroupingIssuing
+      selectedGroupingIssuing,
+      selectedGroupingValuesMarketing,
+      selectedGroupingMarketing,
+      selectedGroupingValuesOperating,
+      selectedGroupingOperating,
+      selectedGroupingValuesGeoFrom,
+      selectedGroupingGeoFrom, selectedGroupingValuesGeoTo,
+      selectedGroupingGeoTo,
+      ODconcept,
+      ODfiltering,
+      sqlCode,
+      isCustomSqlActive
 
       // Add other necessary state or props here
     };
@@ -94,7 +168,32 @@ const CreateFormLayout: React.FC = () => {
     <main className="z-20">
       <LayoutRightPurplePanel handleSave={handleSave} fields={fields} removeField={removeField} />
       <div className="flex flex-col lg:mr-48 mr-44 ml-0 mt-0 h-full border-none marker:overflow-y-auto">
-      <LayoutMainInfoForm />
+      <LayoutMainInfoForm 
+         reportName={reportName}
+         setReportName={setReportName}
+         description={description}
+         setDescription={setDescription}
+         tags={tags}
+         setTags={setTags}
+         dateConcept={dateConcept}
+         setDateConcept={setDateConcept}
+         dateFrom={dateFrom}
+         setDateFrom={setDateFrom}
+         dateTo={dateTo}
+         setDateTo={setDateTo}
+         benchmarkPeriod={benchmarkPeriod}
+         setBenchmarkPeriod={setBenchmarkPeriod}
+         benchmarkDateFrom={benchmarkDateFrom}
+         setBenchmarkDateFrom={setBenchmarkDateFrom}
+         benchmarkDateTo={benchmarkDateTo}
+         setBenchmarkDateTo={setBenchmarkDateTo}
+         defaultDateConcept={defaultDateConcept}
+         defaultDateFrom={defaultDateFrom}
+         defaultDateTo={defaultDateTo}
+         defaultBenchmarkPeriod={defaultBenchmarkPeriod}
+         defaultBenchmarkDateFrom={defaultBenchmarkDateFrom}
+         defaultBenchmarkDateTo={defaultBenchmarkDateTo}
+         />
 
       
         <Tabs defaultValue="main-options" className="w-full">
@@ -142,11 +241,52 @@ const CreateFormLayout: React.FC = () => {
         {activeTab === 2 && (
           <div className="p-4 bg-white rounded-lg shadow-md">
             <FilterForm 
+                selectedGroupingAgency={selectedGroupingAgency}
+                setSelectedGroupingAgency={setSelectedGroupingAgency}
+                selectedGroupingValuesAgency={selectedGroupingValuesAgency}
+                setSelectedGroupingValuesAgency={setSelectedGroupingValuesAgency}
+                isDropdownOpenAgency={isDropdownOpenAgency}
+                toggleDropdownAgency={toggleDropdownAgency}
+
                 selectedGroupingIssuing={selectedGroupingIssuing}
                 setSelectedGroupingIssuing={setSelectedGroupingIssuing}
                 selectedGroupingValuesIssuing={selectedGroupingValuesIssuing}
                 setSelectedGroupingValuesIssuing={setSelectedGroupingValuesIssuing}
-            
+                isDropdownOpenIssuing={isDropdownOpenIssuing}
+                toggleDropdownIssuing={toggleDropdownIssuing}
+
+                selectedGroupingMarketing={selectedGroupingMarketing}
+                setSelectedGroupingMarketing={setSelectedGroupingMarketing}
+                selectedGroupingValuesMarketing={selectedGroupingValuesMarketing}
+                setSelectedGroupingValuesMarketing={setSelectedGroupingValuesMarketing}
+                isDropdownOpenMarketing={isDropdownOpenMarketing}
+                toggleDropdownMarketing={toggleDropdownMarketing}
+
+                selectedGroupingOperating={selectedGroupingOperating}
+                setSelectedGroupingOperating={setSelectedGroupingOperating}
+                selectedGroupingValuesOperating={selectedGroupingValuesOperating}
+                setSelectedGroupingValuesOperating={setSelectedGroupingValuesOperating}
+                isDropdownOpenOperating={isDropdownOpenOperating}
+                toggleDropdownOperating={toggleDropdownOperating}
+
+                selectedGroupingGeoFrom={selectedGroupingGeoFrom}
+                setSelectedGroupingGeoFrom={setSelectedGroupingGeoFrom}
+                selectedGroupingValuesGeoFrom={selectedGroupingValuesGeoFrom}
+                setSelectedGroupingValuesGeoFrom={setSelectedGroupingValuesGeoFrom}
+                isDropdownOpenGeoFrom={isDropdownOpenGeoFrom}
+                toggleDropdownGeoFrom={toggleDropdownGeoFrom}
+
+                selectedGroupingGeoTo={selectedGroupingGeoTo}
+                setSelectedGroupingGeoTo={setSelectedGroupingGeoTo}
+                selectedGroupingValuesGeoTo={selectedGroupingValuesGeoTo}
+                setSelectedGroupingValuesGeoTo={setSelectedGroupingValuesGeoTo}
+                isDropdownOpenGeoTo={isDropdownOpenGeoTo}
+                toggleDropdownGeoTo={toggleDropdownGeoTo}
+
+                ODconcept={ODconcept}
+                setODconcept={setODconcept}
+                ODfiltering={ODfiltering}
+                setODfiltering={setODfiltering}
             />
           </div>
         )}
@@ -155,9 +295,9 @@ const CreateFormLayout: React.FC = () => {
         {activeTab === 3 && (
           <div className="p-4 bg-white rounded-lg shadow-md">
             <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4">
-          <ToggleSwitchCustomSql />
+          <ToggleSwitchCustomSql isCustomSqlActive={isCustomSqlActive} setIsCustomSqlActive={setIsCustomSqlActive} />
             </div>
-            <TextBoxSQL />
+            <TextBoxSQL sqlCode={sqlCode} setSqlCode={setSqlCode}/>
           </div>
         )}
           </TabsContent>

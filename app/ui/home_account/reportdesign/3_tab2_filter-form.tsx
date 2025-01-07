@@ -12,25 +12,128 @@ import LoadingSpinner from '@/app/ui/LoadingSpinner';
 
 
 interface FilterFormProps {
+  selectedGroupingAgency: string;
+  setSelectedGroupingAgency: (value: string) => void;
+  selectedGroupingValuesAgency: string[];
+  setSelectedGroupingValuesAgency: (values: string[]) => void;
+  isDropdownOpenAgency: boolean;
+  toggleDropdownAgency: () => void;
+
+
   selectedGroupingIssuing: string;
   setSelectedGroupingIssuing: (value: string) => void;
   selectedGroupingValuesIssuing: string[];
   setSelectedGroupingValuesIssuing: (values: string[]) => void;
+  isDropdownOpenIssuing: boolean;
+  toggleDropdownIssuing: () => void;
+
+  selectedGroupingMarketing: string;
+  setSelectedGroupingMarketing: (value: string) => void;
+  selectedGroupingValuesMarketing: string[];
+  setSelectedGroupingValuesMarketing: (values: string[]) => void;
+  isDropdownOpenMarketing: boolean;
+  toggleDropdownMarketing: () => void;
+
+  selectedGroupingOperating: string;
+  setSelectedGroupingOperating: (value: string) => void;
+  selectedGroupingValuesOperating: string[];
+  setSelectedGroupingValuesOperating: (values: string[]) => void;
+  isDropdownOpenOperating: boolean;
+  toggleDropdownOperating: () => void;
+
+  selectedGroupingGeoFrom: string;
+  setSelectedGroupingGeoFrom: (value: string) => void;
+  selectedGroupingValuesGeoFrom: string[];
+  setSelectedGroupingValuesGeoFrom: (values: string[]) => void;
+  isDropdownOpenGeoFrom: boolean;
+  toggleDropdownGeoFrom: () => void;
+
+  selectedGroupingGeoTo: string;
+  setSelectedGroupingGeoTo: (value: string) => void;
+  selectedGroupingValuesGeoTo: string[];
+  setSelectedGroupingValuesGeoTo: (values: string[]) => void;
+  isDropdownOpenGeoTo: boolean;
+  toggleDropdownGeoTo: () => void;
+
+  ODconcept: string;
+  setODconcept: (value: string) => void;
+  ODfiltering: string;
+  setODfiltering: (value: string) => void;
+
 }
 
 const FilterForm: React.FC<FilterFormProps> = ({ 
+  selectedGroupingAgency,
+  setSelectedGroupingAgency,
+  selectedGroupingValuesAgency,
+  setSelectedGroupingValuesAgency,
+  isDropdownOpenAgency,
+  toggleDropdownAgency,
+
   selectedGroupingIssuing,
   setSelectedGroupingIssuing,
   selectedGroupingValuesIssuing,
-  setSelectedGroupingValuesIssuing}) => {
+  setSelectedGroupingValuesIssuing,
+  isDropdownOpenIssuing,
+  toggleDropdownIssuing,
+
+  selectedGroupingMarketing,
+  setSelectedGroupingMarketing,
+  selectedGroupingValuesMarketing,
+  setSelectedGroupingValuesMarketing,
+  isDropdownOpenMarketing,
+  toggleDropdownMarketing,
+
+  selectedGroupingOperating,
+  setSelectedGroupingOperating,
+  selectedGroupingValuesOperating,
+  setSelectedGroupingValuesOperating,
+  isDropdownOpenOperating,
+  toggleDropdownOperating,
+
+  selectedGroupingGeoFrom,
+  setSelectedGroupingGeoFrom,
+  selectedGroupingValuesGeoFrom,
+  setSelectedGroupingValuesGeoFrom,
+  isDropdownOpenGeoFrom,
+  toggleDropdownGeoFrom,
+
+  selectedGroupingGeoTo,
+  setSelectedGroupingGeoTo,
+  selectedGroupingValuesGeoTo,
+  setSelectedGroupingValuesGeoTo,
+  isDropdownOpenGeoTo,
+  toggleDropdownGeoTo,
+
+  ODconcept,
+  setODconcept,
+  ODfiltering,
+  setODfiltering,
+}) => {
+  const [agencyGroupings, setAgencyGroupings] = useState<string[]>([]);
   const [airlineGroupingsIssuing, setAirlineGroupingsIssuing] = useState<string[]>([]);
   const [airlineGroupingsMarketing, setAirlineGroupingsMarketing] = useState<string[]>([]);
   const [airlineGroupingsOperating, setAirlineGroupingsOperating] = useState<string[]>([]);
+  const [GroupingsGeoFrom, setGroupingsGeoFrom] = useState<string[]>([]);
+  const [GroupingsGeoTo, setGroupingsGeoTo] = useState<string[]>([]);
+  const [loadingAgency, setLoadingAgency] = useState<boolean>(false);
   const [loadingIssuing, setLoadingIssuing] = useState<boolean>(false);
   const [loadingMarketing, setLoadingMarketing] = useState<boolean>(false);
   const [loadingOperating, setLoadingOperating] = useState<boolean>(false);
+  const [loadingGeoFrom, setLoadingGeoFrom] = useState<boolean>(false);
+  const [loadingGeoTo, setLoadingGeoTo] = useState<boolean>(false);
+  
+  
 
   useEffect(() => {
+    setLoadingAgency(true);
+    fetch('/api/home_account/reportdesign/agencyfilter/agencyGrouping')
+      .then(response => response.json())
+      .then(data => setAgencyGroupings(data))
+      .catch(error => console.error('Error fetching agency groupings:', error))
+      .finally(() => setLoadingAgency(false));
+
+
     setLoadingIssuing(true);
     fetch('/api/home_account/reportdesign/airlinefilter/airlineGrouping')
       .then(response => response.json())
@@ -38,7 +141,7 @@ const FilterForm: React.FC<FilterFormProps> = ({
       .catch(error => console.error('Error fetching airline groupings:', error))
       .finally(() => setLoadingIssuing(false));
 
-      setLoadingIssuing(true);
+      setLoadingMarketing(true);
       fetch('/api/home_account/reportdesign/airlinefilter/airlineGrouping')
       .then(response => response.json())
       .then(data => setAirlineGroupingsMarketing(data))
@@ -51,6 +154,20 @@ const FilterForm: React.FC<FilterFormProps> = ({
       .then(data => setAirlineGroupingsOperating(data))
       .catch(error => console.error('Error fetching airline groupings:', error))
       .finally(() => setLoadingOperating(false));
+
+      setLoadingGeoFrom(true);
+      fetch('/api/home_account/reportdesign/geofilter/geoGrouping')
+      .then(response => response.json())
+      .then(data => setGroupingsGeoFrom(data))
+      .catch(error => console.error('Error fetching geo groupings:', error))
+      .finally(() => setLoadingGeoFrom(false));
+
+      setLoadingGeoTo(true);
+      fetch('/api/home_account/reportdesign/geofilter/geoGrouping')
+      .then(response => response.json())
+      .then(data => setGroupingsGeoTo(data))
+      .catch(error => console.error('Error fetching geo groupings:', error))
+      .finally(() => setLoadingGeoTo(false));
 
   }, []);
 
@@ -71,28 +188,41 @@ const FilterForm: React.FC<FilterFormProps> = ({
     
          <div className="mb-4 items-center">
           <label htmlFor="AgencyGroup" className="mb-2 block text-sm font-medium w-64">
-          Agency Group Name
+          Agency Grouping
           </label>
           <div className="relative">
-            <select
-              id="AgencyGroup"
-              name="AgencyGroup"
+          <select
+              id="Agency"
+              name="Agency"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue="None"
+              value={selectedGroupingAgency}
+              onChange={(e) => setSelectedGroupingAgency(e.target.value)}
             >
-
-                 {/* THIS SHOULD COME FROM DATABASE BASED ON USER/ACCOUNT GROUPINGS */}
-           <option value="None" className="bg-white"></option>
-           <option value="Grouping 1" className="bg-white">Grouping 1</option>
-           <option value="Grouping 2" className="bg-white">Grouping 2</option>
-           <option value="Grouping 3" className="bg-white">Grouping 3</option>
+              <option value="None" className="bg-white"></option>
+              {loadingAgency ? (
+                   
+                   <option value="loading" disabled>
+                   Loading...
+                 </option>
+                  
+                  ) : (
+                    agencyGroupings.map((grouping, index) => (
+                <option key={index} value={grouping} className="bg-white">{grouping}</option>
+              )))}
             </select>
           </div>
         </div>
 
          {/* Grouping values filtering */}
     
-         <CheckBoxGroupingAgency />
+         <CheckBoxGroupingAgency 
+          selectedGroupingAgency={selectedGroupingAgency}
+          selectedGroupingValuesAgency={selectedGroupingValuesAgency}
+          setSelectedGroupingValuesAgency={setSelectedGroupingValuesAgency}
+          isDropdownOpenAgency={isDropdownOpenAgency}
+          toggleDropdownAgency={toggleDropdownAgency}
+          
+         />
 
          </div>
          </div>
@@ -112,7 +242,7 @@ const FilterForm: React.FC<FilterFormProps> = ({
     
          <div className="mb-4">
           <label htmlFor="Issuing" className="mb-2 block text-sm font-medium w-64">
-          Issuing Airline Group Type
+          Issuing Airline Grouping
           </label>
           <div className="relative">
           <select
@@ -143,6 +273,8 @@ const FilterForm: React.FC<FilterFormProps> = ({
          selectedGroupingValuesIssuing={selectedGroupingValuesIssuing}
         setSelectedGroupingValuesIssuing={setSelectedGroupingValuesIssuing}
         selectedGroupingIssuing={selectedGroupingIssuing}
+        isDropdownOpenIssuing={isDropdownOpenIssuing}
+        toggleDropdownIssuing={toggleDropdownIssuing}
         />
          </div>
 
@@ -150,73 +282,79 @@ const FilterForm: React.FC<FilterFormProps> = ({
     
          <div className="mb-4">
           <label className="mb-2 block text-sm font-medium w-64">
-          Marketing Airline Group Type
+          Marketing Airline Grouping
           </label>
           <div className="relative">
-            <select
+          <select
               id="Marketing"
               name="Marketing"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue="None"
+              value={selectedGroupingMarketing}
+              onChange={(e) => setSelectedGroupingMarketing(e.target.value)}
             >
-
-                 {/* THIS SHOULD COME FROM DATABASE BASED ON USER/ACCOUNT GROUPINGS */}
-                 <option value="None" className="bg-white"></option>
-          
-                 {loadingMarketing ? (
+              <option value="None" className="bg-white"></option>
+              {loadingMarketing ? (
                    
                    <option value="loading" disabled>
                    Loading...
                  </option>
-                   
-                  ) : (airlineGroupingsMarketing.map((grouping, index) => (
-              <option key={index} value={grouping} className="bg-white">{grouping}</option>
-            )))}
+                  
+                  ) : (
+              airlineGroupingsMarketing.map((grouping, index) => (
+                <option key={index} value={grouping} className="bg-white">{grouping}</option>
+              )))}
             </select>
           </div>
         </div>
 
          {/* Grouping values filtering */}
     
-         <CheckBoxMarketing />
-      
+         <CheckBoxMarketing 
+            selectedGroupingValuesMarketing ={selectedGroupingValuesMarketing }
+            setSelectedGroupingValuesMarketing ={setSelectedGroupingValuesMarketing }
+            selectedGroupingMarketing ={selectedGroupingMarketing }
+            isDropdownOpenMarketing ={isDropdownOpenMarketing }
+            toggleDropdownMarketing ={toggleDropdownMarketing }/>
 
-         
          </div>
 
          <div className="flex flex-row bg-gray-200 pt-0 pr-4 pl-6 pb-1 space-x-6">
     
          <div className="mb-4">
           <label className="mb-2 block text-sm font-medium w-64">
-          Operating Airline Group Type
+          Operating Airline Grouping
           </label>
           <div className="relative">
-            <select
+          <select
               id="Operating"
               name="Operating"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue="None"
+              value={selectedGroupingOperating}
+              onChange={(e) => setSelectedGroupingOperating(e.target.value)}
             >
-
-                 {/* THIS SHOULD COME FROM DATABASE BASED ON USER/ACCOUNT GROUPINGS */}
-                 <option value="None" className="bg-white"></option>
-                 {loadingOperating ? (
+              <option value="None" className="bg-white"></option>
+              {loadingOperating ? (
                    
                    <option value="loading" disabled>
                    Loading...
                  </option>
-                   
+                  
                   ) : (
-                 airlineGroupingsOperating.map((grouping, index) => (
-              <option key={index} value={grouping} className="bg-white">{grouping}</option>
-            )))}
+              airlineGroupingsOperating.map((grouping, index) => (
+                <option key={index} value={grouping} className="bg-white">{grouping}</option>
+              )))}
             </select>
           </div>
         </div>
 
          {/* Grouping values filtering */}
     
-         <CheckBoxOperating />
+         <CheckBoxOperating 
+               selectedGroupingValuesOperating  ={selectedGroupingValuesOperating}
+               setSelectedGroupingValuesOperating  ={setSelectedGroupingValuesOperating}
+               selectedGroupingOperating  ={selectedGroupingOperating}
+               isDropdownOpenOperating  ={isDropdownOpenOperating}
+               toggleDropdownOperating  ={toggleDropdownOperating}/>
          </div>
          </div>
          <div className="flex flex-grow w-full bg-gray-200"> 
@@ -240,64 +378,84 @@ const FilterForm: React.FC<FilterFormProps> = ({
            
       <div className="flex flex-row rounded-md bg-white pt-4 pr-4 pl-6 pb-1 space-x-6">
     
-         <div className="mb-4">
-          <label className="mb-2 block text-sm font-medium w-64">
-          Origin Type
+      <div className="mb-4 items-center">
+          <label htmlFor="OriginGroup" className="mb-2 block text-sm font-medium w-64">
+          Origin Grouping
           </label>
           <div className="relative">
-            <select
+          <select
               id="Origin"
               name="Origin"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue="None"
+              value={selectedGroupingGeoFrom}
+              onChange={(e) => setSelectedGroupingGeoFrom(e.target.value)}
             >
-
-                 {/* THIS SHOULD COME FROM DATABASE BASED ON USER/ACCOUNT GROUPINGS */}
-           <option value="None" className="bg-white"></option>
-           <option value="Grouping 1" className="bg-white">Airport</option>
-           <option value="Grouping 2" className="bg-white">City</option>
-           <option value="Grouping 3" className="bg-white">Country</option>
-           <option value="Grouping 3" className="bg-white">Region</option>
-           <option value="Grouping 3" className="bg-white">User Grouping 1</option>
+              <option value="None" className="bg-white"></option>
+              {loadingGeoFrom ? (
+                   
+                   <option value="loading" disabled>
+                   Loading...
+                 </option>
+                  
+                  ) : (
+                    GroupingsGeoFrom.map((grouping, index) => (
+                <option key={index} value={grouping} className="bg-white">{grouping}</option>
+              )))}
             </select>
           </div>
         </div>
 
          {/* Grouping values filtering */}
     
-         <CheckBoxGeoFrom />
+         <CheckBoxGeoFrom 
+               selectedGroupingValuesGeoFrom={selectedGroupingValuesGeoFrom}
+               setSelectedGroupingValuesGeoFrom={setSelectedGroupingValuesGeoFrom}
+               selectedGroupingGeoFrom={selectedGroupingGeoFrom}
+               isDropdownOpenGeoFrom={isDropdownOpenGeoFrom}
+               toggleDropdownGeoFrom={toggleDropdownGeoFrom}
+               />
 
          
          </div>
 
       <div className="flex flex-row rounded-md bg-white pt-0 pr-4 pl-6 pb-1 space-x-6">
     
-         <div className="mb-4">
-          <label className="mb-2 block text-sm font-medium w-64">
-          Destination Type
+      <div className="mb-4 items-center">
+          <label htmlFor="DestinationGroup" className="mb-2 block text-sm font-medium w-64">
+          Destination Grouping
           </label>
           <div className="relative">
-            <select
-              id="destination"
-              name="destination"
+          <select
+              id="Destination"
+              name="Destination"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue="None"
+              value={selectedGroupingGeoTo}
+              onChange={(e) => setSelectedGroupingGeoTo(e.target.value)}
             >
-
-                 {/* THIS SHOULD COME FROM DATABASE BASED ON USER/ACCOUNT GROUPINGS */}
-                 <option value="None" className="bg-white"></option>
-           <option value="Grouping 1" className="bg-white">Airport</option>
-           <option value="Grouping 2" className="bg-white">City</option>
-           <option value="Grouping 3" className="bg-white">Country</option>
-           <option value="Grouping 3" className="bg-white">Region</option>
-           <option value="Grouping 3" className="bg-white">User Grouping 1</option>
+              <option value="None" className="bg-white"></option>
+              {loadingGeoTo ? (
+                   
+                   <option value="loading" disabled>
+                   Loading...
+                 </option>
+                  
+                  ) : (
+                    GroupingsGeoTo.map((grouping, index) => (
+                <option key={index} value={grouping} className="bg-white">{grouping}</option>
+              )))}
             </select>
           </div>
         </div>
 
          {/* OD Filetrs */}
     
-         <CheckBoxGeoTo />
+         <CheckBoxGeoTo 
+               selectedGroupingValuesGeoTo={selectedGroupingValuesGeoTo}
+               setSelectedGroupingValuesGeoTo={setSelectedGroupingValuesGeoTo}
+               selectedGroupingGeoTo={selectedGroupingGeoTo}
+               isDropdownOpenGeoTo={isDropdownOpenGeoTo}
+               toggleDropdownGeoTo={toggleDropdownGeoTo}
+               />
          </div>    
          </div>
 
@@ -317,7 +475,10 @@ const FilterForm: React.FC<FilterFormProps> = ({
           O&D Concept
           </label>
           <div className="relative">
-          <RadioButtonListItinerary/>
+          <RadioButtonListItinerary
+          ODconcept={ODconcept}
+          setODconcept={setODconcept}
+          />
           </div>
           </div>      
           </div>  
@@ -337,7 +498,10 @@ const FilterForm: React.FC<FilterFormProps> = ({
           O&D Filtering
           </label>
           <div className="relative">
-          <ToggleSwitchItinerary onChange={(info) => console.log(info)} />
+          <ToggleSwitchItinerary 
+          ODfiltering={ODfiltering}
+          setODfiltering={setODfiltering}
+          />
           </div>   
  
        

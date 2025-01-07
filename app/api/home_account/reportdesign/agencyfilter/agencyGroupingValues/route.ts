@@ -14,7 +14,9 @@ export async function GET(request: Request) {
 
     // This is to be collected from DB: VALUES of the user grouping selected
     const selectedGroupingValues =  [selectedGrouping, 
-      'CDG', 'MAD', 'JFK','SYD', 'OSL', 'YUL'];
+      'Group ABD', 'Group GHD', 'Group JUS','Group dfc', 'Group ddd', 'Group dewe',
+      'Group vtrebyr', 'Group ddfcc','Group drftg','Group gtregtrv', 
+      'Group vrvr','Group vtrvr', 'Group vtrvtr', 'Group JUvtretS'];
 
     return NextResponse.json(selectedGroupingValues);
   } catch (error) {
@@ -22,3 +24,4 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Database error' }, { status: 500 });
   }
 }
+

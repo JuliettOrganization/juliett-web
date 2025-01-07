@@ -2,10 +2,64 @@
 import React from 'react';
 import TagInput from '@/app/ui/home_account/reportdesign/1_TagInput';
 
-export default function ReportMainInfo() {
+interface ReportMainInfoProps {
+  reportName: string;
+  setReportName: (value: string) => void;
+  description: string;
+  setDescription: (value: string) => void;
+  tags: string[];
+  setTags: (values: string[]) => void;
+  dateConcept: string;
+  setDateConcept: (value: string) => void;
+  dateFrom: string;
+  setDateFrom: (value: string) => void;
+  dateTo: string;
+  setDateTo: (value: string) => void;
+  benchmarkPeriod: string;
+  setBenchmarkPeriod: (value: string) => void;
+  benchmarkDateFrom: string;
+  setBenchmarkDateFrom: (value: string) => void;
+  benchmarkDateTo: string;
+  setBenchmarkDateTo: (value: string) => void;
+  defaultDateConcept: string;
+  defaultDateFrom: string;
+  defaultDateTo: string;
+  defaultBenchmarkPeriod: string;
+  defaultBenchmarkDateFrom: string;
+  defaultBenchmarkDateTo: string;
+}
+
+const ReportMainInfo: React.FC<ReportMainInfoProps> = ({
+  reportName,
+  setReportName,
+  description,
+  setDescription,
+  tags,
+  setTags,
+  dateConcept,
+  setDateConcept,
+  dateFrom,
+  setDateFrom,
+  dateTo,
+  setDateTo,
+  benchmarkPeriod,
+  setBenchmarkPeriod,
+  benchmarkDateFrom,
+  setBenchmarkDateFrom,
+  benchmarkDateTo,
+  setBenchmarkDateTo,
+  defaultDateConcept,
+  defaultDateFrom,
+  defaultDateTo,
+  defaultBenchmarkPeriod,
+  defaultBenchmarkDateFrom,
+  defaultBenchmarkDateTo,
+}) => {
+  const isBenchmarkDisabled = benchmarkPeriod === 'No';
+
   return (
     <div className="p-4">
-      <div className="rounded-md  border-none bg-white p-4">
+      <div className="rounded-md border-none bg-white p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Report Name */}
           <div className="mb-4">
@@ -16,8 +70,10 @@ export default function ReportMainInfo() {
               <input
                 id="report_name"
                 name="report_name"
-                type="string"
+                type="text"
                 placeholder="Type here"
+                value={reportName}
+                onChange={(e) => setReportName(e.target.value)}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
                 required
               />
@@ -31,10 +87,12 @@ export default function ReportMainInfo() {
             </label>
             <div className="relative mt-2 rounded-md">
               <input
-                id="Description"
-                name="Description"
-                type="string"
+                id="description"
+                name="description"
+                type="text"
                 placeholder="Type here"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
               />
             </div>
@@ -44,116 +102,123 @@ export default function ReportMainInfo() {
           <div className="mb-4 md:col-span-2 lg:col-span-2">
             <label htmlFor="tags" className="mb-2 block text-sm font-medium">
               Tags
-            </label>
+            </label>            
             <div className="relative mt-2 rounded-md border border-gray-200 bg-white px-[14px] pl-0 py-0 items-center gap-4">
-              <TagInput />
+            <TagInput tags={tags} setTags={setTags} />
             </div>
-          </div>
-        </div>
+            </div>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mt-6">
           {/* Date Concept */}
           <div className="mb-4">
-            <label htmlFor="DateConcept" className="mb-2 block text-sm font-medium w-40">
+            <label htmlFor="date_concept" className="mb-2 block text-sm font-medium w-40">
               Date Concept
             </label>
             <div className="relative">
-              <select
-                id="DateConcept"
-                name="DateConcept"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue="Issue Date"
+            <select
+                id="date_concept"
+                name="date_concept"
+                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500 bg-white"
+                value={dateConcept || defaultDateConcept}
+                onChange={(e) => setDateConcept(e.target.value)}
               >
-                <option value="Option1">Issue Date</option>
-                <option value="Option2">Travel Date</option>
-                <option value="Option3">Reporting Date</option>
+                <option value={defaultDateConcept} className="bg-white text-black">{defaultDateConcept}</option>
+                <option value="Travel Date" className="bg-white text-black">Travel Date</option>
               </select>
-            </div>
+                          </div>
           </div>
 
-          {/* Date from */}
+          {/* Date From */}
           <div className="mb-4">
-            <label htmlFor="DateFrom" className="mb-2 block text-sm font-medium">
+            <label htmlFor="date_from" className="mb-2 block text-sm font-medium">
               Date From
             </label>
             <div className="relative">
               <input
-                id="DateFrom"
-                name="DateFrom"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+                id="date_from"
+                name="date_from"
                 type="date"
-                defaultValue="2025-01-01"
+                value={dateFrom || defaultDateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
               />
             </div>
           </div>
 
-          {/* Date to */}
+          {/* Date To */}
           <div className="mb-4">
-            <label htmlFor="DateTo" className="mb-2 block text-sm font-medium">
+            <label htmlFor="date_to" className="mb-2 block text-sm font-medium">
               Date To
             </label>
             <div className="relative">
               <input
-                id="DateTo"
-                name="DateTo"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+                id="date_to"
+                name="date_to"
                 type="date"
-                defaultValue="2025-01-31"
+                value={dateTo || defaultDateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
               />
             </div>
           </div>
 
           {/* Benchmark Period */}
           <div className="mb-4">
-            <label htmlFor="BenchmarkPeriod" className="mb-2 block text-sm font-medium w-40">
+            <label htmlFor="benchmark_period" className="mb-2 block text-sm font-medium w-40">
               Benchmark Period
             </label>
             <div className="relative">
-              <select
-                id="BenchmarkPeriod"
-                name="BenchmarkPeriod"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue="No"
+            <select
+                id="benchmark_period"
+                name="benchmark_period"
+                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500 bg-white"
+                value={benchmarkPeriod || defaultBenchmarkPeriod}
+                onChange={(e) => setBenchmarkPeriod(e.target.value)}
               >
-                <option value="Option1">Yes</option>
-                <option value="Option2">No</option>
+                <option value={defaultBenchmarkPeriod} className="bg-white text-black">{defaultBenchmarkPeriod}</option>
+                <option value="No" className="bg-white text-black">No</option>
               </select>
             </div>
           </div>
 
-          {/* Date from benchmark */}
+          {/* Benchmark Date From */}
           <div className="mb-4">
-            <label htmlFor="DateFromBenchmark" className="mb-2 block text-sm font-medium">
-              Date From
+            <label htmlFor="benchmark_date_from" className="mb-2 block text-sm font-medium">
+              Benchmark Date From
             </label>
             <div className="relative">
               <input
-                id="DateFromBenchmark"
-                name="DateFromBenchmark"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+                id="benchmark_date_from"
+                name="benchmark_date_from"
                 type="date"
-                defaultValue="2024-01-01"
-              />
+                value={benchmarkDateFrom || defaultBenchmarkDateFrom}
+                onChange={(e) => setBenchmarkDateFrom(e.target.value)}
+                className={`peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500 ${isBenchmarkDisabled ? 'text-gray-400' : ''}`}
+                disabled={isBenchmarkDisabled}               />
             </div>
           </div>
 
-          {/* Date to benchmark */}
+          {/* Benchmark Date To */}
           <div className="mb-4">
-            <label htmlFor="DateToBenchmark" className="mb-2 block text-sm font-medium">
-              Date To
+            <label htmlFor="benchmark_date_to" className="mb-2 block text-sm font-medium">
+              Benchmark Date To
             </label>
             <div className="relative">
               <input
-                id="DateToBenchmark"
-                name="DateToBenchmark"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+                id="benchmark_date_to"
+                name="benchmark_date_to"
                 type="date"
-                defaultValue="2024-01-31"
-              />
+                value={benchmarkDateTo || defaultBenchmarkDateTo}
+                onChange={(e) => setBenchmarkDateTo(e.target.value)}
+                className={`peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500 ${isBenchmarkDisabled ? 'text-gray-400' : ''}`}
+                disabled={isBenchmarkDisabled}                />
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default ReportMainInfo;

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql';
+import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-const TextBoxSQL = () => {
-  const [sqlCode, setSqlCode] = useState('');
+// Register the SQL language
+SyntaxHighlighter.registerLanguage('sql', sql);
 
+const TextBoxSQL = ({ sqlCode, setSqlCode }) => {
   const handleChange = (event) => {
     setSqlCode(event.target.value);
   };
@@ -18,7 +20,7 @@ const TextBoxSQL = () => {
         onChange={handleChange}
       ></textarea>
       <div className="w-full max-w-2xl p-2 bg-white border border-gray-300 rounded-md">
-        <SyntaxHighlighter language="sql" style={docco}>
+        <SyntaxHighlighter language="sql" style={atomOneDark}>
           {sqlCode}
         </SyntaxHighlighter>
       </div>
