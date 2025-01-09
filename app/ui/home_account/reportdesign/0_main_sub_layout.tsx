@@ -9,7 +9,9 @@ import ToggleSwitchCustomSql from './3_tab3_custom-sql-toggle';
 import TextBoxSQL from './3_tab3_custom-sql';
 import MainOptionsForm from './3_tab0_main_options';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAccount } from '@/app/context/AccountContext';
+
 
 // const defaultDateConcept = 'Issue Date';
 // const defaultDateFrom = '2025-01-01';
@@ -160,12 +162,14 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
   const filteredFields = availableFields.filter((field) =>
     field.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  const { accountid } = useAccount();
   //SAVE BUTTON HANDLE SAVE BEGIN
   const handleSave = async () => {
     const reportData = {
       // Consolidate all the necessary data from LayoutRightPurplePanel, LayoutMainInfoForm, and Tabs
       // Example:
+      
+      accountid,
       reportid,
       reportName,
       description,

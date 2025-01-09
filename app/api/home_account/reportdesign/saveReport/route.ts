@@ -5,7 +5,7 @@ import { auth } from '@/auth';
 
 export async function POST(request: Request) {
   try {
-    const { reportid, reportData } = await request.json();
+    const { reportData } = await request.json();
     const session = await auth();
 
     if (!session || !session.user) {
@@ -13,11 +13,11 @@ export async function POST(request: Request) {
     }
 
     const useremail = session.user.email;
-    if (reportid) {
+    if (reportData.reportid) {
       // Update existing report
       const updateQuery = `
-        UPDATE reports
-        SET
+          UPDATE reports
+          SET
           status='draft',
           reportname = $1,
           description = $2,
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
         reportData.selectedGroupingValuesMarketing,
         reportData.selectedGroupingValuesOperating,
         reportData.sqlCode,
-        reportid,
+        reportData.reportid,
       ];
       await sql.query(updateQuery, updateValues);
     } else {
@@ -104,10 +104,10 @@ export async function POST(request: Request) {
         selected_grouping_operating, selected_grouping_values_agency, 
         selected_grouping_values_geo_from, selected_grouping_values_geo_to, 
         selected_grouping_values_issuing, selected_grouping_values_marketing, 
-        selected_grouping_values_operating, sql_code, transaction_type
+        selected_grouping_values_operating, sql_code, transaction_type, accountid
       ) VALUES (
        $1,$2,$3,$4,$5,NOW(),$6, $7, $8, $9, $10, $11, $12, $13, $14, $15, 
-        $16, $17, $18, $19, $20,$21, $22, $23, $24, $25, $26, $27, $28, $29, $30,$31,$32
+        $16, $17, $18, $19, $20,$21, $22, $23, $24, $25, $26, $27, $28, $29, $30,$31,$32,$33
       )
    
     `;
@@ -145,6 +145,7 @@ export async function POST(request: Request) {
       reportData.selectedGroupingValuesOperating,
       reportData.sqlCode,
       reportData.transactionType,
+      reportData.accountid
     ];
 
     await sql.query(insertQuery, insertValues);

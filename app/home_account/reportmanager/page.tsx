@@ -5,6 +5,8 @@ import ReportsTableServer from '@/app/ui/home_account/reportmanager/ReportsTable
 import { CreateReport } from '@/app/ui/home_account/reportmanager/buttons';
 import { ReportsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense, useEffect, useState, use } from 'react';
+import { useAccount } from '@/app/context/AccountContext';
+
 
 type SearchParams = Promise<{ query?: string; page?: string }>;
 
@@ -17,10 +19,11 @@ export default function Page({ searchParams }: PageProps) {
   const params = use(searchParams);
   const query = params.query || '';
   const currentPage = Number(params.page) || 1;
+  const { accountid } = useAccount();
 
 
 useEffect(() => {
-    fetch(`/api/home_account/reportmanager/fetchReportsPages?query=${encodeURIComponent(query)}`)
+    fetch(`/api/home_account/reportmanager/fetchReportsPages?accountid=${accountid}&query=${encodeURIComponent(query)}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch reports');
@@ -33,7 +36,7 @@ useEffect(() => {
       .catch((error) => {
         console.error('Error fetching reports:', error);
       });
-  }, [query]);
+  }, [query,accountid]);
 
 
 

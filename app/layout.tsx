@@ -1,5 +1,7 @@
 
 import { Metadata } from 'next';
+import { AccountProvider } from '@/app/context/AccountContext';
+
  
 export const metadata: Metadata = {
   title: 'JULIETT',
@@ -17,7 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-        <body className={`${inter.className} antialiased`}>{children}</body>
+        <body className={`${inter.className} antialiased`}> <AccountProvider>
+          {children}
+        </AccountProvider></body>
         
     </html>
   );

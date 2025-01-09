@@ -71,7 +71,7 @@ return (
           />
         </div>
         <div className="flex flex-col text-left">
-          <span className="hidden md:block">Jane Dutton</span>
+          <span className="hidden md:block text-xs">Jane Dutton</span>
           <span className="hidden md:block text-xs text-left text-gray-400">jane.dutton@travelggroup.com</span>
         </div>
         <ChevronDownIcon className="w-5 h-5 text-justify-start text-white"/>
