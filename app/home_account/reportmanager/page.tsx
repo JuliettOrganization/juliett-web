@@ -1,10 +1,10 @@
+'use client';
 import Pagination from '@/app/ui/home_account/reportmanager/pagination';
 import Search from '@/app/ui/search';
 import ReportsTableServer from '@/app/ui/home_account/reportmanager/ReportsTableServer';
 import { CreateReport } from '@/app/ui/home_account/reportmanager/buttons';
 import { ReportsTableSkeleton } from '@/app/ui/skeletons';
-import { Suspense, use } from 'react';
-import { fetchReportsPages } from '@/app/lib/data';
+import { Suspense, useEffect, useState, use } from 'react';
 
 type SearchParams = Promise<{ query?: string; page?: string }>;
 
@@ -13,10 +13,29 @@ interface PageProps {
 }
 
 export default function Page({ searchParams }: PageProps) {
+  const [totalPages, setTotalPages] = useState(0);
   const params = use(searchParams);
   const query = params.query || '';
   const currentPage = Number(params.page) || 1;
-  const totalPages = use(fetchReportsPages(query));
+
+
+useEffect(() => {
+    fetch(`/api/home_account/reportmanager/fetchReportsPages?query=${encodeURIComponent(query)}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch reports');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setTotalPages(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching reports:', error);
+      });
+  }, [query]);
+
+
 
   return (
     <div className="w-full">

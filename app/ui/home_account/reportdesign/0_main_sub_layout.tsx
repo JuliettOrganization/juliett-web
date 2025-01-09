@@ -11,17 +11,81 @@ import MainOptionsForm from './3_tab0_main_options';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const defaultDateConcept = 'Issue Date';
-const defaultDateFrom = '2025-01-01';
-const defaultDateTo = '2025-12-31';
-const defaultBenchmarkPeriod = 'Yes';
-const defaultBenchmarkDateFrom = '2024-01-01';
-const defaultBenchmarkDateTo = '2024-12-31';
-const defaultODconcept = 'Ticket based';
-const defaultODfiltering = 'Include';
+// const defaultDateConcept = 'Issue Date';
+// const defaultDateFrom = '2025-01-01';
+// const defaultDateTo = '2025-12-31';
+// const defaultBenchmarkPeriod = 'Yes';
+// const defaultBenchmarkDateFrom = '2024-01-01';
+// const defaultBenchmarkDateTo = '2024-12-31';
+// const defaultODconcept = 'Ticket based';
+// const defaultODfiltering = 'Include';
 
 
-const CreateFormLayout: React.FC = () => {
+interface CreateFormLayoutProps {
+  reportName: string;
+  description: string;
+  tags: string[];
+  dateConcept: string;
+  dateFrom: string;
+  dateTo: string;
+  benchmarkPeriod: string;
+  benchmarkDateFrom: string;
+  benchmarkDateTo: string;
+  currency: string;
+  fields: string[];
+  transactionType: string[];
+  amounts: string[];
+  ODconcept: string;
+  ODfiltering: string;
+  isCustomSqlActive: boolean;
+  selectedGroupingAgency: string;
+  selectedGroupingGeoFrom: string;
+  selectedGroupingGeoTo: string;
+  selectedGroupingIssuing: string;
+  selectedGroupingMarketing: string;
+  selectedGroupingOperating: string;
+  selectedGroupingValuesAgency: string[];
+  selectedGroupingValuesGeoFrom: string[];
+  selectedGroupingValuesGeoTo: string[];
+  selectedGroupingValuesIssuing: string[];
+  selectedGroupingValuesMarketing: string[];
+  selectedGroupingValuesOperating: string[];
+  sqlCode: string;
+  reportid?: string; // Add reportid as an optional prop
+}
+
+const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
+  reportName: initialReportName,
+  description: initialDescription,
+  tags: initialTags,
+  dateConcept: initialDateConcept,
+  dateFrom: initialDateFrom,
+  dateTo: initialDateTo,
+  benchmarkPeriod: initialBenchmarkPeriod,
+  benchmarkDateFrom: initialBenchmarkDateFrom,
+  benchmarkDateTo: initialBenchmarkDateTo,
+  currency: initialCurrency,
+  fields: initialFields,
+  transactionType: initialTransactionType,
+  amounts: initialAmounts,
+  ODconcept: initialODconcept,
+  ODfiltering: initialODfiltering,
+  isCustomSqlActive: initialIsCustomSqlActive,
+  selectedGroupingAgency: initialSelectedGroupingAgency,
+  selectedGroupingGeoFrom: initialSelectedGroupingGeoFrom,
+  selectedGroupingGeoTo: initialSelectedGroupingGeoTo,
+  selectedGroupingIssuing: initialSelectedGroupingIssuing,
+  selectedGroupingMarketing: initialSelectedGroupingMarketing,
+  selectedGroupingOperating: initialSelectedGroupingOperating,
+  selectedGroupingValuesAgency: initialSelectedGroupingValuesAgency,
+  selectedGroupingValuesGeoFrom: initialSelectedGroupingValuesGeoFrom,
+  selectedGroupingValuesGeoTo: initialSelectedGroupingValuesGeoTo,
+  selectedGroupingValuesIssuing: initialSelectedGroupingValuesIssuing,
+  selectedGroupingValuesMarketing: initialSelectedGroupingValuesMarketing,
+  selectedGroupingValuesOperating: initialSelectedGroupingValuesOperating,
+  sqlCode: initialSqlCode,
+  reportid, // Add reportid to the destructured props
+}) => {
   const availableFields = [
     'agency code (booking)', 'agency code (issuing)', 'airline code (marketing)',
     'commission (total)', 'coupon number', 'currency code (local)', 'date (issuing)',
@@ -38,46 +102,14 @@ const CreateFormLayout: React.FC = () => {
     'ticket number (refunded)', 'ticket number (TDNR)', 'tour code', 'transaction code',
     'yq amount (local currency)', 'yr amount (local currency)',
   ];
-  
-  const [reportName, setReportName] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [tags, setTags] = useState<string[]>([]);
-  const [dateConcept, setDateConcept] = useState<string>(defaultDateConcept);
-  const [dateFrom, setDateFrom] = useState<string>(defaultDateFrom);
-  const [dateTo, setDateTo] = useState<string>(defaultDateTo);
-  const [benchmarkPeriod, setBenchmarkPeriod] = useState<string>(defaultBenchmarkPeriod);
-  const [benchmarkDateFrom, setBenchmarkDateFrom] = useState<string>(defaultBenchmarkDateFrom);
-  const [benchmarkDateTo, setBenchmarkDateTo] = useState<string>(defaultBenchmarkDateTo);
-
-
-  const [fields, setFields] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [currency, setCurrency] = useState('');
-  const [transactionType, setTransactionType] = useState<string[]>([]);
-  const [amounts, setAmounts] = useState<string[]>([]);
-
-  const [selectedGroupingValuesAgency, setSelectedGroupingValuesAgency] = useState<string[]>([]);
-  const [selectedGroupingValuesIssuing, setSelectedGroupingValuesIssuing] = useState<string[]>([]);
-  const [selectedGroupingValuesMarketing, setSelectedGroupingValuesMarketing] = useState<string[]>([]);
-  const [selectedGroupingValuesOperating, setSelectedGroupingValuesOperating] = useState<string[]>([]);
-  const [selectedGroupingValuesGeoFrom, setSelectedGroupingValuesGeoFrom] = useState<string[]>([]);
-  const [selectedGroupingValuesGeoTo, setSelectedGroupingValuesGeoTo] = useState<string[]>([]);
-
-  const [selectedGroupingAgency, setSelectedGroupingAgency] = useState<string>('');
-  const [selectedGroupingIssuing, setSelectedGroupingIssuing] = useState<string>('');
-  const [selectedGroupingMarketing, setSelectedGroupingMarketing] = useState<string>('');
-  const [selectedGroupingOperating, setSelectedGroupingOperating] = useState<string>('');
-  const [selectedGroupingGeoFrom, setSelectedGroupingGeoFrom] = useState<string>('');
-  const [selectedGroupingGeoTo, setSelectedGroupingGeoTo] = useState<string>('');
-
   const [isDropdownOpenAgency, setIsDropdownOpenAgency] = useState<boolean>(false);
   const [isDropdownOpenIssuing, setIsDropdownOpenIssuing] = useState<boolean>(false);
   const [isDropdownOpenMarketing, setIsDropdownOpenMarketing] = useState<boolean>(false);
   const [isDropdownOpenOperating, setIsDropdownOpenOperating] = useState<boolean>(false);
   const [isDropdownOpenGeoFrom, setIsDropdownOpenGeoFrom] = useState<boolean>(false);
   const [isDropdownOpenGeoTo, setIsDropdownOpenGeoTo] = useState<boolean>(false);
-
   const toggleDropdownAgency = () => {setIsDropdownOpenAgency(!isDropdownOpenAgency);};
   const toggleDropdownIssuing = () => {setIsDropdownOpenIssuing(!isDropdownOpenIssuing);};
   const toggleDropdownMarketing = () => {setIsDropdownOpenMarketing(!isDropdownOpenMarketing);};
@@ -85,11 +117,35 @@ const CreateFormLayout: React.FC = () => {
   const toggleDropdownGeoFrom = () => {setIsDropdownOpenGeoFrom (!isDropdownOpenGeoFrom);};
   const toggleDropdownGeoTo = () => {setIsDropdownOpenGeoTo (!isDropdownOpenGeoTo);};
 
-  const [ODconcept, setODconcept] = useState<string>(defaultODconcept);
-  const [ODfiltering, setODfiltering] = useState<string>(defaultODfiltering);
-
-  const [sqlCode, setSqlCode] = useState<string>('');
-  const [isCustomSqlActive, setIsCustomSqlActive] = useState<boolean>(false);
+  const [reportName, setReportName] = useState<string>(initialReportName);
+  const [description, setDescription] = useState<string>(initialDescription);
+  const [tags, setTags] = useState<string[]>(initialTags);
+  const [dateConcept, setDateConcept] = useState<string>(initialDateConcept);
+  const [dateFrom, setDateFrom] = useState<string>(initialDateFrom);
+  const [dateTo, setDateTo] = useState<string>(initialDateTo);
+  const [benchmarkPeriod, setBenchmarkPeriod] = useState<string>(initialBenchmarkPeriod);
+  const [benchmarkDateFrom, setBenchmarkDateFrom] = useState<string>(initialBenchmarkDateFrom);
+  const [benchmarkDateTo, setBenchmarkDateTo] = useState<string>(initialBenchmarkDateTo);
+  const [currency, setCurrency] = useState<string>(initialCurrency);
+  const [fields, setFields] = useState<string[]>(initialFields);
+  const [transactionType, setTransactionType] = useState<string[]>(initialTransactionType);
+  const [amounts, setAmounts] = useState<string[]>(initialAmounts);
+  const [ODconcept, setODconcept] = useState<string>(initialODconcept);
+  const [ODfiltering, setODfiltering] = useState<string>(initialODfiltering);
+  const [isCustomSqlActive, setIsCustomSqlActive] = useState<boolean>(initialIsCustomSqlActive);
+  const [selectedGroupingAgency, setSelectedGroupingAgency] = useState<string>(initialSelectedGroupingAgency);
+  const [selectedGroupingGeoFrom, setSelectedGroupingGeoFrom] = useState<string>(initialSelectedGroupingGeoFrom);
+  const [selectedGroupingGeoTo, setSelectedGroupingGeoTo] = useState<string>(initialSelectedGroupingGeoTo);
+  const [selectedGroupingIssuing, setSelectedGroupingIssuing] = useState<string>(initialSelectedGroupingIssuing);
+  const [selectedGroupingMarketing, setSelectedGroupingMarketing] = useState<string>(initialSelectedGroupingMarketing);
+  const [selectedGroupingOperating, setSelectedGroupingOperating] = useState<string>(initialSelectedGroupingOperating);
+  const [selectedGroupingValuesAgency, setSelectedGroupingValuesAgency] = useState<string[]>(initialSelectedGroupingValuesAgency);
+  const [selectedGroupingValuesGeoFrom, setSelectedGroupingValuesGeoFrom] = useState<string[]>(initialSelectedGroupingValuesGeoFrom);
+  const [selectedGroupingValuesGeoTo, setSelectedGroupingValuesGeoTo] = useState<string[]>(initialSelectedGroupingValuesGeoTo);
+  const [selectedGroupingValuesIssuing, setSelectedGroupingValuesIssuing] = useState<string[]>(initialSelectedGroupingValuesIssuing);
+  const [selectedGroupingValuesMarketing, setSelectedGroupingValuesMarketing] = useState<string[]>(initialSelectedGroupingValuesMarketing);
+  const [selectedGroupingValuesOperating, setSelectedGroupingValuesOperating] = useState<string[]>(initialSelectedGroupingValuesOperating);
+  const [sqlCode, setSqlCode] = useState<string>(initialSqlCode);
   
   const addTag = (field: string) => {
     if (!fields.includes(field)) {
@@ -110,6 +166,7 @@ const CreateFormLayout: React.FC = () => {
     const reportData = {
       // Consolidate all the necessary data from LayoutRightPurplePanel, LayoutMainInfoForm, and Tabs
       // Example:
+      reportid,
       reportName,
       description,
       tags,
@@ -187,12 +244,12 @@ const CreateFormLayout: React.FC = () => {
          setBenchmarkDateFrom={setBenchmarkDateFrom}
          benchmarkDateTo={benchmarkDateTo}
          setBenchmarkDateTo={setBenchmarkDateTo}
-         defaultDateConcept={defaultDateConcept}
-         defaultDateFrom={defaultDateFrom}
-         defaultDateTo={defaultDateTo}
-         defaultBenchmarkPeriod={defaultBenchmarkPeriod}
-         defaultBenchmarkDateFrom={defaultBenchmarkDateFrom}
-         defaultBenchmarkDateTo={defaultBenchmarkDateTo}
+         defaultDateConcept={dateConcept}
+         defaultDateFrom={dateFrom}
+         defaultDateTo={dateTo}
+         defaultBenchmarkPeriod={benchmarkPeriod}
+         defaultBenchmarkDateFrom={benchmarkDateFrom}
+         defaultBenchmarkDateTo={benchmarkDateTo}
          />
 
       

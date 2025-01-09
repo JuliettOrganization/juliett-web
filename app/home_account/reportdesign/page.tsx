@@ -1,14 +1,14 @@
+'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-import CreateFormLayout from '@/app/ui/home_account/reportdesign/0_main_sub_layout'
+export default function Page() {
+  const router = useRouter();
 
-export default async function Page() {
+  useEffect(() => {
+    router.replace('/home_account/reportdesign/create');
+  }, [router]);
 
-    
-  return (
-    <main >
-      <div >
-        <CreateFormLayout />
-        {/* SHOULD BE EDIT FORM LAYOUT JUST TO COLLECT THE DATA OF THE FORM TO BE DISLAYED */}
-   </div> </main>
-   ); }
+  return null;
+}

@@ -1,9 +1,10 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'; // <-- Import Heroicon
 import ReportStatus from '@/app/ui/home_account/reportmanager/status';
 import ReportTags from '@/app/ui/home_account/reportmanager/tags';
-import { deleteReport } from '@/app/lib/actions'; // <-- Import deleteReport
+
 
 interface Report {
   reportid: number;
@@ -20,12 +21,19 @@ interface ReportsTableClientProps {
   reports: Report[];
 }
 
+interface ErrorState {
+  general?: string[];
+}
+
 const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
+  const router = useRouter();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [sortedReports, setSortedReports] = useState(reports);
   const [sortConfig, setSortConfig] = useState<{ key: keyof Report; direction: 'ascending' | 'descending' } | null>(null);
-
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+    const [errors, setErrors] = useState<ErrorState | null>(null);
+  
   const handleSort = (key: keyof Report) => {
     let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -59,15 +67,34 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
     };
   }, []);
 
-  const handleDelete = async (reportId: string) => {
-    try {
-      await deleteReport(reportId);
-      // Optionally, you can add code to update the UI after deletion
-      alert(`Report with ID ${reportId} deleted successfully.`);
-    } catch (error) {
-      console.error('Error deleting report:', error);
+const handleDelete = async (reportId: string) => {
+  try {
+    const response = await fetch('/api/home_account/reportmanager/deleteReport', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ reportid: reportId }),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log('Report deleted successfully:', result);
+      setPopupMessage('Report deleted successfully');
+      setTimeout(() => {
+        setPopupMessage(null);
+        window.location.reload();
+      }, 2000); // Hide the popup after 3 seconds and refresh the page
+    } else {
+      const result = await response.json();
+      setErrors(result.errors);
     }
-  };
+  } catch (error) {
+    console.error('Error deleting account:', error);
+    setErrors({ general: ['An unexpected error occurred.'] });
+  }
+};
+
 
   const getSortIcon = (key: keyof Report) => {
     if (!sortConfig || sortConfig.key !== key) {
@@ -77,6 +104,10 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
       return <span>&uarr;</span>; // Up arrow
     }
     return <span>&darr;</span>; // Down arrow
+  };
+
+  const handleEditReport = (reportid: string) => {
+    router.push(`/home_account/reportdesign/${reportid}`);
   };
 
   return (
@@ -99,7 +130,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
                   {activeMenu === report.reportid.toString() && (
                     <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
                       <ul>
-                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Edit</li>
+                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}  onClick={() => handleEditReport(report.reportid.toString())}>Edit</li>
                         <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Run</li>
                         <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Schedule</li>
                         <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Clone</li>
@@ -116,25 +147,25 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th onClick={() => handleSort('reportname')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                  <th onClick={() => handleSort('reportname')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Report Name {getSortIcon('reportname')}
                   </th>
-                  <th onClick={() => handleSort('status')} className="px-4 py-5 text-xs text-left font-medium cursor-pointer tracking-wider">
+                  <th onClick={() => handleSort('status')} className="px-4 py-5 text-sm text-left font-medium cursor-pointer tracking-wider">
                     Status {getSortIcon('status')}
                   </th>
-                  <th onClick={() => handleSort('description')} className="px-4 py-5 text-xs text-left font-medium cursor-pointer tracking-wider">
+                  <th onClick={() => handleSort('description')} className="px-4 py-5 text-sm text-left font-medium cursor-pointer tracking-wider">
                     Description {getSortIcon('description')}
                   </th>
-                  <th onClick={() => handleSort('date_concept')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                  <th onClick={() => handleSort('date_concept')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Date Concept {getSortIcon('date_concept')}
                   </th>
-                  <th onClick={() => handleSort('period')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                  <th onClick={() => handleSort('period')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Period {getSortIcon('period')}
                   </th>
-                  <th onClick={() => handleSort('tags')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                  <th onClick={() => handleSort('tags')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Tags {getSortIcon('tags')}
                   </th>
-                  <th onClick={() => handleSort('last_updated')} className="px-4 py-5 text-left text-xs font-medium cursor-pointer tracking-wider">
+                  <th onClick={() => handleSort('last_updated')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Last Updated {getSortIcon('last_updated')}
                   </th>
                   <th className="relative px-6 py-3">
@@ -159,7 +190,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
                       {activeMenu === report.reportid.toString() && (
                         <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
                           <ul>
-                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Edit</li>
+                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}  onClick={() => handleEditReport(report.reportid.toString())}>Edit</li>
                             <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Run</li>
                             <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Schedule</li>
                             <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Clone</li>
@@ -176,6 +207,20 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
           </div>
         </div>
       </div>
+      {popupMessage && (
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 border-l-8 border-l-green-500 bg-white text-green-500 px-4 py-2 rounded shadow-lg">
+          {popupMessage}
+        </div>
+      )}
+      {errors && (
+        <div className="mt-4 text-red-500">
+          <ul>
+            {Object.entries(errors).map(([field, errorMessages]) => (
+              <li key={field}>{field}: {(errorMessages as string[]).join(', ')}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

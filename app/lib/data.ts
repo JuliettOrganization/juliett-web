@@ -96,43 +96,43 @@ export async function fetchCardData () {
 
 
 
+//USE API INSTEAD
+// export async function fetchFilteredReports  (
+//   query: string,
+//   currentPage: number,
+// ) {
+//   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
-export async function fetchFilteredReports  (
-  query: string,
-  currentPage: number,
-) {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
-  try {
-    const reports = await sql<ReportsTable>`
-      SELECT
+//   try {
+//     const reports = await sql<ReportsTable>`
+//       SELECT
       
-        reportid,
-        reportname,
-        description,
-        date_concept,
-        period,
-        status,
-        tags
-      FROM master.report_manager
-       where 
-       report_manager.reportname ILIKE ${`%${query}%`} OR
-        report_manager.description ILIKE ${`%${query}%`} OR
-        report_manager.date_concept ILIKE ${`%${query}%`} OR
-         report_manager.period ILIKE ${`%${query}%`} OR
-          report_manager.status ILIKE ${`%${query}%`} OR
-          report_manager.tags ILIKE ${`%${query}%`} 
-      ORDER BY reportid DESC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-    `;
+//         reportid,
+//         reportname,
+//         description,
+//         date_concept,
+//         period,
+//         status,
+//         tags
+//       FROM master.report_manager
+//        where 
+//        report_manager.reportname ILIKE ${`%${query}%`} OR
+//         report_manager.description ILIKE ${`%${query}%`} OR
+//         report_manager.date_concept ILIKE ${`%${query}%`} OR
+//          report_manager.period ILIKE ${`%${query}%`} OR
+//           report_manager.status ILIKE ${`%${query}%`} OR
+//           report_manager.tags ILIKE ${`%${query}%`} 
+//       ORDER BY reportid DESC
+//       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+//     `;
 
-    return reports.rows; 
-    // was invoices.rows
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch reports.');
-  }
-}
+//     return reports.rows; 
+//     // was invoices.rows
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch reports.');
+//   }
+// }
 
 export async function fetchReportsPages(query: string): Promise<number> {
   try {
