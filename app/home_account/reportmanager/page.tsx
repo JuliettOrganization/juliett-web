@@ -23,6 +23,7 @@ export default function Page({ searchParams }: PageProps) {
 
 
 useEffect(() => {
+  if (accountid) {
     fetch(`/api/home_account/reportmanager/fetchReportsPages?accountid=${accountid}&query=${encodeURIComponent(query)}`)
       .then((response) => {
         if (!response.ok) {
@@ -36,12 +37,13 @@ useEffect(() => {
       .catch((error) => {
         console.error('Error fetching reports:', error);
       });
+    }    
   }, [query,accountid]);
 
 
 
   return (
-    <div className="w-full">
+    <div className="flex flex-col w-full">
       <div className="flex w-full items-center justify-between">
         <h1 className='mb-4 text-4xl'>Report List</h1>
       </div>
@@ -49,9 +51,11 @@ useEffect(() => {
         <Search placeholder="Search report..." />
         <CreateReport />
       </div>
+      <div>
       <Suspense key={query + currentPage} fallback={<ReportsTableSkeleton />}>
         <ReportsTableServer query={query} currentPage={currentPage} />
       </Suspense>
+      </div>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>

@@ -1,6 +1,31 @@
 // Loading animation
+import React from 'react';
+
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
+
+  const HomeUserSkeleton = () => {
+    return (
+      <main className="bg-gray-300 p-8 animate-pulse">
+        <div className="mx-auto justify-center">
+          <div className="rounded-lg mb-8 w-[80vw] mx-auto">
+            <div className="h-10 bg-gray-400 rounded mb-4"></div>
+            <div className="h-6 bg-gray-400 rounded w-1/2"></div>
+          </div>
+          <div className="flex justify-center w-[80vw] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="h-40 bg-gray-400 rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  };
+  
+  export { HomeUserSkeleton };
+
 
 
   export function HomeSkeleton() {
@@ -9,7 +34,7 @@ const shimmer =
         className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
       >
         <div className="flex p-4">
-          <div className="h-5 w-5 rounded-md bg-gray-200" />
+          <div className="h-5 w-5 rounded-md bg-red-500" />
           <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
         </div>
         <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
@@ -31,7 +56,7 @@ export function CardSkeleton() {
       className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
     >
       <div className="flex p-4">
-        <div className="h-5 w-5 rounded-md bg-gray-200" />
+        <div className="h-72 w-72 rounded-md bg-gray-200" />
         <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
       </div>
       <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
@@ -48,24 +73,14 @@ export function CardsSkeleton() {
       <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
     </>
   );
 }
 
-export function RevenueChartSkeleton() {
-  return (
-    <div className={`${shimmer} relative w-full overflow-hidden md:col-span-4`}>
-      <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
-      <div className="rounded-xl bg-gray-100 p-4">
-        <div className="sm:grid-cols-13 mt-0 grid h-[410px] grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4" />
-        <div className="flex items-center pb-2 pt-6">
-          <div className="h-5 w-5 rounded-full bg-gray-200" />
-          <div className="ml-2 h-4 w-20 rounded-md bg-gray-200" />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export function InvoiceSkeleton() {
   return (
@@ -87,7 +102,7 @@ export function LatestInvoicesSkeleton() {
     <div
       className={`${shimmer} relative flex w-full flex-col overflow-hidden md:col-span-4`}
     >
-      <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
+      <div className="mb-4 h-36 w-36 rounded-md bg-gray-100" />
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-100 p-4">
         <div className="bg-white px-6">
           <InvoiceSkeleton />
@@ -107,21 +122,25 @@ export function LatestInvoicesSkeleton() {
 
 export default function DashboardSkeleton() {
   return (
-    <>
+    <div className="flex flex-col w-full ml-24 mt-12">
       <div
-        className={`${shimmer} relative mb-4 h-8 w-36 overflow-hidden rounded-md bg-gray-100`}
+        className={`${shimmer} relative mb-4 h-36 w-full overflow-hidden rounded-md bg-gray-100 `}
       />
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <CardSkeleton />
+        <CardSkeleton />
+        <CardSkeleton />
+        <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
       </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <RevenueChartSkeleton />
+      {/* <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+  
         <LatestInvoicesSkeleton />
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 }
 

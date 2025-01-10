@@ -248,6 +248,7 @@ export async function fetchFilteredUsers  (
         u.id,
         u.name,
         u.email,
+         u.role,
         u.accountstatus,
         u.confirmationstatus,
         COALESCE(string_agg(a.accountname, '; '), '') AS accountnames
@@ -261,9 +262,10 @@ export async function fetchFilteredUsers  (
       WHERE 
         u.name ILIKE ${`%${query}%`} OR
         u.email ILIKE ${`%${query}%`} OR
+        u.role ILIKE ${`%${query}%`} OR
         u.accountstatus ILIKE ${`%${query}%`} OR
         u.confirmationstatus ILIKE ${`%${query}%`}
-      GROUP BY u.id, u.name, u.email, u.accountstatus, u.confirmationstatus
+      GROUP BY u.id, u.name, u.email,u.role , u.accountstatus, u.confirmationstatus
       HAVING COALESCE(string_agg(a.accountname, '; '), '') ILIKE ${`%${query}%`}
       ORDER BY u.email
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}

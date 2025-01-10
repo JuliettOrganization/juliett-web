@@ -5,6 +5,7 @@ import LoadingSpinner from '@/app/ui/LoadingSpinner';
 import { useAccount } from '@/app/context/AccountContext';
 
 
+
 interface ReportsTableServerProps {
   query: string;
   currentPage: number;
@@ -16,6 +17,7 @@ const ReportsTableServer: React.FC<ReportsTableServerProps> = ({ query, currentP
   const [error, setError] = useState<string | null>(null);
   const { accountid } = useAccount();
   useEffect(() => {
+    if (accountid) {
     setLoading(true);
     fetch(`/api/home_account/reportmanager/fetchFilteredReports?accountid=${accountid}&query=${encodeURIComponent(query)}&page=${currentPage}`)
       .then((response) => {
@@ -33,6 +35,7 @@ const ReportsTableServer: React.FC<ReportsTableServerProps> = ({ query, currentP
         setError(error.message);
         setLoading(false);
       });
+    }
   }, [accountid, query, currentPage]);
 
   if (loading) {
@@ -43,7 +46,11 @@ const ReportsTableServer: React.FC<ReportsTableServerProps> = ({ query, currentP
     return <div>Error: {error}</div>;
   }
 
-  return <ReportsTableClient reports={reports} />;
+  return (
+  <div className="flow-root">
+  <ReportsTableClient reports={reports} />
+  </div>
+)
 };
 
 export default ReportsTableServer;

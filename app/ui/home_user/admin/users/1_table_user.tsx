@@ -10,6 +10,7 @@ interface UsersTableClientProps {
     id: string, 
     name: string, 
     email: string, 
+    role: string,
     accountstatus: string, 
     confirmationstatus: string ,
   accountnames:string  }>;
@@ -45,6 +46,7 @@ const UsersTableClient: React.FC<UsersTableClientProps> = ({ users }) => {
               <div key={user.id} className="mb-2 w-full rounded-md shadow p-4">
                 <div><p className="text-sm text-purple-500">{user.name}</p></div>
                 <div><p className="text-sm text-purple-500">{user.email}</p></div>
+                <div><p className="text-sm text-purple-500">{user.role}</p></div>
                 <div><EmailConfirmation status={user.confirmationstatus} /></div>
                 <div><UserStatus status={user.accountstatus} /></div>
                 <div><AccountNames accountnames={user.accountnames} /></div>
@@ -70,6 +72,7 @@ const UsersTableClient: React.FC<UsersTableClientProps> = ({ users }) => {
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Name</th>
                 <th scope="col" className="px-4 py-5 font-medium">Email</th>
+                <th scope="col" className="px-4 py-5 font-medium">Role</th>
                 <th scope="col" className="px-4 py-5 font-medium">AWS Account Status</th>
                 <th scope="col" className="px-4 py-5 font-medium">Confirmation Status</th>
                 <th scope="col" className="px-4 py-5 font-medium">Juliett Account Names</th>
@@ -81,6 +84,7 @@ const UsersTableClient: React.FC<UsersTableClientProps> = ({ users }) => {
                 <tr key={user.id} className="w-full border-b py-3 text-sm last-of-type:border-none">
                   <td className="whitespace-nowrap px-4 py-3 sm:pl-6">{user.name}</td>
                   <td className="whitespace-nowrap px-4 py-3">{user.email}</td>
+                  <td className="whitespace-nowrap px-4 py-3">{user.role}</td>
                   <td className="whitespace-nowrap px-4 py-3"><UserStatus status={user.accountstatus} /></td>
                   <td className="whitespace-nowrap px-4 py-3"><EmailConfirmation status={user.confirmationstatus} /></td>
                   <td className="whitespace-nowrap px-4 py-3"> <div><AccountNames accountnames={user.accountnames} /></div></td>

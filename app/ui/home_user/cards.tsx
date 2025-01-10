@@ -10,11 +10,20 @@ import image1 from '@/public/accounts/image3.jpg';
 import image2 from '@/public/accounts/image4.jpg';
 import image3 from '@/public/accounts/image1.jpg';
 import image4 from '@/public/accounts/image2.jpg';
+import image5 from '@/public/accounts/image5.jpg';
+import image6 from '@/public/accounts/image6.jpg';
+import image7 from '@/public/accounts/image7.jpg';
+import image8 from '@/public/accounts/image8.jpg';
+
 const imagePaths = [
   image1,
   image2,
   image3,
   image4,
+  image5,
+  image6,
+  image7,
+  image8,
   // Add more image paths as needed
 ];
 interface Account {
@@ -98,6 +107,7 @@ const Cards = () => {
             width={400}
             height={200}
             className="w-full h-48 object-cover"
+            priority
           />
           <div className="p-4 border-b">
             <div className="flex items-center space-x-2">

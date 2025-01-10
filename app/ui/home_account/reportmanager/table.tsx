@@ -5,7 +5,6 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'; // <-- Impor
 import ReportStatus from '@/app/ui/home_account/reportmanager/status';
 import ReportTags from '@/app/ui/home_account/reportmanager/tags';
 
-
 interface Report {
   reportid: number;
   reportname: string;
@@ -25,6 +24,82 @@ interface ErrorState {
   general?: string[];
 }
 
+interface DropDownMenuProps {
+  report: Report;
+  handleEditReport: (reportId: string) => void;
+  handleDelete: (reportId: string) => void;
+}
+
+const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, handleDelete }) => {
+  const menuRef = useRef<HTMLUListElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleItemClick = (event: React.MouseEvent, action: () => void) => {
+    event.stopPropagation();
+    action();
+    setIsMenuOpen(false); // Close the menu after action
+  };
+
+  const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className="relative">
+      <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
+      </button>
+      {isMenuOpen && (
+        <ul ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
+          <li
+            className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
+            onClick={(event) => handleItemClick(event, () => handleEditReport(report.reportid.toString()))}
+          >
+            Edit
+          </li>
+          <li
+            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
+          >
+            Run
+          </li>
+          <li
+            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
+          >
+            Schedule
+          </li>
+          <li
+            className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
+          >
+            Clone
+          </li>
+          <li
+            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
+          >
+            Download
+          </li>
+          <li
+            className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer"
+            onClick={(event) => handleItemClick(event, () => handleDelete(report.reportid.toString()))}
+          >
+            Delete
+          </li>
+        </ul>
+      )}
+    </div>
+  );
+};
+
 const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
   const router = useRouter();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -32,8 +107,8 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
   const [sortedReports, setSortedReports] = useState(reports);
   const [sortConfig, setSortConfig] = useState<{ key: keyof Report; direction: 'ascending' | 'descending' } | null>(null);
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
-    const [errors, setErrors] = useState<ErrorState | null>(null);
-  
+  const [errors, setErrors] = useState<ErrorState | null>(null);
+
   const handleSort = (key: keyof Report) => {
     let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -54,7 +129,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
     setSortedReports(sorted);
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = (event: MouseEvent | TouchEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setActiveMenu(null);
     }
@@ -62,39 +137,40 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, []);
 
-const handleDelete = async (reportId: string) => {
-  try {
-    const response = await fetch('/api/home_account/reportmanager/deleteReport', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ reportid: reportId }),
-    });
+  const handleDelete = async (reportId: string) => {
+    try {
+      const response = await fetch('/api/home_account/reportmanager/deleteReport', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reportid: reportId }),
+      });
 
-    if (response.ok) {
-      const result = await response.json();
-      console.log('Report deleted successfully:', result);
-      setPopupMessage('Report deleted successfully');
-      setTimeout(() => {
-        setPopupMessage(null);
-        window.location.reload();
-      }, 2000); // Hide the popup after 3 seconds and refresh the page
-    } else {
-      const result = await response.json();
-      setErrors(result.errors);
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Report deleted successfully:', result);
+        setPopupMessage('Report deleted successfully');
+        setTimeout(() => {
+          setPopupMessage(null);
+          window.location.reload();
+        }, 2000); // Hide the popup after 3 seconds and refresh the page
+      } else {
+        const result = await response.json();
+        setErrors(result.errors);
+      }
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      setErrors({ general: ['An unexpected error occurred.'] });
     }
-  } catch (error) {
-    console.error('Error deleting account:', error);
-    setErrors({ general: ['An unexpected error occurred.'] });
-  }
-};
-
+  };
 
   const getSortIcon = (key: keyof Report) => {
     if (!sortConfig || sortConfig.key !== key) {
@@ -111,9 +187,9 @@ const handleDelete = async (reportId: string) => {
   };
 
   return (
-    <div className="mt-6 flow-root w-full">
-      <div className="inline-block w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+    <div className="flex flex-col mt-6">
+      <div className="inline-block align-middle overflow-x-auto">
+        <div className="flex flex-col rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             {sortedReports.map((report) => (
               <div key={report.reportid} className="mb-2 w-full rounded-md shadow p-4">
@@ -124,28 +200,14 @@ const handleDelete = async (reportId: string) => {
                 <div><p className="text-sm text-gray-500">{report.period}</p></div>
                 <div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div>
                 <div className="flex justify-end gap-2 relative">
-                  <button onClick={() => setActiveMenu(report.reportid.toString())}>
-                    <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
-                  </button>
-                  {activeMenu === report.reportid.toString() && (
-                    <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
-                      <ul>
-                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}  onClick={() => handleEditReport(report.reportid.toString())}>Edit</li>
-                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Run</li>
-                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Schedule</li>
-                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Clone</li>
-                        <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Download</li>
-                        <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid.toString())}>Delete</li>
-                      </ul>
-                    </div>
-                  )}
+                  <DropDownMenu report={report} handleEditReport={handleEditReport} handleDelete={handleDelete} />
                 </div>
               </div>
             ))}
           </div>
-          <div className="hidden md:block">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+          
+          <table className=" text-gray-900 min-w-full table-auto">
+          <thead className="rounded-lg text-left text-sm font-normal">
                 <tr>
                   <th onClick={() => handleSort('reportname')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Report Name {getSortIcon('reportname')}
@@ -175,36 +237,22 @@ const handleDelete = async (reportId: string) => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {sortedReports.map((report) => (
-                  <tr key={report.reportid}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.reportname}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><ReportStatus status={report.status} /></td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.description}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.date_concept}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.period}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><ReportTags tags={report.tags ? report.tags.split(';') : []} /></td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{report.last_updated}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium relative">
-                      <button onClick={() => setActiveMenu(report.reportid.toString())}>
-                        <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
-                      </button>
-                      {activeMenu === report.reportid.toString() && (
-                        <div ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
-                          <ul>
-                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}  onClick={() => handleEditReport(report.reportid.toString())}>Edit</li>
-                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Run</li>
-                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Schedule</li>
-                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Clone</li>
-                            <li className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}>Download</li>
-                            <li className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer" onClick={() => handleDelete(report.reportid.toString())}>Delete</li>
-                          </ul>
-                        </div>
-                      )}
+                  <tr key={report.reportid} className="w-full border-b py-3 text-sm last-of-type:border-none">
+                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.reportname}</td>
+                    <td className="px-6 py-4 break-words text-sm text-gray-500"><ReportStatus status={report.status} /></td>
+                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.description}</td>
+                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.date_concept}</td>
+                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.period}</td>
+                    <td className="px-6 py-4 text-sm text-gray-500"><div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div></td>
+                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.last_updated}</td>
+                    <td className="px-6 py-4 break-words text-right text-sm font-medium relative">
+                      <DropDownMenu report={report} handleEditReport={handleEditReport} handleDelete={handleDelete} />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+         
         </div>
       </div>
       {popupMessage && (

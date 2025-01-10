@@ -104,6 +104,7 @@ export type ReportForm = {
   userid: string;
   tags: string;
   status: 'pending' | 'paid';
+  
 };
 
 
@@ -112,6 +113,7 @@ export type UsersTable = {
   accountstatus: string, 
   confirmationstatus: string ;
   accountnames: string;
+  role: string;
   // createdtime: Date, 
   // lastupdatedtime: Date
 };

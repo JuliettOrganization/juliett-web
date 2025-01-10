@@ -13,6 +13,11 @@ const NavHomeUserClient = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [role, setRole] = useState('');
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,6 +27,28 @@ const NavHomeUserClient = () => {
       setIsMenuOpen(false);
     }
   };
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch('/api/home_user/fetchUserDetailsProfile');
+        if (!response.ok) {
+          throw new Error('Failed to fetch user details');
+        }
+        const data = await response.json();
+        setName(data.name);
+        setEmail(data.email);
+        setRole(data.role);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+        setError('Failed to fetch user details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   useEffect(() => {
     setLoading(false); // Stop loading when the component mounts or updates
@@ -71,8 +98,8 @@ return (
           />
         </div>
         <div className="flex flex-col text-left">
-          <span className="hidden md:block text-xs">Jane Dutton</span>
-          <span className="hidden md:block text-xs text-left text-gray-400">jane.dutton@travelggroup.com</span>
+        <span className="hidden md:block text-xs">{name}</span>
+        <span className="hidden md:block text-xs text-left text-gray-400">{email}</span>
         </div>
         <ChevronDownIcon className="w-5 h-5 text-justify-start text-white"/>
       </button>
@@ -92,9 +119,11 @@ return (
         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
           <Link href="/home_user/support" onClick={handleClick}>Support</Link>
         </li>
-        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-          <Link href="/home_user/admin" onClick={handleClick}>Admin (admin users only)</Link>
-        </li>
+        {role === 'admin' && (
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <Link href="/home_user/admin" onClick={handleClick}>Admin</Link>
+                </li>
+              )}
         <li className="px-4 py-2 hover:bg-red-100 hover:rounded-b-lg cursor-pointer">
           <button type="button" onClick={handleSignOut}>Sign out</button>
         </li>

@@ -22,7 +22,7 @@ export default function CardWrapper() {
       <CardComponent title="Loading Status" value={status_loading} type='basic' path='/home_account/loadingstatus' />
       <CardComponent title="Scheduler" value={scheduler} type='basic' path='/home_account/scheduler' />
       <CardComponent title="Configuration" value={config} type='basic' path='/home_account/configuration' />
-      <CardComponent title="Profile" value={profile} type='basic' path='/home_users/profile'/>
+      <CardComponent title="Profile" value={profile} type='basic' path='/home_user/profile'/>
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default function ReportTags({ tags }: { tags: string[] }) {
   }, [tags]);
 
   return (
-    <div className="inline-flex space-x-2">
+    <div className="inline-flex flex-wrap gap-1">
       {tags.map((tag, index) => (
         <span
           key={index}
