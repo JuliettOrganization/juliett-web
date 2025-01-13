@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 import { useAccount } from '@/app/context/AccountContext';
+import {CardsSkeleton} from '@/app/ui/skeletons';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
+
 
 
 // Import images directly
@@ -69,12 +72,16 @@ const Cards = () => {
   }, []);
 
   const handleAccountClick = (accountid: string, accountname: string, accountpic: StaticImageData) => {
+    setLoading(true);
     setAccountInfo(accountid, accountname, accountpic.src);
   };
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return(
+  <CardsSkeleton/>
+
+  );
   }
   const additionalAccounts = [
     { accountid: 'profile', accountname: 'Profile', href: '/home_user/profile', module: user_level_module },
@@ -91,6 +98,7 @@ const Cards = () => {
   return (
    
     <div className="cards-container">
+        {loading && <LoadingSpinner />}
        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[80vw]">
       {allAccounts.map((account, index) => {
                   const accountpic = imagePaths[index % imagePaths.length];

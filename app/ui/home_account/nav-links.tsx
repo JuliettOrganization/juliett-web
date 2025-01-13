@@ -2,8 +2,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { useState, useEffect } from 'react';
-import LoadingSpinner from '@/app/ui/LoadingSpinner';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/home_account', colorref: '/home_account' },
@@ -18,25 +16,19 @@ const links = [
 export default function NavLinks() {
   const pathname = usePathname();
   const beginningOfPathname = pathname ? `/${pathname.split('/')[1]}` + (pathname.split('/')[2] ? `/${pathname.split('/')[2]}` : '') : '';
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(false); // Stop loading when the component mounts or updates
-  }, [pathname]);
 
-  const handleClick = () => {
-    setLoading(true);
-  };
+
   
   return (
     <>
-      {loading && <LoadingSpinner />}
+   
       <div className="flex flex-col rounded-lg xl:flex-row xl:space-x-8">
         {links.map((link) => {
           return (
             <Link
               key={link.name}
               href={link.href}
-              onClick={handleClick}
+       
               className={clsx(
                 'flex items-center justify-center h-20 gap-2 p-3 text-l font-medium text-gray-500 hover:text-white xl:flex-none xl:justify-start xl:p-2 xl:px-3',
                 {

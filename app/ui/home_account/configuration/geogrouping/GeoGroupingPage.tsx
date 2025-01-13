@@ -8,6 +8,7 @@ import AddSubGroupDialog from '@/app/ui/home_account/configuration/geogrouping/A
 import DeleteConfirmationDialog from '@/app/ui/home_account/configuration/geogrouping/DeleteConfirmationDialog';
 import PopupNotification from '@/app/ui/PopupNotification';
 import '@/app/ui/global_public.module.css';
+import { useRouter } from 'next/navigation';
 
 const LoadingSpinner = () => (
   <div className="w-full flex justify-center items-center h-screen">
@@ -30,7 +31,7 @@ export default function GeoGroupingPage() {
   const [deleteItem, setDeleteItem] = useState<{ type: 'group' | 'subgroup'; name: string } | null>(null);
   const [initialGeoCodes, setinitialGeoCodes] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(true);
-
+const router = useRouter();
   useEffect(() => {
     // Fetch groups from the API
     fetch('/api/configuration/geoGrouping/groups')
@@ -133,12 +134,14 @@ const handleAddGroup = () => {
   const handleSave = () => {
     setPopupMessage('Changes saved successfully!');
     setTimeout(() => setPopupMessage(null), 3000);
+    router.push('/home_account/configuration');
   };
 
   const handleCancel = () => {
     // Reset state to initial values (for simplicity, not implemented here)
     setPopupMessage('Changes canceled!');
     setTimeout(() => setPopupMessage(null), 3000);
+    router.push('/home_account/configuration');
   };
 
   const filteredGeoCodes = selectedGroup

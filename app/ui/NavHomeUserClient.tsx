@@ -5,13 +5,11 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import profile from '@/public/profile.jpg'; // Ensure the image path is correct
 import Link from 'next/link';
-import LoadingSpinner from '@/app/ui/LoadingSpinner';
 import { usePathname } from 'next/navigation';
 
 const NavHomeUserClient = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(false);
   const pathname = usePathname();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -42,27 +40,21 @@ const NavHomeUserClient = () => {
       } catch (error) {
         console.error('Error fetching user details:', error);
         setError('Failed to fetch user details');
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     fetchUserDetails();
   }, []);
 
   useEffect(() => {
-    setLoading(false); // Stop loading when the component mounts or updates
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [pathname]);
 
-  const handleClick = () => {
-    setLoading(true);
-  };
+  
   const handleSignOut = async () => {
-    setLoading(true);
     try {
       const response = await fetch('/api/signOut', { method: 'POST' });
       if (response.ok) {
@@ -81,7 +73,7 @@ const NavHomeUserClient = () => {
   };
 return (
   <>
-      {loading && <LoadingSpinner />}
+   
   <div className="flex justify-end relative">
       <button
         className="flex items-center gap-2 p-0 text-l font-medium text-white hover:text-gray-300"
@@ -111,17 +103,17 @@ return (
       
       <ul>
         <li className="px-4 py-2 hover:bg-gray-100 hover:rounded-t-lg cursor-pointer">
-          <Link href="/home_user/profile" onClick={handleClick}>Profile</Link>
+          <Link href="/home_user/profile" >Profile</Link>
         </li>
         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-          <Link href="/home_user/documentation" onClick={handleClick}>Documentation</Link>
+          <Link href="/home_user/documentation">Documentation</Link>
         </li>
         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-          <Link href="/home_user/support" onClick={handleClick}>Support</Link>
+          <Link href="/home_user/support">Support</Link>
         </li>
         {role === 'admin' && (
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <Link href="/home_user/admin" onClick={handleClick}>Admin</Link>
+                  <Link href="/home_user/admin">Admin</Link>
                 </li>
               )}
         <li className="px-4 py-2 hover:bg-red-100 hover:rounded-b-lg cursor-pointer">

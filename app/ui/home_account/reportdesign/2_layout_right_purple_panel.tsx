@@ -1,17 +1,38 @@
-// 1_layout_right_purple_panel.tsx
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { RectangleGroupIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import SelectedFields from '@/app/ui/home_account/reportdesign/2_SelectedFields';
-import { ButtonSave } from '@/app/ui/button';
+import {ButtonSave} from '@/app/ui/button';
+import ConfirmationModal from '@/app/ui/home_account/reportdesign/2_ConfirmationModal';
 
 interface LayoutRightPurplePanelProps {
   fields: string[];
   removeField: (field: string) => void;
   handleSave: () => void;
+  handleRun: () => void;
 }
 
-const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields, removeField, handleSave }) => {
+const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields, removeField, handleSave, handleRun }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleRunPopup = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleNotSaveatRun = async () => {
+    await handleRun();
+    setIsModalOpen(false);
+  };
+
+  const handleSaveatRun = async () => {
+    await handleSave();
+    await handleRun();
+    setIsModalOpen(false);
+  };
+
+
   return (
     <div className="fixed top-20 right-0 w-38 md:w-48 h-full z-10 bg-gray-400">
       <div className="mt-1 flex flex-row text-white font-bold text-2xl p-4 gap-4 items-center">
@@ -32,9 +53,14 @@ const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields,
         <ButtonSave onClick={handleSave} className="flex h-10 items-center justify-center rounded-full" type="submit">
           Save Report
         </ButtonSave>
-        <ButtonSave className="flex h-10 items-center justify-center rounded-full" type="submit">
+        <ButtonSave onClick={handleRunPopup} className="flex h-10 items-center justify-center rounded-full" type="button">
           Run Report
         </ButtonSave>
+        <ConfirmationModal
+          isOpen={isModalOpen}
+          SaveConfirm={handleSaveatRun}
+          SaveNotConfirm={handleNotSaveatRun}
+        />
       </div>
     </div>
   );

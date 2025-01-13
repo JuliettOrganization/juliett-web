@@ -9,7 +9,7 @@ export default function LoadingPage() {
   return (
     <main className="fixed top-20 left-0 h-full w-full z-auto items-center justify-center min-h-screen bg-gray-100 bg-cover bg-center" style={{ backgroundImage: "url('/accounts/image2.jpg')" }}>
       <div className="flex w-64 left-0 m-4 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-gray-200 z-10">
-    <Link href="/home_user" className="flex items-center space-x-2 text-black">
+    <Link href="/home_account" className="flex items-center space-x-2 text-black">
     
       <ArrowLeftIcon className="w-6 h-6" />
       <span className="text-xl"> | </span>

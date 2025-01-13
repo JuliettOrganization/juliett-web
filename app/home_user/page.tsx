@@ -1,8 +1,8 @@
 import React,  { Suspense } from 'react';
-import { CardsSkeleton } from '@/app/ui/skeletons';
+// import { CardsSkeleton } from '@/app/ui/skeletons';
 import Cards from '@/app/ui/home_user/cards';
 import {auth} from '@/auth';
-import HomeUserSkeleton from '@/app/ui/skeletons';
+// import {HomeUserSkeleton} from '@/app/ui/skeletons';
 
  
 export default async function Page() {
@@ -11,7 +11,7 @@ export default async function Page() {
  
   return (
     <main className=" bg-gray-300 p-8">
-      <Suspense fallback={<HomeUserSkeleton />}>
+
       <div className="mx-auto justify-center">
         <div className="rounded-lg mb-8 w-[80vw] mx-auto">
           {session && session.user ? (
@@ -27,7 +27,7 @@ export default async function Page() {
         
         </div>
       </div>
-      </Suspense>
+ 
     </main>
   );
 }

@@ -31,7 +31,7 @@ const SelectedFields: React.FC<SelectedFieldsProps> = ({ fields, removeField }) 
           </div>
         </div>
       ) : (
-        <p className='text-gray-200 text-center'>No fields selected yet</p>
+        <p className='text-gray-200 text-center'>No field selected yet</p>
       )}
     </div>
   );

@@ -123,8 +123,9 @@ const ReportMainInfo: React.FC<ReportMainInfoProps> = ({
                 value={dateConcept || defaultDateConcept}
                 onChange={(e) => setDateConcept(e.target.value)}
               >
-                <option value={defaultDateConcept} className="bg-white text-black">{defaultDateConcept}</option>
+                <option value="Issue Date" className="bg-white text-black">Issue Date</option>
                 <option value="Travel Date" className="bg-white text-black">Travel Date</option>
+                <option value="Reporting Date" className="bg-white text-black">Reporting Date</option>
               </select>
                           </div>
           </div>
@@ -176,7 +177,7 @@ const ReportMainInfo: React.FC<ReportMainInfoProps> = ({
                 value={benchmarkPeriod || defaultBenchmarkPeriod}
                 onChange={(e) => setBenchmarkPeriod(e.target.value)}
               >
-                <option value={defaultBenchmarkPeriod} className="bg-white text-black">{defaultBenchmarkPeriod}</option>
+                <option value="Yes" className="bg-white text-black">Yes</option>
                 <option value="No" className="bg-white text-black">No</option>
               </select>
             </div>

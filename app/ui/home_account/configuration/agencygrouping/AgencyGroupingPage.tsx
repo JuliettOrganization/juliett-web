@@ -8,6 +8,7 @@ import AddSubGroupDialog from '@/app/ui/home_account/configuration/agencygroupin
 import DeleteConfirmationDialog from '@/app/ui/home_account/configuration/agencygrouping/DeleteConfirmationDialog';
 import PopupNotification from '@/app/ui/PopupNotification';
 import '@/app/ui/global_public.module.css';
+import { useRouter } from 'next/navigation';
 
 const LoadingSpinner = () => (
   <div className="w-full flex justify-center items-center h-screen">
@@ -30,6 +31,7 @@ export default function AgencyGroupingPage() {
   const [deleteItem, setDeleteItem] = useState<{ type: 'group' | 'subgroup'; name: string } | null>(null);
   const [initialAgencyCodes, setinitialAgencyCodes] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     // Fetch groups from the API
@@ -137,8 +139,9 @@ const handleAddGroup = () => {
 
   const handleCancel = () => {
     // Reset state to initial values (for simplicity, not implemented here)
-    setPopupMessage('Changes canceled!');
-    setTimeout(() => setPopupMessage(null), 3000);
+  setPopupMessage('Changes canceled!');  
+  setTimeout(() => setPopupMessage(null), 3000);
+  router.push('/home_account/configuration');
   };
 
   const filteredAgencyCodes = selectedGroup

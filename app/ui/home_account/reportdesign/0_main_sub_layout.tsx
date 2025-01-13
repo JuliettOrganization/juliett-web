@@ -11,6 +11,8 @@ import MainOptionsForm from './3_tab0_main_options';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAccount } from '@/app/context/AccountContext';
+import PopupNotification from '@/app/ui/PopupNotification';
+
 
 
 // const defaultDateConcept = 'Issue Date';
@@ -88,6 +90,8 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
   sqlCode: initialSqlCode,
   reportid, // Add reportid to the destructured props
 }) => {
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+
   const availableFields = [
     'agency code (booking)', 'agency code (issuing)', 'airline code (marketing)',
     'commission (total)', 'coupon number', 'currency code (local)', 'date (issuing)',
@@ -198,7 +202,8 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
       ODconcept,
       ODfiltering,
       sqlCode,
-      isCustomSqlActive
+      isCustomSqlActive,
+      status: 'draft' 
 
       // Add other necessary state or props here
     };
@@ -217,17 +222,102 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
       }
 
       const result = await response.json();
-      alert(result.message);
+      setPopupMessage(result.message);
+      setTimeout(() => setPopupMessage(null), 3000);
     } catch (error) {
       console.error('Error saving report:', error);
-      alert('Failed to save report');
+      setPopupMessage('Failed to save report');
+      setTimeout(() => setPopupMessage(null), 3000);
     }
   };
   //SAVE BUTTON HANDLE SAVE END
 
+  // START HANDLE RUN REPORT
+
+  const handleRun = async () => {
+    const reportData = {
+      // Consolidate all the necessary data from LayoutRightPurplePanel, LayoutMainInfoForm, and Tabs
+      // Example:
+      accountid,
+      reportid,
+      reportName,
+      description,
+      tags,
+      dateConcept,
+      dateFrom,
+      dateTo,
+      benchmarkPeriod,
+      benchmarkDateFrom,
+      benchmarkDateTo,
+      currency,
+      fields,
+      transactionType,
+      amounts,
+      selectedGroupingValuesAgency,
+      selectedGroupingAgency,
+      selectedGroupingValuesIssuing,
+      selectedGroupingIssuing,
+      selectedGroupingValuesMarketing,
+      selectedGroupingMarketing,
+      selectedGroupingValuesOperating,
+      selectedGroupingOperating,
+      selectedGroupingValuesGeoFrom,
+      selectedGroupingGeoFrom,
+      selectedGroupingValuesGeoTo,
+      selectedGroupingGeoTo,
+      ODconcept,
+      ODfiltering,
+      sqlCode,
+      isCustomSqlActive,
+      status: 'running' // Set status to 'result'
+      // Add other necessary state or props here
+    };
+  
+    try {
+      const response = await fetch('/api/home_account/reportdesign/runReport', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reportData }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to run report');
+      }
+
+      const result = await response.json();
+      const { reportId } = result;
+
+      // Trigger the generateExcel API
+      const excelResponse = await fetch('/api/home_account/reportdesign/generateExcel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reportData, reportId }),
+      });
+
+      if (!excelResponse.ok) {
+        throw new Error('Failed to generate Excel file');
+      }
+
+      const excelResult = await excelResponse.json();
+      setPopupMessage(excelResult.message);
+      setTimeout(() => setPopupMessage(null), 3000);
+    } catch (error) {
+      console.error('Error running report:', error);
+      setPopupMessage('Failed to run report');
+      setTimeout(() => setPopupMessage(null), 3000);
+    }
+  };
+
+
+  // END HANDLE RUN REPORT
+
   return (
     <main className="z-20">
-      <LayoutRightPurplePanel handleSave={handleSave} fields={fields} removeField={removeField} />
+      <LayoutRightPurplePanel handleRun={handleRun}  handleSave={handleSave} fields={fields} removeField={removeField} />
       <div className="flex flex-col lg:mr-48 mr-44 ml-0 mt-0 h-full border-none marker:overflow-y-auto">
       <LayoutMainInfoForm 
          reportName={reportName}
@@ -364,6 +454,11 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
           </TabsContent>
         </Tabs>
       </div>
+      {popupMessage && (
+        <PopupNotification
+          message={popupMessage}
+        />
+      )}
     </main>
   );
 };

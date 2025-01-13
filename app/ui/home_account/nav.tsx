@@ -3,9 +3,7 @@ import Link from 'next/link';
 // import { PowerIcon } from '@heroicons/react/24/outline';
 // import { signOut } from '@/auth';
 import NavHomeUserClient from '../NavHomeUserClient';
-import { useState, useEffect } from 'react';
-import NavClient from './NavClient';
-import LoadingSpinner from '@/app/ui/LoadingSpinner';
+import NavClient from './NavClient'
 import { useAccount } from '@/app/context/AccountContext';
 import Image from 'next/image';
 import favicon from '@/public/favicon.jpg';
@@ -18,14 +16,7 @@ const imagePaths = [
 
 export default function Nav() {
   const { accountname, accountpic } = useAccount();
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(false); // Stop loading when the component mounts or updates
-  }, []);
-
-  const handleClick = () => {
-    setLoading(true);
-  };
+  
   const logo = imagePaths[1 % imagePaths.length];
   return (
   
@@ -33,9 +24,9 @@ export default function Nav() {
     <div className="topbar_flex justify-between items-center h-20 px-2 bg-black text-white">
      <>
      <div className="flex flex-row items-center space-x-4">
-      {loading && <LoadingSpinner />}
+    
       <Link href="/home_user">
-        <div className="flex flex-row items-center" onClick={handleClick}>
+        <div className="flex flex-row items-center" >
           {/* <div>
             <p className="topbar_j_font">J</p>
           </div>*/}
@@ -51,7 +42,7 @@ export default function Nav() {
             </div>
             </Link>
             <Link href="/home_account">
-            <div className="flex flex-row items-center" onClick={handleClick}>
+            <div className="flex flex-row items-center" >
             {accountname && (
           <div className="flex items-center space-x-2">
             <Image

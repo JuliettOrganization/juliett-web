@@ -10,8 +10,8 @@ export default function UserGuidePage() {
 
   return (
     <main className="flex-col h-[80vh] items-center rounded-lg justify-center bg-gray-300">
-        <div className="flex w-64 left-0 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-purple-200 z-10">
-    <Link href="/home_user" className="flex items-center space-x-2 text-purple-600">
+        <div className="flex w-64 left-0 rounded-full justify-start p-3 shadow bg-gray-200 hover:bg-gray-200 z-10">
+    <Link href="/home_user" className="flex items-center space-x-2 text-black">
     
       <ArrowLeftIcon className="w-6 h-6" />
       <span className="text-xl"> | </span>
