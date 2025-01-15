@@ -1,7 +1,7 @@
 'use client';
 import Pagination from '@/app/ui/home_account/reportmanager/pagination';
 import Search from '@/app/ui/search';
-import ReportsTableServer from '@/app/ui/home_account/reportmanager/ReportsTableServer';
+import ReportsTableClient from '@/app/ui/home_account/reportmanager/table';
 import { CreateReport } from '@/app/ui/home_account/reportmanager/buttons';
 import { ReportsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense, useEffect, useState, use } from 'react';
@@ -53,7 +53,7 @@ useEffect(() => {
       </div>
       <div>
       <Suspense key={query + currentPage} fallback={<ReportsTableSkeleton />}>
-        <ReportsTableServer query={query} currentPage={currentPage} />
+        <ReportsTableClient query={query} currentPage={currentPage} />
       </Suspense>
       </div>
       <div className="mt-5 flex w-full justify-center">

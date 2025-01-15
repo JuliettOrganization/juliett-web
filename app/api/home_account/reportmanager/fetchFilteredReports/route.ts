@@ -4,6 +4,17 @@ import { ReportsTable } from '@/app/lib/definitions';
 import { NextResponse } from 'next/server';
 //import { useAccount } from '@/app/context/AccountContext';
 
+const fieldMapping: { [key: string]: string } = {
+  reportid: 'reportid',
+  reportname: 'reportname',
+  description: 'description',
+  date_concept: 'date_concept',
+  period: "to_char(date_from, 'YYYY-MM-DD') || ' to ' || to_char(date_to, 'YYYY-MM-DD')",
+  status: 'status',
+  tags: 'tags',
+  last_updated: "to_char(updated, 'YYYY-MM-DD hh:mm:ss')"
+};
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('query') || '';
@@ -12,36 +23,50 @@ export async function GET(request: Request) {
  // const { accountid } = useAccount();
  const accountid = searchParams.get('accountid');
 
+ const sort = searchParams.get('sort') || '';
+ const sortField = sort ? sort.split(':')[0] : 'reportname';
+
+const sortOrder = sort ? sort.split(':')[1] : 'desc';
+ const dbSortField = fieldMapping[sortField] || 'reportname';
+
+
   if (!accountid) {
     return NextResponse.json({ error: 'Account ID is required' }, { status: 400 });
   }
 
   try {
-    const reports = await sql<ReportsTable>`
-      SELECT
-        reportid,
-        reportname,
-        description,
-        date_concept,
-        to_char(date_from, 'YYYY-MM-DD') ||' to '||to_char(date_to, 'YYYY-MM-DD') as period,
-        status,
-        tags,
-         to_char(updated, 'YYYY-MM-DD hh:mm:ss') as last_updated
-      FROM reports
-      WHERE 
-            accountid=${accountid} AND (
-        reports.reportname ILIKE ${`%${query}%`} OR
-        reports.description ILIKE ${`%${query}%`} OR
-        reports.date_concept ILIKE ${`%${query}%`} OR
-         to_char(reports.date_from, 'YYYY-MM-DD') ||' - '||to_char(reports.date_to, 'YYYY-MM-DD') ILIKE ${`%${query}%`} OR
-        reports.status ILIKE ${`%${query}%`} OR
-       reports.tags ILIKE ${`%${query}%`} OR
-                    to_char(reports.updated, 'YYYY-MM-DD hh:mm:ss') ILIKE ${`%${query}%`}
-  )         
-      ORDER BY reportid DESC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-    `;
+    const reportsQuery = `
+    SELECT
+      reportid,
+      reportname,
+      description,
+      date_concept,
+      to_char(date_from, 'YYYY-MM-DD') || ' to ' || to_char(date_to, 'YYYY-MM-DD') as period,
+      status,
+      tags,
+      to_char(updated, 'YYYY-MM-DD hh:mm:ss') as last_updated
+    FROM reports
+    WHERE accountid = $1
+    AND (
+      reportname ILIKE $2 OR
+      description ILIKE $2 OR
+      date_concept ILIKE $2 OR
+      to_char(date_from, 'YYYY-MM-DD') || ' - ' || to_char(date_to, 'YYYY-MM-DD') ILIKE $2 OR
+      status ILIKE $2 OR
+      tags ILIKE $2 OR
+      to_char(updated, 'YYYY-MM-DD hh:mm:ss') ILIKE $2
+    )
+    ORDER BY ${dbSortField} ${sortOrder === 'asc' ? 'ASC' : 'DESC'}
+    LIMIT ${ITEMS_PER_PAGE} OFFSET $3
+  `;
 
+  // Log the query and parameters
+  console.log('Executing query:', reportsQuery);
+  console.log('Query parameters:', [accountid, `%${query}%`, offset]);
+
+  const reports = await sql.query(reportsQuery, [accountid, `%${query}%`, offset]);
+ 
+   // ${(sortField)} ${(sortOrder === 'asc' ? 'ASC' : 'DESC')}
     return NextResponse.json(reports.rows);
   } catch (error) {
     console.error('Database error:', error); // Log the error to the console

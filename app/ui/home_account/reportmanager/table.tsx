@@ -1,9 +1,12 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'; // <-- Import Heroicon
 import ReportStatus from '@/app/ui/home_account/reportmanager/status';
 import ReportTags from '@/app/ui/home_account/reportmanager/tags';
+import DropDownMenu from '@/app/ui/home_account/reportmanager/DropDownMenu';
+import RefreshCountdown from '@/app/ui/home_account/reportmanager/RefreshCountdown';
+import { useAccount } from '@/app/context/AccountContext';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
 
 interface Report {
   reportid: number;
@@ -17,116 +20,68 @@ interface Report {
 }
 
 interface ReportsTableClientProps {
-  reports: Report[];
+  query: string;
+  currentPage: number;
 }
 
 interface ErrorState {
   general?: string[];
 }
 
-interface DropDownMenuProps {
-  report: Report;
-  handleEditReport: (reportId: string) => void;
-  handleDelete: (reportId: string) => void;
-}
+const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentPage }) => {
+  const router = useRouter();
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [sortedReports, setSortedReports] = useState<Report[]>([]);
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Report; direction: 'asc' | 'desc' } | null>(null);
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [errors, setErrors] = useState<ErrorState | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { accountid } = useAccount();
 
-const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, handleDelete }) => {
-  const menuRef = useRef<HTMLUListElement>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const fetchReports = async () => {
+    if (accountid) {
+      setLoading(true);
+      try {
+        const sortParam = sortConfig ? `${sortConfig.key}:${sortConfig.direction}` : '';
 
-  const handleItemClick = (event: React.MouseEvent, action: () => void) => {
-    event.stopPropagation();
-    action();
-    setIsMenuOpen(false); // Close the menu after action
-  };
-
-  const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setIsMenuOpen(false);
+        const response = await fetch(`/api/home_account/reportmanager/fetchFilteredReports?accountid=${accountid}&query=${encodeURIComponent(query)}&page=${currentPage}&sort=${sortParam}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch reports');
+        }
+        const data = await response.json();
+        setSortedReports(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching reports:', error);
+        setError((error as Error).message);
+        setLoading(false);
+      }
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
-    };
-  }, []);
-
-  return (
-    <div className="relative">
-      <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-        <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
-      </button>
-      {isMenuOpen && (
-        <ul ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
-          <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
-            onClick={(event) => handleItemClick(event, () => handleEditReport(report.reportid.toString()))}
-          >
-            Edit
-          </li>
-          <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
-          >
-            Run
-          </li>
-          <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
-          >
-            Schedule
-          </li>
-          <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
-          >
-            Clone
-          </li>
-          <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
-          >
-            Download
-          </li>
-          <li
-            className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer"
-            onClick={(event) => handleItemClick(event, () => handleDelete(report.reportid.toString()))}
-          >
-            Delete
-          </li>
-        </ul>
-      )}
-    </div>
-  );
-};
-
-const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
-  const router = useRouter();
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const [sortedReports, setSortedReports] = useState(reports);
-  const [sortConfig, setSortConfig] = useState<{ key: keyof Report; direction: 'ascending' | 'descending' } | null>(null);
-  const [popupMessage, setPopupMessage] = useState<string | null>(null);
-  const [errors, setErrors] = useState<ErrorState | null>(null);
+    fetchReports();
+  }, [accountid, query, currentPage, sortConfig]);
 
   const handleSort = (key: keyof Report) => {
-    let direction: 'ascending' | 'descending' = 'ascending';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    let direction: 'asc' | 'desc' = 'asc';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
     }
-    setSortConfig({ key, direction });
+      setSortConfig({ key, direction });
+    };
 
-    const sorted = [...reports].sort((a, b) => {
-      if (a[key] < b[key]) {
-        return direction === 'ascending' ? -1 : 1;
-      }
-      if (a[key] > b[key]) {
-        return direction === 'ascending' ? 1 : -1;
-      }
-      return 0;
-    });
-
-    setSortedReports(sorted);
+    
+  const getSortIcon = (key: keyof Report) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return null;
+    }
+    if (sortConfig.direction === 'asc') {
+      return <span>&uarr;</span>; // Up arrow
+    }
+    return <span>&darr;</span>; // Down arrow
   };
 
   const handleClickOutside = (event: MouseEvent | TouchEvent) => {
@@ -172,22 +127,22 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ reports }) => {
     }
   };
 
-  const getSortIcon = (key: keyof Report) => {
-    if (!sortConfig || sortConfig.key !== key) {
-      return null;
-    }
-    if (sortConfig.direction === 'ascending') {
-      return <span>&uarr;</span>; // Up arrow
-    }
-    return <span>&darr;</span>; // Down arrow
-  };
 
   const handleEditReport = (reportid: string) => {
     router.push(`/home_account/reportdesign/${reportid}`);
   };
 
+  if (loading) {
+    return <LoadingSpinner />; // Use your spinner component
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="flex flex-col mt-6">
+      <RefreshCountdown sortedReports={sortedReports} fetchReports={fetchReports} />
       <div className="inline-block align-middle overflow-x-auto">
         <div className="flex flex-col rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">

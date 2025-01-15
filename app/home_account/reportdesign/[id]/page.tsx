@@ -102,9 +102,6 @@ export default function Page() {
     }
   }, [reportid]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <main>

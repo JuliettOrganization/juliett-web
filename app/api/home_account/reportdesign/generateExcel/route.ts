@@ -7,7 +7,8 @@ import { sql } from '@vercel/postgres';
 export async function POST(request: Request) {
   try {
     const { reportData, reportId } = await request.json();
-
+   // Delay execution for 5 seconds
+   await new Promise(resolve => setTimeout(resolve, 20000));
     // Create a new workbook and worksheet
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Report');
@@ -52,17 +53,17 @@ export async function POST(request: Request) {
       { field: 'Transaction Type', value: reportData.transactionType },
       { field: 'Amounts', value: reportData.amounts ? reportData.amounts.join(', ') : '' },
       { field: 'Selected Grouping Values Agency', value: parseAndJoin(reportData.selectedGroupingValuesAgency) },
-      // { field: 'Selected Grouping Agency', value: reportData.selectedGroupingAgency ? reportData.selectedGroupingAgency.join(', ') : '' },
+      { field: 'Selected Grouping Agency', value: parseAndJoin(reportData.selectedGroupingAgency) },
       { field: 'Selected Grouping Values Issuing', value: parseAndJoin(reportData.selectedGroupingValuesIssuing) },
-      { field: 'Selected Grouping Issuing', value: reportData.selectedGroupingIssuing ? reportData.selectedGroupingIssuing.join(', ') : '' },
+      { field: 'Selected Grouping Issuing', value: parseAndJoin(reportData.selectedGroupingIssuing) },
       { field: 'Selected Grouping Values Marketing', value: parseAndJoin(reportData.selectedGroupingValuesMarketing) },
-      { field: 'Selected Grouping Marketing', value: reportData.selectedGroupingMarketing ? reportData.selectedGroupingMarketing.join(', ') : '' },
+      { field: 'Selected Grouping Marketing', value: parseAndJoin(reportData.selectedGroupingMarketing) },
       { field: 'Selected Grouping Values Operating', value: parseAndJoin(reportData.selectedGroupingValuesOperating) },
-      { field: 'Selected Grouping Operating', value: reportData.selectedGroupingOperating ? reportData.selectedGroupingOperating.join(', ') : '' },
+      { field: 'Selected Grouping Operating', value: parseAndJoin(reportData.selectedGroupingOperating) },
       { field: 'Selected Grouping Values Geo From', value: parseAndJoin(reportData.selectedGroupingValuesGeoFrom) },
-      { field: 'Selected Grouping Geo From', value: reportData.selectedGroupingGeoFrom ? reportData.selectedGroupingGeoFrom.join(', ') : '' },
+      { field: 'Selected Grouping Geo From', value: parseAndJoin(reportData.selectedGroupingGeoFrom) },
       { field: 'Selected Grouping Values Geo To', value: parseAndJoin(reportData.selectedGroupingValuesGeoTo) },
-      { field: 'Selected Grouping Geo To', value: reportData.selectedGroupingGeoTo ? reportData.selectedGroupingGeoTo.join(', ') : '' },
+      { field: 'Selected Grouping Geo To', value: parseAndJoin(reportData.selectedGroupingGeoTo) },
       { field: 'OD Concept', value: reportData.ODconcept },
       { field: 'OD Filtering', value: reportData.ODfiltering },
       { field: 'SQL Code', value: reportData.sqlCode },

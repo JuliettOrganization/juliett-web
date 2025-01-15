@@ -272,18 +272,25 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
       status: 'running' // Set status to 'result'
       // Add other necessary state or props here
     };
-  
+  setTimeout(() => {
+    setPopupMessage('Report Running');
+    setTimeout(() => {
+    setPopupMessage(null);
+    window.location.href = '/home_account/reportmanager';
+    }, 3000);
+  }, 2000); // Add a delay of 1 second before showing the popup
+
     try {
       const response = await fetch('/api/home_account/reportdesign/runReport', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ reportData }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ reportData }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to run report');
+      throw new Error('Failed to run report');
       }
 
       const result = await response.json();
@@ -291,24 +298,22 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
 
       // Trigger the generateExcel API
       const excelResponse = await fetch('/api/home_account/reportdesign/generateExcel', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ reportData, reportId }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ reportData, reportId }),
       });
 
-      if (!excelResponse.ok) {
-        throw new Error('Failed to generate Excel file');
-      }
+      // if (!excelResponse.ok) {
+      // throw new Error('Failed to generate Excel file');
+      // }
 
-      const excelResult = await excelResponse.json();
-      setPopupMessage(excelResult.message);
-      setTimeout(() => setPopupMessage(null), 3000);
-    } catch (error) {
+      // const excelResult = await excelResponse.json();
+      // console.log(excelResult.message);
+    } 
+    catch (error) {
       console.error('Error running report:', error);
-      setPopupMessage('Failed to run report');
-      setTimeout(() => setPopupMessage(null), 3000);
     }
   };
 

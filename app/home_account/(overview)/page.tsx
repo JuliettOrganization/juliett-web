@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-import { CardsSkeleton } from '@/app/ui/skeletons';
 import CardWrapper from '@/app/ui/home_account/cards';
 
 export default async function Page() {
@@ -16,9 +14,9 @@ export default async function Page() {
           </div>
 
             <div className="flex w-full">
-            <Suspense fallback={<CardsSkeleton />}>
+     
               <CardWrapper />
-            </Suspense>
+    
             </div>
           <div className="h-10"></div>
         </div>
