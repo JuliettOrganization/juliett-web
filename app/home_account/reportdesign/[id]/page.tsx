@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import CreateFormLayout from '@/app/ui/home_account/reportdesign/0_main_sub_layout';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
 
 export default function Page() {
   const pathname = usePathname();
@@ -43,6 +44,7 @@ export default function Page() {
     const colors = ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500'];
     return colors[Math.floor(Math.random() * colors.length)];
   };
+
   useEffect(() => {
     if (reportid) {
       fetch(`/api/home_account/reportdesign/getReportDetails`, {
@@ -102,6 +104,10 @@ export default function Page() {
     }
   }, [reportid]);
 
+  // THIS IS VERY IMPORTANT OTHERWISE THE REPORT DATA OF THE REPORTID ARE NOT FETCHED. This is enabling the UI to wait for the report data
+  if (loading) {
+    return <div><LoadingSpinner/></div>;
+  }
 
   return (
     <main>

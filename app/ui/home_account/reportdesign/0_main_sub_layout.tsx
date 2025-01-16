@@ -1,6 +1,6 @@
 // create-form-layout-page.tsx
 'use client';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import LayoutRightPurplePanel from './2_layout_right_purple_panel';
 import LayoutMainInfoForm from './1_layout_main_info_form';
 import FilterForm  from '@/app/ui/home_account/reportdesign/3_tab2_filter-form';
@@ -12,6 +12,7 @@ import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAccount } from '@/app/context/AccountContext';
 import PopupNotification from '@/app/ui/PopupNotification';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
 
 
 
@@ -152,6 +153,11 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
   const [selectedGroupingValuesMarketing, setSelectedGroupingValuesMarketing] = useState<string[]>(initialSelectedGroupingValuesMarketing);
   const [selectedGroupingValuesOperating, setSelectedGroupingValuesOperating] = useState<string[]>(initialSelectedGroupingValuesOperating);
   const [sqlCode, setSqlCode] = useState<string>(initialSqlCode);
+
+  const [loading, setLoading] = useState(false);
+   useEffect(() => {
+      setLoading(false); // Stop loading when the component mounts or updates
+    }, []);
   
   const addTag = (field: string) => {
     if (!fields.includes(field)) {
@@ -220,13 +226,15 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
       if (!response.ok) {
         throw new Error('Failed to save report');
       }
-
+      setLoading(false);
       const result = await response.json();
       setPopupMessage(result.message);
+      setLoading(false);
       setTimeout(() => setPopupMessage(null), 3000);
     } catch (error) {
       console.error('Error saving report:', error);
       setPopupMessage('Failed to save report');
+      setLoading(false);
       setTimeout(() => setPopupMessage(null), 3000);
     }
   };
@@ -464,6 +472,9 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
           message={popupMessage}
         />
       )}
+       {loading && (
+                 <LoadingSpinner/>
+                )}
     </main>
   );
 };

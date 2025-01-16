@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RectangleGroupIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import SelectedFields from '@/app/ui/home_account/reportdesign/2_SelectedFields';
 import {ButtonSave} from '@/app/ui/button';
 import ConfirmationModal from '@/app/ui/home_account/reportdesign/2_ConfirmationModal';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
+import PopupNotification from '@/app/ui/PopupNotification';
 
 interface LayoutRightPurplePanelProps {
   fields: string[];
@@ -15,6 +17,7 @@ interface LayoutRightPurplePanelProps {
 }
 
 const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields, removeField, handleSave, handleRun }) => {
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleRunPopup = () => {
@@ -24,13 +27,26 @@ const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields,
   const handleNotSaveatRun = async () => {
     await handleRun();
     setIsModalOpen(false);
+    setLoading(false);
   };
 
   const handleSaveatRun = async () => {
     await handleSave();
     await handleRun();
     setIsModalOpen(false);
+    setLoading(false);
   };
+
+  const handleSaveButton = async () => {
+    await handleSave();
+    setLoading(false);
+  };
+
+
+
+useEffect(() => {
+      setLoading(false); // Stop loading when the component mounts or updates
+    }, []);
 
 
   return (
@@ -47,13 +63,14 @@ const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields,
         <Link
           href="/home_account/reportmanager"
           className="flex h-10 items-center justify-center rounded-full bg-gray-100 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          onClick={() => setLoading(true)}
         >
           Cancel
         </Link>
-        <ButtonSave onClick={handleSave} className="flex h-10 items-center justify-center rounded-full" type="submit">
+        <ButtonSave onClick={() => { setLoading(true); handleSaveButton();  }} className="flex h-10 items-center justify-center rounded-full" type="submit">
           Save Report
         </ButtonSave>
-        <ButtonSave onClick={handleRunPopup} className="flex h-10 items-center justify-center rounded-full" type="button">
+        <ButtonSave onClick={() => {handleRunPopup(); }} className="flex h-10 items-center justify-center rounded-full" type="button">
           Run Report
         </ButtonSave>
         <ConfirmationModal
@@ -62,6 +79,10 @@ const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields,
           SaveNotConfirm={handleNotSaveatRun}
         />
       </div>
+      {loading && (
+                 <LoadingSpinner/>
+                )}
+          
     </div>
   );
 };

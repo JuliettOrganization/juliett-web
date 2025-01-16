@@ -7,6 +7,10 @@ import DropDownMenu from '@/app/ui/home_account/reportmanager/DropDownMenu';
 import RefreshCountdown from '@/app/ui/home_account/reportmanager/RefreshCountdown';
 import { useAccount } from '@/app/context/AccountContext';
 import LoadingSpinner from '@/app/ui/LoadingSpinner';
+import PopupNotification from '@/app/ui/PopupNotification';
+import { useReportActions } from '@/app/ui/home_account/reportmanager/buttons';
+
+
 
 interface Report {
   reportid: number;
@@ -39,6 +43,8 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { accountid } = useAccount();
+  const { handleEditReport, handleDelete, handleClone } = useReportActions();
+
 
   const fetchReports = async () => {
     if (accountid) {
@@ -99,39 +105,6 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
     };
   }, []);
 
-  const handleDelete = async (reportId: string) => {
-    try {
-      const response = await fetch('/api/home_account/reportmanager/deleteReport', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ reportid: reportId }),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Report deleted successfully:', result);
-        setPopupMessage('Report deleted successfully');
-        setTimeout(() => {
-          setPopupMessage(null);
-          window.location.reload();
-        }, 2000); // Hide the popup after 3 seconds and refresh the page
-      } else {
-        const result = await response.json();
-        setErrors(result.errors);
-      }
-    } catch (error) {
-      console.error('Error deleting account:', error);
-      setErrors({ general: ['An unexpected error occurred.'] });
-    }
-  };
-
-
-  const handleEditReport = (reportid: string) => {
-    router.push(`/home_account/reportdesign/${reportid}`);
-  };
-
   if (loading) {
     return <LoadingSpinner />; // Use your spinner component
   }
@@ -155,13 +128,13 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
                 <div><p className="text-sm text-gray-500">{report.period}</p></div>
                 <div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div>
                 <div className="flex justify-end gap-2 relative">
-                  <DropDownMenu report={report} handleEditReport={handleEditReport} handleDelete={handleDelete} />
+                <DropDownMenu report={report} handleEditReport={handleEditReport} handleDelete={(reportId) => handleDelete(reportId, setPopupMessage, setErrors)} handleClone={(reportId) => handleClone(reportId, setPopupMessage, setErrors)} />
                 </div>
               </div>
             ))}
           </div>
           
-          <table className=" text-gray-900 min-w-full table-auto">
+            <table className="hidden md:table text-gray-900 min-w-full table-auto">
           <thead className="rounded-lg text-left text-sm font-normal">
                 <tr>
                   <th onClick={() => handleSort('reportname')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
@@ -201,7 +174,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
                     <td className="px-6 py-4 text-sm text-gray-500"><div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div></td>
                     <td className="px-6 py-4 break-words text-sm text-gray-500">{report.last_updated}</td>
                     <td className="px-6 py-4 break-words text-right text-sm font-medium relative">
-                      <DropDownMenu report={report} handleEditReport={handleEditReport} handleDelete={handleDelete} />
+                    <DropDownMenu report={report} handleEditReport={handleEditReport} handleDelete={(reportId) => handleDelete(reportId, setPopupMessage, setErrors)} handleClone={(reportId) => handleClone(reportId, setPopupMessage, setErrors)} />
                     </td>
                   </tr>
                 ))}
@@ -211,9 +184,9 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
         </div>
       </div>
       {popupMessage && (
-        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 border-l-8 border-l-green-500 bg-white text-green-500 px-4 py-2 rounded shadow-lg">
-          {popupMessage}
-        </div>
+        <PopupNotification
+          message={popupMessage}
+        />
       )}
       {errors && (
         <div className="mt-4 text-red-500">
@@ -224,6 +197,9 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
           </ul>
         </div>
       )}
+      {loading && (
+           {LoadingSpinner}    
+          )}
     </div>
   );
 };

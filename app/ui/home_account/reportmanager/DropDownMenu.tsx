@@ -2,6 +2,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import LoadingSpinner from '@/app/ui/LoadingSpinner';
+import PopupNotification from '@/app/ui/PopupNotification';
 
 interface Report {
   reportid: number;
@@ -12,19 +14,26 @@ interface DropDownMenuProps {
   report: Report;
   handleEditReport: (reportId: string) => void;
   handleDelete: (reportId: string) => void;
+  handleClone: (reportId: string) => void;
 }
 
-const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, handleDelete }) => {
+const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, handleDelete,handleClone }) => {
   const menuRef = useRef<HTMLUListElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  
 
   useEffect(() => {
     setLoading(false); // Stop loading when the component mounts or updates
   }, []);
 
-  const handleClickLoading = () => {
-    setLoading(true);
+  const handleClickDownload = () => {
+    setPopupMessage('Downloading Report');
+    setTimeout(() => {
+      setPopupMessage(null);
+      window.location.reload();
+    }, 2000); // Hide the popup after 3 seconds and refresh the page
   };
 
   const handleItemClick = (event: React.MouseEvent, action: () => void) => {
@@ -57,22 +66,23 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, h
         <ul ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
           <li
             className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
-            onClick={(event) => { handleClickLoading(); handleItemClick(event, () => handleEditReport(report.reportid.toString())); }}
+            onClick={(event) => { setLoading(true); handleItemClick(event, () => handleEditReport(report.reportid.toString())); }}
           >
             Edit
           </li>
-          <li
+          {/* <li
             className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
           >
             Run
-          </li>
+          </li> */}
           <li
             className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
           >
             Schedule
           </li>
           <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
+            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400' : 'text-gray-500 hover:bg-gray-100'}`}
+            onClick={(event) => { setLoading(true);  handleItemClick(event, () => handleClone(report.reportid.toString()))}}
           >
             Clone
           </li>
@@ -82,18 +92,26 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, h
             {report.status === 'running' || report.status === 'draft' ? (
               'Download'
             ) : (
-              <Link href={`/api/home_account/reportmanager/downloadReport/${report.reportid}`} onClick={handleClickLoading}>
+              <Link href={`/api/home_account/reportmanager/downloadReport/${report.reportid}`} onClick={() => { handleClickDownload() }}>
                 Download
               </Link>
             )}
           </li>
           <li
             className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer"
-            onClick={(event) => handleItemClick(event, () => handleDelete(report.reportid.toString()))}
+            onClick={ (event) => {setLoading(true); handleItemClick(event, () => handleDelete(report.reportid.toString()))}}
           >
             Delete
           </li>
         </ul>
+      )}
+       {loading && (
+                 <LoadingSpinner/>
+                )}
+             {popupMessage && (
+        <PopupNotification
+          message={popupMessage}
+        />
       )}
     </div>
   );

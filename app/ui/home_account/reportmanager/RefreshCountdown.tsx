@@ -12,7 +12,7 @@ interface RefreshCountdownProps {
 }
 
 const RefreshCountdown: React.FC<RefreshCountdownProps> = ({ sortedReports, fetchReports }) => {
-  const [refreshCountdown, setRefreshCountdown] = useState(5);
+  const [refreshCountdown, setRefreshCountdown] = useState(10);
 
   useEffect(() => {
     const interval = setInterval(() => {
