@@ -23,7 +23,7 @@ export default function DataSourcesForm({
 
   useEffect(() => {
     onChange(selectedSources);
-  }, [selectedSources]);
+  }, [selectedSources, onChange]);
 
   const filteredSources =
     query === ''

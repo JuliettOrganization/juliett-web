@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Switch } from '@headlessui/react';
 import { Combobox, ComboboxInput, ComboboxButton, ComboboxOptions, ComboboxOption } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 const currencies = [
   'USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'SEK', 'NZD',
@@ -232,7 +233,7 @@ export default function MainInformationForm({
           />
           {preview && (
             <div className="mt-4">
-              <img src={preview} alt="Preview" className="max-w-full h-auto rounded-md shadow-md" />
+              <Image src={preview} alt="Preview" className="max-w-full h-auto rounded-md shadow-md" width={500} height={500} />
             </div>
           )}
         </div>

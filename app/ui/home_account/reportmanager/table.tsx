@@ -71,7 +71,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
 
   useEffect(() => {
     fetchReports();
-  }, [accountid, query, currentPage, sortConfig]);
+  }, [accountid, query, currentPage, sortConfig, fetchReports]);
 
   const handleSort = (key: keyof Report) => {
     let direction: 'asc' | 'desc' = 'asc';
