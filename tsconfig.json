@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -33,6 +33,6 @@
     "scripts/seed.js",
     "app/ui/home_account/reportdesign/3_tab3_custom-sql.js", 
     "app/ui/home_user/admin/accounts/1_accountbillingtsx"  
-],
+  ],
   "exclude": ["node_modules"]
 }
