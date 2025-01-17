@@ -31,7 +31,12 @@ export async function POST(request: Request) {
     selected_grouping_operating, selected_grouping_values_agency, 
     selected_grouping_values_geo_from, selected_grouping_values_geo_to, 
     selected_grouping_values_issuing, selected_grouping_values_marketing, 
-    selected_grouping_values_operating, sql_code, transaction_type, accountid
+    selected_grouping_values_operating, sql_code, transaction_type, accountid,
+                isscheduleractive,
+                schedulefrequency,
+                scheduleperiodconcept,
+                schedulefirstdayofyear,
+                scheduleemail
 ) 
 SELECT 
     $1, useremail, reportname||' (cloned)', status, tags, NOW(), description, od_concept, 
@@ -43,7 +48,12 @@ SELECT
     selected_grouping_operating, selected_grouping_values_agency, 
     selected_grouping_values_geo_from, selected_grouping_values_geo_to, 
     selected_grouping_values_issuing, selected_grouping_values_marketing, 
-    selected_grouping_values_operating, sql_code, transaction_type, accountid
+    selected_grouping_values_operating, sql_code, transaction_type, accountid, 
+                isscheduleractive,
+                schedulefrequency,
+                scheduleperiodconcept,
+                schedulefirstdayofyear,
+                scheduleemail
 FROM reports
 WHERE reportid = $2;
 

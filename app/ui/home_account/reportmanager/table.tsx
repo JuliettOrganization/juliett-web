@@ -4,11 +4,12 @@ import { useRouter } from 'next/navigation';
 import ReportStatus from '@/app/ui/home_account/reportmanager/status';
 import ReportTags from '@/app/ui/home_account/reportmanager/tags';
 import DropDownMenu from '@/app/ui/home_account/reportmanager/DropDownMenu';
-import RefreshCountdown from '@/app/ui/home_account/reportmanager/RefreshCountdown';
+// import RefreshCountdown from '@/app/ui/home_account/reportmanager/RefreshCountdown';
 import { useAccount } from '@/app/context/AccountContext';
 import LoadingSpinner from '@/app/ui/LoadingSpinner';
 import PopupNotification from '@/app/ui/PopupNotification';
 import { useReportActions } from '@/app/ui/home_account/reportmanager/buttons';
+import { ClockIcon } from '@heroicons/react/24/outline';
 
 
 
@@ -21,6 +22,7 @@ interface Report {
   status: string;
   tags: string;
   last_updated: string;
+  isscheduleractive: boolean;
 }
 
 interface ReportsTableClientProps {
@@ -115,8 +117,8 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
 
   return (
     <div className="flex flex-col mt-6">
-      <RefreshCountdown sortedReports={sortedReports} fetchReports={fetchReports} />
-      <div className="inline-block align-middle overflow-x-auto">
+      {/* <RefreshCountdown sortedReports={sortedReports} fetchReports={fetchReports} /> */}
+      <div className="inline-block align-middle text-left overflow-x-auto">
         <div className="flex flex-col rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             {sortedReports.map((report) => (
@@ -127,6 +129,15 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
                 <div><p className="text-sm text-gray-500">{report.date_concept}</p></div>
                 <div><p className="text-sm text-gray-500">{report.period}</p></div>
                 <div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div>
+            
+
+                <div>
+                  {report.isscheduleractive ? (
+                    <ClockIcon className="rounded-full bg-blue-500 h-8 w-8 p-1 text-center justify-center text-white"/>
+                  ) : (
+                    <p className="text-sm text-gray-500"></p>
+                  )}
+                </div>
                 <div className="flex justify-end gap-2 relative">
                 <DropDownMenu report={report} handleEditReport={handleEditReport} handleDelete={(reportId) => handleDelete(reportId, setPopupMessage, setErrors)} handleClone={(reportId) => handleClone(reportId, setPopupMessage, setErrors)} />
                 </div>
@@ -155,6 +166,9 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
                   <th onClick={() => handleSort('tags')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Tags {getSortIcon('tags')}
                   </th>
+                  <th onClick={() => handleSort('isscheduleractive')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
+                    Scheduler {getSortIcon('isscheduleractive')}
+                  </th>
                   <th onClick={() => handleSort('last_updated')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Last Updated {getSortIcon('last_updated')}
                   </th>
@@ -163,16 +177,21 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white text-left divide-y divide-gray-200">
                 {sortedReports.map((report) => (
                   <tr key={report.reportid} className="w-full border-b py-3 text-sm last-of-type:border-none">
-                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.reportname}</td>
-                    <td className="px-6 py-4 break-words text-sm text-gray-500"><ReportStatus status={report.status} /></td>
-                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.description}</td>
-                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.date_concept}</td>
-                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.period}</td>
-                    <td className="px-6 py-4 text-sm text-gray-500"><div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div></td>
-                    <td className="px-6 py-4 break-words text-sm text-gray-500">{report.last_updated}</td>
+                    <td className="px-4 py-4 break-words text-sm text-gray-500">{report.reportname}</td>
+                    <td className="px-4 py-4 break-words text-sm text-gray-500"><ReportStatus status={report.status} /></td>
+                    <td className="px-4 py-4 break-words text-sm text-gray-500">{report.description}</td>
+                    <td className="px-4 py-4 break-words text-sm text-gray-500">{report.date_concept}</td>
+                    <td className="px-4 py-4 break-words text-sm text-gray-500">{report.period}</td>
+                    <td className="px-4 py-4 text-sm text-gray-500"><div><ReportTags tags={report.tags ? report.tags.split(';') : []} /></div></td>
+                    <td className="px-4 py-4 break-words text-sm text-gray-500">{report.isscheduleractive ? (
+                    <ClockIcon className="rounded-full bg-blue-500 h-8 w-8 p-1 text-center justify-center text-white" />
+                  ) : (
+                    <p className="text-sm text-gray-500"></p>
+                  )}</td>
+                    <td className="px-4 py-4 break-words text-sm text-gray-500">{report.last_updated}</td>
                     <td className="px-6 py-4 break-words text-right text-sm font-medium relative">
                     <DropDownMenu report={report} handleEditReport={handleEditReport} handleDelete={(reportId) => handleDelete(reportId, setPopupMessage, setErrors)} handleClone={(reportId) => handleClone(reportId, setPopupMessage, setErrors)} />
                     </td>

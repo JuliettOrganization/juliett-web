@@ -37,6 +37,7 @@ export default function Nav() {
               width={24}
               height={24}
               className="w-12 h-12 border border-white"
+              priority
             />
             </div>
             </div>

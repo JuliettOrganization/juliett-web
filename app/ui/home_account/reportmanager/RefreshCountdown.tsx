@@ -1,57 +1,73 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+// import { TIMEOUT } from 'dns';
+// import React, { useState, useEffect } from 'react';
 
-interface Report {
-  reportid: number;
-  status: string;
-}
+// interface RefreshCountdownProps {
+//   sortedReports: any[];
+//   fetchReports: () => void;
+// }
 
-interface RefreshCountdownProps {
-  sortedReports: Report[];
-  fetchReports: () => void;
-}
+// const RefreshCountdown: React.FC<RefreshCountdownProps> = ({ sortedReports, fetchReports }) => {
+//   const [refreshCountdown, setRefreshCountdown] = useState<number>(() => {
+//     const savedCountdown = localStorage.getItem('refreshCountdown');
+//     return savedCountdown ? parseInt(savedCountdown, 10) : 10;
+//   });
+//   const [stopPolling, setStopPolling] = useState<boolean>(() => {
+//     const savedStopPolling = localStorage.getItem('stopPolling');
+//     return savedStopPolling ? JSON.parse(savedStopPolling) : false;
+//   });
+//   useEffect(() => {
+//     localStorage.setItem('stopPolling', 'false');
+//     localStorage.removeItem('timeout');
+//   }, []);
 
-const RefreshCountdown: React.FC<RefreshCountdownProps> = ({ sortedReports, fetchReports }) => {
-  const [refreshCountdown, setRefreshCountdown] = useState(10);
+//   useEffect(() => {
+//     // if (stopPolling) return;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const hasRunningReports = sortedReports.some(report => report.status === 'running');
-      if (hasRunningReports) {
-        fetchReports();
-        setRefreshCountdown(5); // Reset countdown to 5 seconds
-      } else {
-        clearInterval(interval);
-      }
-    }, 10000);
+//     const interval = setInterval(() => {
+//       if (hasRunningReports && !stopPolling) {
+//         fetchReports();
+//         setRefreshCountdown(10); // Reset countdown to 10 seconds
+//         localStorage.setItem('refreshCountdown', '10');
+//       } else {
+//         clearInterval(interval);
+//       }
+//     }, 10000);
 
-    const countdownInterval = setInterval(() => {
-      setRefreshCountdown(prev => prev > 0 ? prev - 1 : 0);
-    }, 1000);
+//     const countdownInterval = setInterval(() => {
+//       setRefreshCountdown(prev => {
+//         const newCountdown = prev > 0 ? prev - 1 : 0;
+//         localStorage.setItem('refreshCountdown', newCountdown.toString());
+//         return newCountdown;
+//       });
+//     }, 1000);
 
-    const timeout = setTimeout(() => {
-      clearInterval(interval);
-      clearInterval(countdownInterval);
-    }, 30000); // Stop polling after 1 minute
+//     const timeout = setTimeout(() => {
+//       setStopPolling(true);
+//       localStorage.setItem('stopPolling', 'true');
+//       clearInterval(interval);
+//       clearInterval(countdownInterval);
+//     }, 30000); // Stop polling after 30 seconds
 
-    return () => {
-      clearInterval(interval);
-      clearInterval(countdownInterval);
-      clearTimeout(timeout);
-    };
-  }, [sortedReports]);
+//     localStorage.setItem('timeout', timeout.toString());
 
-  const hasRunningReports = sortedReports.some(report => report.status === 'running');
+//     return () => {
+//       clearInterval(interval);
+//       clearInterval(countdownInterval);
+//       // clearTimeout(timeout);
+//     };
+//   }, [sortedReports]);
 
-  return (
-    <div>
-      {hasRunningReports && (
-        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 border-l-8 border-l-green-500 bg-white text-green-500 px-4 py-2 rounded shadow-lg">
-          Report running. Auto-refresh in: {refreshCountdown} seconds
-        </div>
-       )} 
-    </div>
-  );
-};
+//   const hasRunningReports = sortedReports.some(report => report.status === 'running');
 
-export default RefreshCountdown;
+//   return (
+//     <div>
+//       {hasRunningReports && localStorage.getItem('stopPolling') === 'false' ? (
+//         <div className="fixed top-24 left-1/2 transform -translate-x-1/2 border-l-8 border-l-green-500 bg-white text-green-500 px-4 py-2 rounded shadow-lg">
+//           Report running. Auto-refresh in: {refreshCountdown} seconds
+//         </div>
+//       ) : null}
+//     </div>
+//   );
+// };
+
+// export default RefreshCountdown;

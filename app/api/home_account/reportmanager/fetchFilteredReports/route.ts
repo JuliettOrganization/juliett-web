@@ -12,7 +12,8 @@ const fieldMapping: { [key: string]: string } = {
   period: "to_char(date_from, 'YYYY-MM-DD') || ' to ' || to_char(date_to, 'YYYY-MM-DD')",
   status: 'status',
   tags: 'tags',
-  last_updated: "to_char(updated, 'YYYY-MM-DD hh:mm:ss')"
+  last_updated: "to_char(updated, 'YYYY-MM-DD hh:mm:ss')",
+  isscheduleractive: 'isscheduleractive'
 };
 
 export async function GET(request: Request) {
@@ -44,7 +45,8 @@ const sortOrder = sort ? sort.split(':')[1] : 'desc';
       to_char(date_from, 'YYYY-MM-DD') || ' to ' || to_char(date_to, 'YYYY-MM-DD') as period,
       status,
       tags,
-      to_char(updated, 'YYYY-MM-DD hh:mm:ss') as last_updated
+      to_char(updated, 'YYYY-MM-DD hh:mm:ss') as last_updated,
+      isscheduleractive
     FROM reports
     WHERE accountid = $1
     AND (

@@ -386,7 +386,7 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
           <div className="p-4 bg-white rounded-lg shadow-md">
             <div className="bg-white rounded-lg">
           <div className="flex flex-row rounded-md p-4 justify-start text-xl font-bold space-x-6">Field Selection</div>
-          <div className="relative pr-6 pl-6 flex flex-1 flex-shrink-0">
+          <div className="relative pr-8 pl-4 flex flex-1 flex-shrink-0">
             <input
               type="text"
               placeholder="Click on fields below to include them on the report Group By. Type here to search fields..."

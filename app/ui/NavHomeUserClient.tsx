@@ -87,6 +87,7 @@ return (
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         style={{ objectFit: 'cover' }}
         className="rounded-full"
+        priority
           />
         </div>
         <div className="flex flex-col text-left">
