@@ -29,13 +29,16 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, h
     setLoading(false); // Stop loading when the component mounts or updates
   }, []);
 
-  const handleClickDownload = () => {
-    setPopupMessage('Downloading Report');
+ const handleClickDownload = async () => {
+  setLoading(true);
+  setPopupMessage('Downloading report, please wait until it is complete');
+window.location.href = `/api/home_account/reportmanager/downloadReport/${report.reportid}`;
     setTimeout(() => {
+      setLoading(false);
       setPopupMessage(null);
-      window.location.reload();
-    }, 2000); // Hide the popup after 3 seconds and refresh the page
-  };
+    }, 5000); // Hide the popup after 3 seconds
+
+};
 
   const handleItemClick = (event: React.MouseEvent, action: () => void) => {
     event.stopPropagation();
@@ -112,9 +115,9 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, h
             {report.status === 'running' || report.status === 'draft' ? (
               'Download'
             ) : (
-              <Link href={`/api/home_account/reportmanager/downloadReport/${report.reportid}`} onClick={() => { handleClickDownload() }}>
-          Download
-              </Link>
+                <a onClick={handleClickDownload}>
+              Download
+                </a>
             )}
           </li>
           <li

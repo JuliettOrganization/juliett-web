@@ -7,8 +7,23 @@ import { sql } from '@vercel/postgres';
 export async function POST(request: Request) {
   try {
     const { reportData, reportId } = await request.json();
-   // Delay execution for 5 seconds
-   await new Promise(resolve => setTimeout(resolve, 20000));
+
+    // Trigger the long-running task in the background
+    processReport(reportData, reportId);
+
+    // Immediately respond to the client
+    return NextResponse.json({ message: 'Report generation started' }, { status: 202 });
+  } catch (error) {
+    console.error('Error starting report generation:', error);
+    return NextResponse.json({ error: 'Failed to start report generation' }, { status: 500 });
+  }
+}
+
+async function processReport(reportData: any, reportId: string) {
+  try {
+    // Delay execution for 5 seconds
+      await new Promise(resolve => setTimeout(resolve, 20000));
+
     // Create a new workbook and worksheet
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Report');
@@ -20,17 +35,17 @@ export async function POST(request: Request) {
     headerRow.font = { size: 16, bold: true };
     headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
 
-      // Function to parse and join values
-      const parseAndJoin = (value: string | null) => {
-        if (!value) return '';
-        try {
-          const parsed = JSON.parse(value.replace(/""/g, '"'));
-          return Array.isArray(parsed) ? parsed.join(', ') : '';
-        } catch (error) {
-          console.error('Error parsing value:', error);
-          return '';
-        }
-      };
+    // Function to parse and join values
+    const parseAndJoin = (value: string | null) => {
+      if (!value) return '';
+      try {
+        const parsed = typeof value === 'string' ? JSON.parse(value.replace(/""/g, '"')) : value;
+        return Array.isArray(parsed) ? parsed.join(', ') : '';
+      } catch (error) {
+        console.error('Error parsing value:', error);
+        return '';
+      }
+    };
 
     // Add report data with nice formatting
     worksheet.columns = [
@@ -89,9 +104,8 @@ export async function POST(request: Request) {
            SET status = 'result'
          WHERE reportid = ${reportId}
          `;
-    return NextResponse.json({ message: 'Excel file created successfully', filePath });
+    console.log(`Report generated: ${filePath}`);
   } catch (error) {
-    console.error('Error creating Excel file:', error);
-    return NextResponse.json({ error: 'Error creating Excel file' }, { status: 500 });
+    console.error('Error generating report:', error);
   }
 }

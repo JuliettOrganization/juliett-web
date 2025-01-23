@@ -116,10 +116,10 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
   }
 
   return (
-    <div className="flex flex-col mt-6">
+    <div className="flex flex-col w-full mt-6 bg-gray-50 rounded-lg overflow-x-auto">
       {/* <RefreshCountdown sortedReports={sortedReports} fetchReports={fetchReports} /> */}
-      <div className="inline-block align-middle text-left overflow-x-auto">
-        <div className="flex flex-col rounded-lg bg-gray-50 p-2 md:pt-0">
+      <div className="inline-block align-middle w-full text-left overflow-x-auto">
+        <div className="flex flex-col rounded-lg w-full bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             {sortedReports.map((report) => (
               <div key={report.reportid} className="mb-2 w-full rounded-md shadow p-4">
@@ -146,7 +146,7 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
           </div>
           
             <table className="hidden md:table text-gray-900 min-w-full table-auto">
-          <thead className="rounded-lg text-left text-sm font-normal">
+          <thead className="text-left min-w-full text-sm font-normal overflow-x-auto">
                 <tr>
                   <th onClick={() => handleSort('reportname')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Report Name {getSortIcon('reportname')}
@@ -172,12 +172,12 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({ query, currentP
                   <th onClick={() => handleSort('last_updated')} className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     Last Updated {getSortIcon('last_updated')}
                   </th>
-                  <th className="relative px-6 py-3">
+                  <th className="px-4 py-5 text-left text-sm font-medium cursor-pointer tracking-wider">
                     <span className="sr-only">Actions</span>
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white text-left divide-y divide-gray-200">
+              <tbody className="bg-white text-left w-full divide-y divide-gray-200">
                 {sortedReports.map((report) => (
                   <tr key={report.reportid} className="w-full border-b py-3 text-sm last-of-type:border-none">
                     <td className="px-4 py-4 break-words text-sm text-gray-500">{report.reportname}</td>

@@ -23,7 +23,6 @@ export async function POST(request: Request) {
     if (checkReportIdResult.rows.length > 0) {
       throw new Error('Report ID already exists');
     }
-
     const insertQuery = `
       INSERT INTO reports (
        reportid,useremail,reportname,status, tags, updated, description,od_concept, 
@@ -83,7 +82,8 @@ export async function POST(request: Request) {
     await sql.query(insertQuery, insertValues);
 
    
-  return NextResponse.json({ message: 'Go to Report Manager to download your results', reportId: newReportId }, { status: 200 });
+    return NextResponse.json({ message: 'Go to Report Manager to download your results', reportId: newReportId }, { status: 200 })
+
 
   } catch (error) {
     console.error('Error running report:', error);

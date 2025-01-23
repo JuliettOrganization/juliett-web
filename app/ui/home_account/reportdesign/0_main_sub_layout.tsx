@@ -284,7 +284,6 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
     setPopupMessage('Report Running');
     setTimeout(() => {
     setPopupMessage(null);
-    window.location.href = '/home_account/reportmanager';
     }, 3000);
   }, 2000); // Add a delay of 1 second before showing the popup
 
@@ -313,12 +312,13 @@ const CreateFormLayout: React.FC<CreateFormLayoutProps> = ({
       body: JSON.stringify({ reportData, reportId }),
       });
 
-      // if (!excelResponse.ok) {
-      // throw new Error('Failed to generate Excel file');
-      // }
+      if (!excelResponse.ok) {
+      throw new Error('Failed to generate Excel file');
+      }
 
-      // const excelResult = await excelResponse.json();
-      // console.log(excelResult.message);
+      const excelResult = await excelResponse.json();
+      console.log(excelResult.message);
+      window.location.href = '/home_account/reportmanager';
     } 
     catch (error) {
       console.error('Error running report:', error);

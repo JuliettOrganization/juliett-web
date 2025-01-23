@@ -8,7 +8,7 @@ import Nav_home_user from '@/app/ui/home_user/nav_home_user';
           <div className="fixed top-0 left-0 z-50 w-full h-20 flex items-center p-4 bg-black">
             <Nav_home_user />
           </div>
-          <div className="flex-grow md:overflow-y-auto p-6 mt-20 h-full bg-gray-300">
+          <div className="flex-grow md:overflow-y-auto p-6 mt-20 bg-gray-300">
             {children}
           </div>
         </div>
