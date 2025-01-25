@@ -8,7 +8,7 @@ const links = [
   { name: 'Report Manager', href: '/home_account/reportmanager', colorref: '/home_account/reportmanager' },
   { name: 'Report Design', href: '/home_account/reportdesign/create', colorref: '/home_account/reportdesign' },
   { name: 'Loading Status', href: '/home_account/loadingstatus', colorref: '/home_account/loadingstatus' },
-  { name: 'Scheduler', href: '/home_account/scheduler', colorref: '/home_account/scheduler' },
+  { name: 'Analytics', href: '/home_account/analytics', colorref: '/home_account/analytics' },
   { name: 'Configuration', href: '/home_account/configuration', colorref: '/home_account/configuration' },
 ];
 
