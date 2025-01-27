@@ -20,7 +20,7 @@ const AnalyticsPage = () => {
   const [chartData, setChartData] = useState<any>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [selectedKPI, setSelectedKPI] = useState('Total Gross (USD)');
+  const [selectedKPI, setSelectedKPI] = useState('Gross Amount');
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(false); // State to manage loading spinner visibility
 
@@ -33,6 +33,7 @@ const AnalyticsPage = () => {
   useEffect(() => {
 
     fetchChartData();
+    setActiveTab(0);
   }, [selectedReportid,startDate,endDate]);
 
   const fetchReportInfo = async () => {
@@ -109,7 +110,7 @@ const AnalyticsPage = () => {
   const [reportOptions, setReportOptions] = useState<Report[]>([]);
 
   return (
-    <div className="bg-gray-300 min-h-screen p-4">
+    <div className="bg-gray-300 min-h-screen p-2">
       {loading && <LoadingSpinner />} {/* Show loading spinner when loading */}
       <div className="flex flex-row w-full items-center space-x-4 justify-between">
         <h1 className="text-4xl mb-4">Analytics</h1>
@@ -205,10 +206,34 @@ const AnalyticsPage = () => {
       
           {chartData && (
             <>
-              <KPIBox title={`Total Gross Amount (${reportInfo ? reportInfo[0].currency : 'USD'})`} value={chartData.kpiDataGrossAmount.value} yoy={chartData.kpiDataGrossAmount.yoy} />
-              <KPIBox title="Total Coupon Count" value={chartData.kpiDataCouponCount.value} yoy={chartData.kpiDataCouponCount.yoy} />
-               <KPIBox title="Total Ticket Count" value={chartData.kpiDataTicketCount.value} yoy={chartData.kpiDataTicketCount.yoy} />
-          <KPIBox title={`Average Fare (${reportInfo ? reportInfo[0].currency : 'USD'})`} value={chartData.kpiDataAverageFare.value} yoy={chartData.kpiDataAverageFare.yoy} />
+              <KPIBox 
+              selectedKPI={selectedKPI === 'Gross Amount' ? selectedKPI : 'WHITE'} 
+              title={`Total Gross Amount (${reportInfo ? reportInfo[0].currency : 'USD'})`} 
+              value={chartData.kpiDataGrossAmount.value} 
+              yoy={chartData.kpiDataGrossAmount.yoy} 
+              onClick={() => setSelectedKPI('Gross Amount')}
+              />
+              <KPIBox 
+              selectedKPI={selectedKPI === 'Coupon Count' ? selectedKPI : 'WHITE'} 
+              title="Total Coupon Count" 
+              value={chartData.kpiDataCouponCount.value} 
+              yoy={chartData.kpiDataCouponCount.yoy} 
+              onClick={() => setSelectedKPI('Coupon Count')}
+              />
+              <KPIBox 
+              selectedKPI={selectedKPI === 'Ticket Count' ? selectedKPI : 'WHITE'} 
+              title="Total Ticket Count" 
+              value={chartData.kpiDataTicketCount.value} 
+              yoy={chartData.kpiDataTicketCount.yoy} 
+              onClick={() => setSelectedKPI('Ticket Count')}
+              />
+              <KPIBox 
+              selectedKPI={selectedKPI === 'Average Fare' ? selectedKPI : 'WHITE'} 
+              title={`Average Fare (${reportInfo ? reportInfo[0].currency : 'USD'})`} 
+              value={chartData.kpiDataAverageFare.value} 
+              yoy={chartData.kpiDataAverageFare.yoy} 
+              onClick={() => setSelectedKPI('Average Fare')}
+              />
             </>
           )}
          
@@ -220,7 +245,7 @@ const AnalyticsPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
         <div className="col-span-4 bg-white p-4 rounded-lg mb-4">
-          <Tabs defaultValue="main-options" className="w-full">
+          <Tabs defaultValue="Day" className="w-full">
             <TabsList>
               <TabsTrigger value="Day" onClick={() => setActiveTab(0)}>Day</TabsTrigger>
               <TabsTrigger value="Week" onClick={() => setActiveTab(1)}>Week</TabsTrigger>
@@ -267,29 +292,45 @@ const AnalyticsPage = () => {
               {activeTab === 1 && chartData && chartData[`weekly${selectedKPI.trim().replace(/\s+/g, '')}`] && selectedKPI && (
                 <div className="justify-center">
                   <Line
-                                      data={chartData[`weekly${selectedKPI.trim().replace(/\s+/g, '')}`]}
-                                    options={{
-                                      scales: {
-                                        y: {
-                                          title: {
-                                            display: true,
-                                            text: `${selectedKPI} (${reportInfo ? reportInfo[0].currency : 'USD'})`,                                          
-                                          },
-                                        },
-                                        x: {
-                                          title: {
-                                            display: true,
-                                            text: `${selectedKPI} ${
-                                              selectedKPI === 'Gross Amount' || selectedKPI === 'Average Fare'
-                                                ? `(${reportInfo ? reportInfo[0].currency : 'USD'})`
-                                                : ''
-                                            }`,                      
-                                          },
-                                        },
-                                      },
-                                    }}
-                                  />
-                                </div>
+                  data={{
+                    ...chartData[`weekly${selectedKPI.trim().replace(/\s+/g, '')}`],
+                    datasets: chartData[`weekly${selectedKPI.trim().replace(/\s+/g, '')}`].datasets.map((dataset: any) => ({
+                      ...dataset,
+                      fill: true, // Fill the area under the line
+                      bakcgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the fill color
+                    })),
+                  }}
+                  options={{
+                  elements: {
+                  line: {
+                    borderWidth: 1, // Make the line thinner
+                  },
+                  point: {
+                    radius: 0, // Remove the circles on the points
+                  },
+                  },
+                  scales: {
+                  y: {
+                    title: {
+                    display: true,
+                    text: `${selectedKPI} (${reportInfo ? reportInfo[0].currency : 'USD'})`,
+                    },
+                  },
+                  x: {
+                    title: {
+                    display: true,
+                    text: reportInfo ? reportInfo[0].date_concept : '',
+                    },
+                  },
+                  },
+                  plugins: {
+                  filler: {
+                    propagate: false,
+                  },
+                  },
+                  }}
+                  />
+                </div>
                               )}
             </TabsContent>
              <TabsContent value="Month">
@@ -342,7 +383,16 @@ const AnalyticsPage = () => {
                   {
                   ...chartData[`AirlineData${selectedKPI.trim().replace(/\s+/g, '')}`].datasets[0],
                   backgroundColor: [
-                    'rgba(128, 0, 128, 0.6)', 'rgba(0, 255, 255, 0.6)', 'rgba(0, 0, 255, 0.6)', 
+                    'rgba(23, 87, 235, 0.2)', 
+                    'rgba(250, 192, 192, 0.2)', 
+                    'rgba(34, 20, 78, 0.2)', 
+                    'rgba(56, 159, 64, 0.4)', 
+                    'rgba(200, 20, 80, 0.2)', 
+                    'rgba(50, 206, 86, 0.4)',
+                    'rgba(50, 100, 44, 0.2)',
+                    'rgba(89, 20, 86, 0.2)',
+                    'rgba(250, 240, 30, 0.4)',
+                    'rgba(10, 22, 86, 0.2)', 'rgba(0, 255, 255, 0.6)', 'rgba(0, 0, 255, 0.6)', 
                   'rgba(0, 128, 0, 0.6)', 'rgba(0, 255, 0, 0.6)', 'rgba(0, 0, 128, 0.6)', 
                   'rgba(0, 128, 128, 0.6)', 'rgba(128, 0, 128, 0.6)', 'rgba(0, 255, 255, 0.6)', 
                   'rgba(0, 0, 255, 0.6)', 'rgba(0, 128, 0, 0.6)', 'rgba(0, 255, 0, 0.6)', 'rgba(255, 205, 86, 0.6)', 'rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 

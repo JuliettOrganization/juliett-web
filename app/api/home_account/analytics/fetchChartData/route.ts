@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-
+   
    
   // Hardcoded chart data for demonstration purposes
 const chartData = {
@@ -148,12 +148,23 @@ const chartData = {
     },
 
     AirlineDataGrossAmount: {
-        labels: ['Airline A', 'Airline B', 'Airline C'],
+        labels: ['Air France', 'Lufthansa', 'Emirates', 'British Airways', 'American Airlines', 'Iberia', 'Qatar Airways', 'Turkish Airlines', 'Delta Airlines', 'United Airlines'],
         datasets: [
             {
                 label: 'Gross Amount',
-                data: [300, 500, 200],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                data: [300, 500, 200, 80, 55, 30, 22, 15, 5, 1],
+    backgroundColor: [
+        'rgba(23, 87, 235, 0.2)', 
+        'rgba(85, 192, 192, 0.2)', 
+        'rgba(34, 200, 78, 0.2)', 
+        'rgba(56, 159, 64, 0.4)', 
+        'rgba(75, 192, 80, 0.2)', 
+        'rgba(50, 206, 86, 0.4)',
+        'rgba(50, 100, 44, 0.2)',
+        'rgba(89, 20, 86, 0.2)',
+        'rgba(250, 240, 30, 0.4)',
+        'rgba(10, 22, 86, 0.2)',
+    ],
             },
         ],
     },
@@ -163,7 +174,12 @@ const chartData = {
             {
                 label: 'Gross Amount',
                 data: [300, 500, 200, 20],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FFCE74'],
+                backgroundColor: ['rgba(54, 162, 235, 0.4)', 
+                    'rgba(85, 192, 192, 0.2)', 
+                    'rgba(34, 120, 255, 0.2)', 
+                    'rgba(100, 159, 64, 0.4)', 
+                    'rgba(75, 192, 75, 0.2)', 
+                    'rgba(50, 206, 86, 0.2)'],
             },
         ],
     },
@@ -173,8 +189,8 @@ const chartData = {
             {
                 label: 'Gross Amount',
                 data: [400, 300, 500],
-                backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 0.2)',
                 borderWidth: 1,
             },
         ],
@@ -186,7 +202,7 @@ const chartData = {
             {
                 label: 'Coupon Count',
                 data: [300, 500, 200],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                backgroundColor: ['#36A2EB', '#36A2EB', '#36A2EB'],
             },
         ],
     },
@@ -196,7 +212,12 @@ const chartData = {
             {
                 label: 'Coupon Count',
                 data: [300, 500, 200, 20],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FFCE74'],
+                backgroundColor: ['rgba(54, 162, 235, 0.4)', 
+                    'rgba(85, 192, 192, 0.2)', 
+                    'rgba(34, 120, 255, 0.2)', 
+                    'rgba(100, 159, 64, 0.4)', 
+                    'rgba(75, 192, 75, 0.2)', 
+                    'rgba(50, 206, 86, 0.2)'],
             },
         ],
     },
@@ -207,7 +228,7 @@ const chartData = {
                 label: 'Coupon Count',
                 data: [400, 300, 500],
                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                borderColor: 'rgba(153, 102, 255, 1)',
+                borderColor: 'rgba(153, 102, 255, 0.2)',
                 borderWidth: 1,
             },
         ],
@@ -219,7 +240,7 @@ const chartData = {
             {
                 label: 'Ticket Count',
                 data: [300, 500, 200],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                backgroundColor: ['#FFCE56', '#FFCE56', '#FFCE56'],
             },
         ],
     },
@@ -229,7 +250,12 @@ const chartData = {
             {
                 label: 'Ticket Count',
                 data: [300, 500, 200, 20],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FFCE74'],
+                backgroundColor: ['rgba(54, 162, 235, 0.4)', 
+                    'rgba(85, 192, 192, 0.2)', 
+                    'rgba(34, 120, 255, 0.2)', 
+                    'rgba(100, 159, 64, 0.4)', 
+                    'rgba(75, 192, 75, 0.2)', 
+                    'rgba(50, 206, 86, 0.2)'],
             },
         ],
     },
@@ -239,8 +265,8 @@ const chartData = {
             {
                 label: 'Ticket Count',
                 data: [400, 300, 500],
-                backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                borderColor: 'rgba(255, 159, 64, 0.2)',
                 borderWidth: 1,
             },
         ],
@@ -252,7 +278,7 @@ const chartData = {
             {
                 label: 'Average Fare',
                 data: [300, 500, 200],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                backgroundColor: ['#4BC0C0', '#4BC0C0', '#4BC0C0'],
             },
         ],
     },
@@ -262,7 +288,12 @@ const chartData = {
             {
                 label: 'Average Fare',
                 data: [300, 500, 200, 20],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FFCE74'],
+                backgroundColor: ['rgba(54, 162, 235, 0.4)', 
+                'rgba(85, 192, 192, 0.2)', 
+                'rgba(34, 120, 255, 0.2)', 
+                'rgba(100, 159, 64, 0.4)', 
+                'rgba(75, 192, 75, 0.2)', 
+                'rgba(50, 206, 86, 0.2)']
             },
         ],
     },
@@ -272,8 +303,8 @@ const chartData = {
             {
                 label: 'Average Fare',
                 data: [400, 300, 500],
-                backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 0.2)',
                 borderWidth: 1,
             },
         ],

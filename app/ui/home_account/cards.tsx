@@ -11,7 +11,7 @@ export default function CardWrapper() {
   const report_manager = 'Access all of your draft reports and final results.';
   const report_design = 'Quickly access to a new draft report design.';
   const status_loading = 'Be aware of the latest data loaded in your system.';
-  const scheduler = 'Schedule your report to receive them by email or through sftp on a regular basis.';
+  const analytics = 'Analyze your performance through advanced analytics.';
   const config = 'Customize your own groupings, airline class mapping and more.';
   const profile = 'Customize your profile and user experience.';
 
@@ -20,7 +20,7 @@ export default function CardWrapper() {
       <CardComponent title="Report Manager" value={report_manager} type='basic' path='/home_account/reportmanager' />
       <CardComponent title="Report Design" value={report_design} type='basic' path='/home_account/reportdesign/create' />
       <CardComponent title="Loading Status" value={status_loading} type='basic' path='/home_account/loadingstatus' />
-      <CardComponent title="Scheduler" value={scheduler} type='basic' path='/home_account/scheduler' />
+      <CardComponent title="Analytics" value={analytics} type='basic' path='/home_account/analytics' />
       <CardComponent title="Configuration" value={config} type='basic' path='/home_account/configuration' />
       <CardComponent title="Profile" value={profile} type='basic' path='/home_user/profile'/>
     </div>

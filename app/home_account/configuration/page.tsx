@@ -39,12 +39,12 @@ export default function Page() {
           <div className="mb-4 text-4xl">
             Account Configuration
           </div>
-          <div className="flex items-center space-x-2 text-base text-yellow-600 mb-20">
+            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 text-base text-yellow-600 mb-20">
             <AlertTriangle className="w-6 h-6" />
             <span>
               These configurations are at account level. All users of the accounts will have the same account configurations.
             </span>
-          </div>
+            </div>
           <div className="h-2"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             {items.map((item) => (

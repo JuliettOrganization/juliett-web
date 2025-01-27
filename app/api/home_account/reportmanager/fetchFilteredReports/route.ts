@@ -25,10 +25,10 @@ export async function GET(request: Request) {
  const accountid = searchParams.get('accountid');
 
  const sort = searchParams.get('sort') || '';
- const sortField = sort ? sort.split(':')[0] : 'reportname';
+ const sortField = sort ? sort.split(':')[0] : 'last_updated';
 
 const sortOrder = sort ? sort.split(':')[1] : 'desc';
- const dbSortField = fieldMapping[sortField] || 'reportname';
+ const dbSortField = fieldMapping[sortField] || 'updated';
 
 
   if (!accountid) {

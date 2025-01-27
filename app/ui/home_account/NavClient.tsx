@@ -20,9 +20,9 @@ export default function NavClient() {
         <div className="xl:hidden">
           <button onClick={toggleMenu} className="focus:outline-none">
             {isMenuOpen ? (
-              <XMarkIcon className="w-6 h-6" />
+              <XMarkIcon className="w-8 h-8 text-bold mt-2 mr-8" />
             ) : (
-              <Bars3Icon className="w-6 h-6" />
+              <Bars3Icon className="w-10 h-10 text-bold mt-2 mr-8" />
             )}
           </button>
         </div>

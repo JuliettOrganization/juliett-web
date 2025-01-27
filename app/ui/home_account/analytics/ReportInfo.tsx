@@ -7,7 +7,7 @@ interface ReportInfoProps {
 
 const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
   return (
-    <div className="col-span-3 bg-white p-4 rounded-lg mb-4 flex flex-col justify-center">
+    <div className="col-span-3 bg-white p-4 rounded-lg mb-4 flex flex-col justify-top">
       <h2 className="text-lg font-bold mb-4">Report Main Conditions</h2>
       <ul className="space-y-0 py-2">
         {reportInfo && (
