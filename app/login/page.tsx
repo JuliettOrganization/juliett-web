@@ -1,8 +1,8 @@
 
 'use client';
-import styles from '@/app/ui/global_public.module.css';
+import styles from '@/ui_general/global_public.module.css';
 import { useState } from 'react';
-import LoginForm from '@/app/ui/login/login-form';
+import LoginForm from '@/app/login/ui/login-form';
 import Link from 'next/link';
 import { ArrowRightIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 
@@ -56,7 +56,7 @@ export default function LoginPage() {
           </div> */}
         </div>
   <div className="fixed bottom-0 left-0 w-full h-30 flex items-center bg-black p-4">
-<p className="text-m text-white md:text-m bg-white-500 md:leading-normal "> © Copyright 2025 JULIETT
+<p className="text-m text-white md:text-m bg-white-500 md:leading-normal "> © Cpyright 2025 JULIETT Software. All rights reserved.
 </p>
 </div>
 </main>

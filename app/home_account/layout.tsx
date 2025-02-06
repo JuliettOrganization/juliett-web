@@ -1,5 +1,5 @@
 
-import Nav from '@/app/ui/home_account/nav';
+import Nav from '@/app/home_account/ui/Account_NAV_1_structure';
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {

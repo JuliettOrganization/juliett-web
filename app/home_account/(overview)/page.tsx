@@ -1,4 +1,4 @@
-import CardWrapper from '@/app/ui/home_account/cards';
+import CardWrapper from '@/app/home_account/(overview)/ui/cards';
 
 export default async function Page() {
   return (

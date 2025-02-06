@@ -1,4 +1,4 @@
-import CreateFormLayout from '@/app/ui/home_account/reportdesign/0_main_sub_layout';
+import CreateFormLayout from '@/app/home_account/reportdesign/ui/0_main_sub_layout';
 
 
 export default function Page() {

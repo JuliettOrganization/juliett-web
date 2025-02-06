@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import AccountForm from '@/app/ui/home_user/admin/accounts/accountform/AccountForm';
+import AccountForm from '@/app/home_user/admin/accounts/create/ui/AccountForm';
 
 export default function Page() {
   const pathname = usePathname();

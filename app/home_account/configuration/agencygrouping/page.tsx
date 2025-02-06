@@ -1,5 +1,5 @@
 import React from 'react';
-import AgencyGroupingPage from '@/app/ui/home_account/configuration/agencygrouping/AgencyGroupingPage';
+import AgencyGroupingPage from '@/app/home_account/configuration/agencygrouping/ui/AgencyGroupingPage';
 
 const Page = () => {
   return <AgencyGroupingPage />;

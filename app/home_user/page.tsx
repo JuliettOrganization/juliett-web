@@ -1,6 +1,6 @@
 import React,  { Suspense } from 'react';
 // import { CardsSkeleton } from '@/app/ui/skeletons';
-import Cards from '@/app/ui/home_user/cards';
+import Cards from '@/app/home_user/ui/cards';
 import {auth} from '@/auth';
 // import {HomeUserSkeleton} from '@/app/ui/skeletons';
 

@@ -29,10 +29,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/lib/placeholder-data.ts",
     "scripts/seed.js",
-    "app/ui/home_account/reportdesign/3_tab3_custom-sql.js", 
-    "app/ui/home_user/admin/accounts/1_accountbillingtsx"  
+    "app/home_account/reportdesign/ui/3_tab3_custom-sql.js",
+    "app/home_user/admin/accounts/ui/1_accountbilling.tsx"  
   ],
   "exclude": ["node_modules"]
 }

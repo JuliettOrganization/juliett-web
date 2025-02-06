@@ -1,5 +1,5 @@
 import React from 'react';
-import GeoGroupingPage from '@/app/ui/home_account/configuration/geogrouping/GeoGroupingPage';
+import GeoGroupingPage from '@/app/home_account/configuration/geogrouping/ui/GeoGroupingPage';
 
 const Page = () => {
   return <GeoGroupingPage />;

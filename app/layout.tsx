@@ -1,6 +1,6 @@
 
 import { Metadata } from 'next';
-import { AccountProvider } from '@/app/context/AccountContext';
+import { AccountProvider } from '@/context/AccountContext';
 
  
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   // metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
-import '@/app/ui/global.css';
-import { inter } from '@/app/ui/fonts';
+import '@/ui_general/global.css';
+import { inter } from '@/ui_general/fonts';
  
 export default function RootLayout({
   children,

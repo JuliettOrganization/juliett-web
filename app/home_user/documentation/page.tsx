@@ -1,11 +1,11 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/app/home_account/configuration/ui/sidebar/components/button'
 import { Download } from 'lucide-react'
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import LoadingSpinner from '@/app/ui/LoadingSpinner';
-import PopupNotification from '@/app/ui/PopupNotification';
+import LoadingSpinner from '@/ui_general/LoadingSpinner';
+import PopupNotification from '@/ui_general/PopupNotification';
 
 export default function PDFDownloader() {
   const handleDownload = async () => {

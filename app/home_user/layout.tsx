@@ -1,5 +1,5 @@
 
-import Nav_home_user from '@/app/ui/home_user/nav_home_user';
+import Nav_home_user from '@/app/home_user/ui/nav_home_user';
 
     export default function Layout({ children }: { children: React.ReactNode }) {
       return (

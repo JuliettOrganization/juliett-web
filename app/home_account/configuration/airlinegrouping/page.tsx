@@ -1,5 +1,5 @@
 import React from 'react';
-import AirlineGroupingPage from '@/app/ui/home_account/configuration/airlinegrouping/AirlineGroupingPage';
+import AirlineGroupingPage from '@/app/home_account/configuration/airlinegrouping/ui/AirlineGroupingPage';
 
 const Page = () => {
   return <AirlineGroupingPage />;

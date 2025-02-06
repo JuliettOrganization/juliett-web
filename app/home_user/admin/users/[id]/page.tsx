@@ -1,5 +1,5 @@
 // import Form from '@/app/ui/home_account/reportmanager/TEMPLATE - edit-form';
-import Breadcrumbs from '@/app/ui/home_account/reportmanager/breadcrumbs';
+import Breadcrumbs from '@/app/home_account/reportmanager/ui/breadcrumbs';
 import { fetchReportById, fetchCustomers } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 

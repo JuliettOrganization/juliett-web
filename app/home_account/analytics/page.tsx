@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { useAccount } from '@/app/context/AccountContext';
-import KPIBox from '@/app/ui/home_account/analytics/KPIBox';
-import ReportInfo from '@/app/ui/home_account/analytics/ReportInfo';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAccount } from '@/context/AccountContext';
+import KPIBox from '@/app/home_account/analytics/ui/KPIBox';
+import ReportInfo from '@/app/home_account/analytics/ui/ReportInfo';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/home_account/configuration/ui/sidebar/components/tabs";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement, BarElement } from 'chart.js';
 import { Line, Pie, Bar, Doughnut } from 'react-chartjs-2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import LoadingSpinner from '@/app/ui/LoadingSpinner'; // Import the LoadingSpinner component
+import LoadingSpinner from '@/ui_general/LoadingSpinner'; // Import the LoadingSpinner component
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement, BarElement);
 
 const AnalyticsPage = () => {

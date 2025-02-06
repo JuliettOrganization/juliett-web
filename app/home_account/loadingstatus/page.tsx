@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useAccount } from '@/app/context/AccountContext';
-import LoadingSpinner from '@/app/ui/LoadingSpinner';
+import { useAccount } from '@/context/AccountContext';
+import LoadingSpinner from '@/ui_general/LoadingSpinner';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';

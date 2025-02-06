@@ -2,7 +2,7 @@
 import { Building2, Network, Plane, Route, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import LoadingSpinner from '@/app/ui/LoadingSpinner';
+import LoadingSpinner from '@/ui_general/LoadingSpinner';
 
 const items = [
   {

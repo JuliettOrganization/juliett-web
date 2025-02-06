@@ -1,7 +1,7 @@
 'use client';
-import ClassMappingSelection from '@/app/ui/home_account/configuration/classmapping/configuration-tab-classmapping_selection'; // Updated import
-import ClassMappingTable from '@/app/ui/home_account/configuration/classmapping/configuration-tab-classmapping_table'; // Updated import
-import '@/app/ui/global_public.module.css'; // Updated import
+import ClassMappingSelection from '@/app/home_account/configuration/classmapping/ui/configuration-tab-classmapping_selection'; // Updated import
+import ClassMappingTable from '@/app/home_account/configuration/classmapping/ui/configuration-tab-classmapping_table'; // Updated import
+import '@/ui_general/global_public.module.css'; // Updated import
 export default function Page() { 
     return (
       <main >

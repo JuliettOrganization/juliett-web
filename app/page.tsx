@@ -63,7 +63,7 @@ export default function Page() {
         style={{ backgroundColor: 'rgba(0, 0, 0,1)' }}
       >
         <p className="text-m text-white md:text-m bg-white-500 md:leading-normal">
-          © Copyright 2025 JULIETT
+          © Copyright 2025 JULIETT Software. All rights reserved.
         </p>
       </div>
     </main>

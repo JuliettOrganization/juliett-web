@@ -1,11 +1,11 @@
 'use client';
-import Pagination from '@/app/ui/home_account/reportmanager/pagination';
-import Search from '@/app/ui/search';
-import ReportsTableClient from '@/app/ui/home_account/reportmanager/table';
-import { CreateReport, RefreshPage } from '@/app/ui/home_account/reportmanager/buttons';
-import { ReportsTableSkeleton } from '@/app/ui/skeletons';
+import Pagination from '@/app/home_account/reportmanager/ui/pagination';
+import Search from '@/ui_general/search';
+import ReportsTableClient from '@/app/home_account/reportmanager/ui/table';
+import { CreateReport, RefreshPage } from '@/app/home_account/reportmanager/ui/buttons';
+import { ReportsTableSkeleton } from '@/ui_general/skeletons';
 import { Suspense, useEffect, useState, use } from 'react';
-import { useAccount } from '@/app/context/AccountContext';
+import { useAccount } from '@/context/AccountContext';
 
 type SearchParams = Promise<{ query?: string; page?: string }>;
 

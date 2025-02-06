@@ -5,7 +5,7 @@ import Image, { StaticImageData } from 'next/image';
 import profile from '@/public/profile.jpg';
 import Link from 'next/link';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import PopupNotification from '@/app/ui/PopupNotification';
+import PopupNotification from '@/ui_general/PopupNotification';
 
 export default function ProfilePage() {
   const [name, setName] = useState('');

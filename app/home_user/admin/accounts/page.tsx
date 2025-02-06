@@ -1,8 +1,8 @@
-import Pagination from '@/app/ui/home_user/admin/users/1_user_table_pagination';
-import Search from '@/app/ui/search';
-import { AccountsTableServer } from '@/app/ui/home_user/admin/accounts/1_TableServer_accounts';
-import { CreateAccount } from '@/app/ui/home_user/admin/accounts/buttons';
-import { ReportsTableSkeleton } from '@/app/ui/skeletons';
+import Pagination from '@/app/home_user/admin/users/ui/1_user_table_pagination';
+import Search from '@/ui_general/search';
+import { AccountsTableServer } from '@/app/home_user/admin/accounts/ui/1_TableServer_accounts';
+import { CreateAccount } from '@/app/home_user/admin/accounts/ui/buttons';
+import { ReportsTableSkeleton } from '@/ui_general/skeletons';
 import { Suspense } from 'react';
 import { fetchAccountsPages } from '@/app/lib/data';
 import Link from 'next/link';

@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense } from 'react';
-import AccountForm from '@/app/ui/home_user/admin/accounts/accountform/AccountForm';
+import AccountForm from '@/app/home_user/admin/accounts/create/ui/AccountForm';
 
 interface User {
   id: string;

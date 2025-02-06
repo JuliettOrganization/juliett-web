@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import CreateFormLayout from '@/app/ui/home_account/reportdesign/0_main_sub_layout';
-import LoadingSpinner from '@/app/ui/LoadingSpinner';
+import CreateFormLayout from '@/app/home_account/reportdesign/ui/0_main_sub_layout';
+import LoadingSpinner from '@/ui_general/LoadingSpinner';
 
 export default function Page() {
   const pathname = usePathname();
