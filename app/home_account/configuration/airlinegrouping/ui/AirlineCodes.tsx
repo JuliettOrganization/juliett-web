@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface AirlineCodesProps {
   selectedGroup: string | null;
@@ -19,13 +19,13 @@ const AirlineCodes: React.FC<AirlineCodesProps> = ({
 }) => {
   if (!selectedGroup || !selectedSubGroup) return null;
 
-  const filteredAirlineCodes = Object.keys(airlineCodes[selectedGroup] || {}).filter((code) =>
-    code.includes(searchQuery)
-  );
+  const filteredAirlineCodes = Object.keys(
+    airlineCodes[selectedGroup] || {},
+  ).filter((code) => code.includes(searchQuery));
 
   const getNotAllocatedCodes = () => {
     return Object.keys(airlineCodes[selectedGroup] || {}).filter(
-      (code) => airlineCodes[selectedGroup][code] === 'Not Allocated'
+      (code) => airlineCodes[selectedGroup][code] === "Not Allocated",
     );
   };
 
@@ -41,7 +41,7 @@ const AirlineCodes: React.FC<AirlineCodesProps> = ({
         onChange={(e) => setSearchQuery(e.target.value)}
         className="mb-4 p-2 border border-gray-300 rounded-full w-full"
       />
-      {selectedSubGroup === 'Not Allocated' ? (
+      {selectedSubGroup === "Not Allocated" ? (
         <ul className="space-y-2">
           {uniqueNotAllocatedCodes.map((code) => (
             <li key={code} className="p-2 rounded bg-gray-100">
@@ -55,14 +55,14 @@ const AirlineCodes: React.FC<AirlineCodesProps> = ({
             const isAllocatedToOtherSubGroup =
               selectedGroup &&
               selectedSubGroup &&
-              airlineCodes[selectedGroup][code] !== 'Not Allocated' &&
+              airlineCodes[selectedGroup][code] !== "Not Allocated" &&
               airlineCodes[selectedGroup][code] !== selectedSubGroup;
 
             return (
               <li
                 key={code}
                 className={`p-2 rounded ${
-                  isAllocatedToOtherSubGroup ? 'bg-gray-300' : 'bg-gray-100'
+                  isAllocatedToOtherSubGroup ? "bg-gray-300" : "bg-gray-100"
                 }`}
               >
                 <input
@@ -77,11 +77,11 @@ const AirlineCodes: React.FC<AirlineCodesProps> = ({
                       code,
                       selectedGroup &&
                         airlineCodes[selectedGroup][code] === selectedSubGroup
-                        ? 'Not Allocated'
-                        : selectedSubGroup || 'Not Allocated'
+                        ? "Not Allocated"
+                        : selectedSubGroup || "Not Allocated",
                     )
                   }
-                  disabled={selectedSubGroup === 'Not Allocated'}
+                  disabled={selectedSubGroup === "Not Allocated"}
                 />
                 {code}
                 {isAllocatedToOtherSubGroup && (

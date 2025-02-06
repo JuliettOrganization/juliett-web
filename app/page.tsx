@@ -1,10 +1,7 @@
-
-'use client';
-import Link from 'next/link';
-import { ArrowRightIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-
-
+"use client";
+import Link from "next/link";
+import { ArrowRightIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 export default function Page() {
   const [isHovered, setIsHovered] = useState(false);
@@ -60,7 +57,7 @@ export default function Page() {
       </div>
       <div
         className="fixed bottom-0 left-0 w-full h-30 flex items-center bg-black p-4"
-        style={{ backgroundColor: 'rgba(0, 0, 0,1)' }}
+        style={{ backgroundColor: "rgba(0, 0, 0,1)" }}
       >
         <p className="text-m text-white md:text-m bg-white-500 md:leading-normal">
           © Copyright 2025 JULIETT Software. All rights reserved.

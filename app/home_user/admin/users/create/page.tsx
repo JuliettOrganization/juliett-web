@@ -1,5 +1,5 @@
-import React from 'react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import React from "react";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const AwsCognitoInfoPage: React.FC = () => {
   return (
@@ -8,9 +8,12 @@ const AwsCognitoInfoPage: React.FC = () => {
         <div className="flex items-center justify-center mb-4">
           <ExclamationTriangleIcon className="h-12 w-12 text-yellow-500" />
         </div>
-        <h1 className="text-2xl font-bold text-purple-600 mb-4">AWS Cognito User Pool</h1>
+        <h1 className="text-2xl font-bold text-purple-600 mb-4">
+          AWS Cognito User Pool
+        </h1>
         <p className="text-gray-700">
-          This action of creating a new user can be done on the AWS Cognito User Pool console.
+          This action of creating a new user can be done on the AWS Cognito User
+          Pool console.
         </p>
       </div>
     </div>

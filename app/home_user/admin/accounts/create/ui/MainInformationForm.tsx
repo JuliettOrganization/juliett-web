@@ -1,17 +1,45 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
-import { v4 as uuidv4 } from 'uuid';
-import { Switch } from '@headlessui/react';
-import { Combobox, ComboboxInput, ComboboxButton, ComboboxOptions, ComboboxOption } from '@headlessui/react';
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
+import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
+import { Switch } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxButton,
+  ComboboxOptions,
+  ComboboxOption,
+} from "@headlessui/react";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 const currencies = [
-  'USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'SEK', 'NZD',
-  'MXN', 'SGD', 'HKD', 'NOK', 'KRW', 'TRY', 'RUB', 'INR', 'BRL', 'ZAR',
-  'DKK', 'PLN', 'TWD', 'THB', 'MYR'
+  "USD",
+  "EUR",
+  "GBP",
+  "JPY",
+  "AUD",
+  "CAD",
+  "CHF",
+  "CNY",
+  "SEK",
+  "NZD",
+  "MXN",
+  "SGD",
+  "HKD",
+  "NOK",
+  "KRW",
+  "TRY",
+  "RUB",
+  "INR",
+  "BRL",
+  "ZAR",
+  "DKK",
+  "PLN",
+  "TWD",
+  "THB",
+  "MYR",
 ];
 
 interface MainInformationFormProps {
@@ -30,13 +58,16 @@ interface MainInformationFormProps {
 
 export default function MainInformationForm({
   onChange,
-  initialAccountName = '',
+  initialAccountName = "",
   initialBilling = false,
   initialSelectedFile = null,
   initialSelectedCurrencies = [],
 }: MainInformationFormProps) {
   const pathname = usePathname();
-  const idFromUrl = pathname.split('/').pop() === 'create' ? 'please wait during ID generation...' : pathname.split('/').pop();
+  const idFromUrl =
+    pathname.split("/").pop() === "create"
+      ? "please wait during ID generation..."
+      : pathname.split("/").pop();
   const [accountId, setAccountId] = useState<string | null>(idFromUrl || null);
 
   useEffect(() => {
@@ -45,10 +76,10 @@ export default function MainInformationForm({
       let isUnique = false;
 
       while (!isUnique) {
-        const response = await fetch('/api/account/checkUuid', {
-          method: 'POST',
+        const response = await fetch("/api/account/checkUuid", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ uuid: newUuid }),
         });
@@ -64,18 +95,23 @@ export default function MainInformationForm({
       setAccountId(newUuid);
     };
 
-   // if (!idFromUrl && pathname.includes('/create')) {
-      if (pathname.includes('/create')) {
-
+    // if (!idFromUrl && pathname.includes('/create')) {
+    if (pathname.includes("/create")) {
       generateUniqueUuid();
     }
   }, [pathname]);
 
   const [billing, setBilling] = useState(initialBilling);
-  const [selectedFile, setSelectedFile] = useState<File | null>(initialSelectedFile);
-  const [preview, setPreview] = useState<string | null>(initialSelectedFile ? URL.createObjectURL(initialSelectedFile) : null);
-  const [selectedCurrencies, setSelectedCurrencies] = useState<string[]>(initialSelectedCurrencies);
-  const [query, setQuery] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(
+    initialSelectedFile,
+  );
+  const [preview, setPreview] = useState<string | null>(
+    initialSelectedFile ? URL.createObjectURL(initialSelectedFile) : null,
+  );
+  const [selectedCurrencies, setSelectedCurrencies] = useState<string[]>(
+    initialSelectedCurrencies,
+  );
+  const [query, setQuery] = useState("");
   const [accountName, setAccountName] = useState(initialAccountName);
 
   const onChangeRef = useRef(onChange);
@@ -103,10 +139,10 @@ export default function MainInformationForm({
   };
 
   const filteredCurrencies =
-    query === ''
+    query === ""
       ? currencies
       : currencies.filter((currency) =>
-          currency.toLowerCase().includes(query.toLowerCase())
+          currency.toLowerCase().includes(query.toLowerCase()),
         );
 
   const handleSelect = (currencies: string[]) => {
@@ -122,17 +158,21 @@ export default function MainInformationForm({
       <h2 className="text-2xl font-bold mb-4">Main Information</h2>
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Account ID</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Account ID
+          </label>
           <input
             type="text"
             name="accountId"
-            value={accountId || ''}
+            value={accountId || ""}
             readOnly
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-100"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Account Name</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Account Name
+          </label>
           <input
             type="text"
             name="accountName"
@@ -142,30 +182,41 @@ export default function MainInformationForm({
           />
         </div>
         <div className="flex items-center">
-          <label className="block text-sm font-medium text-gray-700 mr-4">Billing</label>
+          <label className="block text-sm font-medium text-gray-700 mr-4">
+            Billing
+          </label>
           <Switch
             checked={billing}
             onChange={setBilling}
-            className={`${billing ? 'bg-indigo-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
+            className={`${billing ? "bg-indigo-600" : "bg-gray-200"} relative inline-flex h-6 w-11 items-center rounded-full`}
           >
             <span className="sr-only">Enable billing</span>
             <span
-              className={`${billing ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              className={`${billing ? "translate-x-6" : "translate-x-1"} inline-block h-4 w-4 transform rounded-full bg-white transition`}
             />
           </Switch>
         </div>
         <div className="flex flex-row items-start space-x-4">
           <div>
-            <label className="block w-24 text-sm font-medium text-gray-700">Currencies</label>
-            <Combobox value={selectedCurrencies} onChange={handleSelect} multiple>
+            <label className="block w-24 text-sm font-medium text-gray-700">
+              Currencies
+            </label>
+            <Combobox
+              value={selectedCurrencies}
+              onChange={handleSelect}
+              multiple
+            >
               <div className="relative mt-1">
                 <ComboboxInput
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   onChange={(event) => setQuery(event.target.value)}
-                  displayValue={() => ''}
+                  displayValue={() => ""}
                 />
                 <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
-                  <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <ChevronDownIcon
+                    className="h-5 w-5 text-gray-400"
+                    aria-hidden="true"
+                  />
                 </ComboboxButton>
                 <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                   {filteredCurrencies.map((currency) => (
@@ -174,7 +225,7 @@ export default function MainInformationForm({
                       value={currency}
                       className={({ focus }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                          focus ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                          focus ? "bg-indigo-600 text-white" : "text-gray-900"
                         }`
                       }
                     >
@@ -182,7 +233,7 @@ export default function MainInformationForm({
                         <>
                           <span
                             className={`block truncate ${
-                              selected ? 'font-medium' : 'font-normal'
+                              selected ? "font-medium" : "font-normal"
                             }`}
                           >
                             {currency}
@@ -190,10 +241,13 @@ export default function MainInformationForm({
                           {selected ? (
                             <span
                               className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                focus ? 'text-white' : 'text-indigo-600'
+                                focus ? "text-white" : "text-indigo-600"
                               }`}
                             >
-                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                              <CheckIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
                             </span>
                           ) : null}
                         </>
@@ -225,7 +279,9 @@ export default function MainInformationForm({
           </div>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Upload Picture</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Upload Picture
+          </label>
           <input
             type="file"
             accept="image/*"
@@ -235,7 +291,13 @@ export default function MainInformationForm({
           />
           {preview && (
             <div className="mt-4">
-              <Image src={preview} alt="Preview" className="max-w-full h-auto rounded-md shadow-md" width={500} height={500} />
+              <Image
+                src={preview}
+                alt="Preview"
+                className="max-w-full h-auto rounded-md shadow-md"
+                width={500}
+                height={500}
+              />
             </div>
           )}
         </div>

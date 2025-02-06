@@ -1,6 +1,6 @@
-'use client';
-import React, { useState } from 'react';
-import { ChevronDownIcon } from '@heroicons/react/24/outline'; // <-- Import Heroicon
+"use client";
+import React, { useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/24/outline"; // <-- Import Heroicon
 
 interface GroupingValuesFilterProps {
   transactionTypes: string[];
@@ -8,7 +8,11 @@ interface GroupingValuesFilterProps {
   setSelectedTransactionTypes: (transactionTypes: string[]) => void;
 }
 
-const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ transactionTypes, selectedTransactionTypes, setSelectedTransactionTypes }) => {
+const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({
+  transactionTypes,
+  selectedTransactionTypes,
+  setSelectedTransactionTypes,
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const handleCheckboxChange = (type: string) => {
@@ -29,9 +33,15 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ transaction
         Transaction Type Filtering
       </label>
       <div className="flex flex-row w-[25vw] items-center peer cursor-pointer rounded-md border border-gray-200 pt-2 pb-1 pl-2 mr-2 text-sm outline-2 placeholder:text-gray-500">
-        <button type="button" onClick={toggleDropdown} className="flex flex-row w-full items-center">
+        <button
+          type="button"
+          onClick={toggleDropdown}
+          className="flex flex-row w-full items-center"
+        >
           <span className="truncate">
-            {selectedTransactionTypes.length > 0 ? selectedTransactionTypes.join(', ') : 'Select Type(s)'}
+            {selectedTransactionTypes.length > 0
+              ? selectedTransactionTypes.join(", ")
+              : "Select Type(s)"}
           </span>
           <ChevronDownIcon className="ml-auto h-6 w-6 pr-2 text-bold text-gray-700" />
         </button>
@@ -50,7 +60,10 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ transaction
                   onChange={() => handleCheckboxChange(type)}
                   className="mr-2 cursor-pointer rounded border-gray-200 text-blue-500 focus:ring-blue-500"
                 />
-                <label htmlFor={`type-${index}`} className="text-sm text-gray-700">
+                <label
+                  htmlFor={`type-${index}`}
+                  className="text-sm text-gray-700"
+                >
                   {type}
                 </label>
               </div>
@@ -67,11 +80,28 @@ interface CheckBoxTransactionTypeProps {
   setSelectedTransactionTypes: (transactionTypes: string[]) => void;
 }
 
-const CheckBoxTransactionType: React.FC<CheckBoxTransactionTypeProps> = ({ selectedTransactionTypes, setSelectedTransactionTypes }) => {
-  const placeholderData = ['Ticket', 'Refund', 'ADM', 'ACM', 'EMDS', 'EMDA', 'Others'];
+const CheckBoxTransactionType: React.FC<CheckBoxTransactionTypeProps> = ({
+  selectedTransactionTypes,
+  setSelectedTransactionTypes,
+}) => {
+  const placeholderData = [
+    "Ticket",
+    "Refund",
+    "ADM",
+    "ACM",
+    "EMDS",
+    "EMDA",
+    "Others",
+  ];
   const [transactionTypes] = useState<string[]>(placeholderData);
 
-  return <GroupingValuesFilter transactionTypes={transactionTypes} selectedTransactionTypes={selectedTransactionTypes} setSelectedTransactionTypes={setSelectedTransactionTypes} />;
+  return (
+    <GroupingValuesFilter
+      transactionTypes={transactionTypes}
+      selectedTransactionTypes={selectedTransactionTypes}
+      setSelectedTransactionTypes={setSelectedTransactionTypes}
+    />
+  );
 };
 
 export default CheckBoxTransactionType;

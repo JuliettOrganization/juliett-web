@@ -1,10 +1,10 @@
-import React from 'react';
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql';
-import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import React from "react";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import sql from "react-syntax-highlighter/dist/esm/languages/hljs/sql";
+import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 // Register the SQL language
-SyntaxHighlighter.registerLanguage('sql', sql);
+SyntaxHighlighter.registerLanguage("sql", sql);
 
 const TextBoxSQL = ({ sqlCode, setSqlCode }) => {
   const handleChange = (event) => {

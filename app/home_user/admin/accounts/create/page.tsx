@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Suspense } from 'react';
-import AccountForm from '@/app/home_user/admin/accounts/create/ui/AccountForm';
+import { Suspense } from "react";
+import AccountForm from "@/app/home_user/admin/accounts/create/ui/AccountForm";
 
 interface User {
   id: string;
@@ -18,10 +18,10 @@ interface AccountFormProps {
 }
 
 const initialAccountFormValues: AccountFormProps = {
-  initialAccountName: 'Default Account Name',
+  initialAccountName: "Default Account Name",
   initialBilling: true,
   initialSelectedFile: null,
-  initialSelectedCurrencies: ['USD', 'EUR'],
+  initialSelectedCurrencies: ["USD", "EUR"],
   initialSelectedSources: [],
   initialSelectedUsers: [],
 };

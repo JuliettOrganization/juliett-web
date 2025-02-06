@@ -1,39 +1,36 @@
-import CreateFormLayout from '@/app/home_account/reportdesign/ui/0_main_sub_layout';
-
+import CreateFormLayout from "@/app/home_account/reportdesign/ui/0_main_sub_layout";
 
 export default function Page() {
- 
-
   const defaultValues = {
-    reportName: '',
-    description: '',
+    reportName: "",
+    description: "",
     tags: [],
-    dateConcept: 'Issue Date',
-    dateFrom: '2025-01-01',
-    dateTo: '2025-12-31',
-    benchmarkPeriod: 'Yes',
-    benchmarkDateFrom: '2024-01-01',
-    benchmarkDateTo: '2024-12-31',
-    currency: '',
+    dateConcept: "Issue Date",
+    dateFrom: "2025-01-01",
+    dateTo: "2025-12-31",
+    benchmarkPeriod: "Yes",
+    benchmarkDateFrom: "2024-01-01",
+    benchmarkDateTo: "2024-12-31",
+    currency: "",
     fields: [],
     transactionType: [],
     amounts: [],
-    ODconcept: 'Ticket based',
-    ODfiltering: 'Include',
+    ODconcept: "Ticket based",
+    ODfiltering: "Include",
     isCustomSqlActive: false,
-    selectedGroupingAgency: '',
-    selectedGroupingGeoFrom: '',
-    selectedGroupingGeoTo: '',
-    selectedGroupingIssuing: '',
-    selectedGroupingMarketing: '',
-    selectedGroupingOperating: '',
+    selectedGroupingAgency: "",
+    selectedGroupingGeoFrom: "",
+    selectedGroupingGeoTo: "",
+    selectedGroupingIssuing: "",
+    selectedGroupingMarketing: "",
+    selectedGroupingOperating: "",
     selectedGroupingValuesAgency: [],
     selectedGroupingValuesGeoFrom: [],
     selectedGroupingValuesGeoTo: [],
     selectedGroupingValuesIssuing: [],
     selectedGroupingValuesMarketing: [],
     selectedGroupingValuesOperating: [],
-    sqlCode: '',
+    sqlCode: "",
   };
 
   return (

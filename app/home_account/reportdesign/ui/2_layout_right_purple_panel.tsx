@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { RectangleGroupIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import SelectedFields from '@/app/home_account/reportdesign/ui/2_SelectedFields';
-import {ButtonSave} from '@/ui_general/button';
-import ConfirmationModal from '@/app/home_account/reportdesign/ui/2_ConfirmationModal';
-import LoadingSpinner from '@/ui_general/LoadingSpinner';
-import PopupNotification from '@/ui_general/PopupNotification';
+import React, { useState, useEffect } from "react";
+import { RectangleGroupIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import SelectedFields from "@/app/home_account/reportdesign/ui/2_SelectedFields";
+import { ButtonSave } from "@/app/ui_general/button";
+import ConfirmationModal from "@/app/home_account/reportdesign/ui/2_ConfirmationModal";
+import LoadingSpinner from "@/app/ui_general/LoadingSpinner";
+import PopupNotification from "@/app/ui_general/PopupNotification";
 
 interface LayoutRightPurplePanelProps {
   fields: string[];
@@ -16,7 +16,12 @@ interface LayoutRightPurplePanelProps {
   handleRun: () => void;
 }
 
-const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields, removeField, handleSave, handleRun }) => {
+const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({
+  fields,
+  removeField,
+  handleSave,
+  handleRun,
+}) => {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,12 +47,9 @@ const LayoutRightPurplePanel: React.FC<LayoutRightPurplePanelProps> = ({ fields,
     setLoading(false);
   };
 
-
-
-useEffect(() => {
-      setLoading(false); // Stop loading when the component mounts or updates
-    }, []);
-
+  useEffect(() => {
+    setLoading(false); // Stop loading when the component mounts or updates
+  }, []);
 
   return (
     <div className="fixed top-20 right-0 w-38 md:w-48 h-full z-10 bg-gray-400">
@@ -67,10 +69,23 @@ useEffect(() => {
         >
           Cancel
         </Link>
-        <ButtonSave onClick={() => { setLoading(true); handleSaveButton();  }} className="flex h-10 items-center justify-center rounded-full" type="submit">
+        <ButtonSave
+          onClick={() => {
+            setLoading(true);
+            handleSaveButton();
+          }}
+          className="flex h-10 items-center justify-center rounded-full"
+          type="submit"
+        >
           Save Report
         </ButtonSave>
-        <ButtonSave onClick={() => {handleRunPopup(); }} className="flex h-10 items-center justify-center rounded-full" type="button">
+        <ButtonSave
+          onClick={() => {
+            handleRunPopup();
+          }}
+          className="flex h-10 items-center justify-center rounded-full"
+          type="button"
+        >
           Run Report
         </ButtonSave>
         <ConfirmationModal
@@ -79,10 +94,7 @@ useEffect(() => {
           SaveNotConfirm={handleNotSaveatRun}
         />
       </div>
-      {loading && (
-                 <LoadingSpinner/>
-                )}
-          
+      {loading && <LoadingSpinner />}
     </div>
   );
 };

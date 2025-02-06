@@ -1,7 +1,6 @@
 // 1_layout_main_info_form.tsx
-import React from 'react';
-import ReportMainInfo from '@/app/home_account/reportdesign/ui/1_main_info_form';
-
+import React from "react";
+import ReportMainInfo from "@/app/home_account/reportdesign/ui/1_main_info_form";
 
 interface LayoutMainInfoFormProps {
   reportName: string;
@@ -29,7 +28,6 @@ interface LayoutMainInfoFormProps {
   defaultBenchmarkDateFrom: string;
   defaultBenchmarkDateTo: string;
 }
-
 
 const LayoutMainInfoForm: React.FC<LayoutMainInfoFormProps> = ({
   reportName,
@@ -59,31 +57,32 @@ const LayoutMainInfoForm: React.FC<LayoutMainInfoFormProps> = ({
 }) => {
   return (
     <div className="flex flex-col mb-10 bg-white rounded-md border overflow-y-auto shadow-lg">
-      <ReportMainInfo 
-       reportName={reportName}
-       setReportName={setReportName}
-       description={description}
-       setDescription={setDescription}
-       tags={tags}
-       setTags={setTags}
-       dateConcept={dateConcept}
-       setDateConcept={setDateConcept}
-       dateFrom={dateFrom}
-       setDateFrom={setDateFrom}
-       dateTo={dateTo}
-       setDateTo={setDateTo}
-       benchmarkPeriod={benchmarkPeriod}
-       setBenchmarkPeriod={setBenchmarkPeriod}
-       benchmarkDateFrom={benchmarkDateFrom}
-       setBenchmarkDateFrom={setBenchmarkDateFrom}
-       benchmarkDateTo={benchmarkDateTo}
-       setBenchmarkDateTo={setBenchmarkDateTo}
-       defaultDateConcept={defaultDateConcept}
-       defaultDateFrom={defaultDateFrom}
-       defaultDateTo={defaultDateTo}
-       defaultBenchmarkPeriod={defaultBenchmarkPeriod}
-       defaultBenchmarkDateFrom={defaultBenchmarkDateFrom}
-       defaultBenchmarkDateTo={defaultBenchmarkDateTo}/>
+      <ReportMainInfo
+        reportName={reportName}
+        setReportName={setReportName}
+        description={description}
+        setDescription={setDescription}
+        tags={tags}
+        setTags={setTags}
+        dateConcept={dateConcept}
+        setDateConcept={setDateConcept}
+        dateFrom={dateFrom}
+        setDateFrom={setDateFrom}
+        dateTo={dateTo}
+        setDateTo={setDateTo}
+        benchmarkPeriod={benchmarkPeriod}
+        setBenchmarkPeriod={setBenchmarkPeriod}
+        benchmarkDateFrom={benchmarkDateFrom}
+        setBenchmarkDateFrom={setBenchmarkDateFrom}
+        benchmarkDateTo={benchmarkDateTo}
+        setBenchmarkDateTo={setBenchmarkDateTo}
+        defaultDateConcept={defaultDateConcept}
+        defaultDateFrom={defaultDateFrom}
+        defaultDateTo={defaultDateTo}
+        defaultBenchmarkPeriod={defaultBenchmarkPeriod}
+        defaultBenchmarkDateFrom={defaultBenchmarkDateFrom}
+        defaultBenchmarkDateTo={defaultBenchmarkDateTo}
+      />
     </div>
   );
 };

@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
 
 interface ToggleSwitchCustomSqlProps {
   isCustomSqlActive: boolean;
   setIsCustomSqlActive: (value: boolean) => void;
 }
 
-const ToggleSwitchCustomSql: React.FC<ToggleSwitchCustomSqlProps> = ({ isCustomSqlActive, setIsCustomSqlActive }) => {
+const ToggleSwitchCustomSql: React.FC<ToggleSwitchCustomSqlProps> = ({
+  isCustomSqlActive,
+  setIsCustomSqlActive,
+}) => {
   const handleToggle = () => {
     setIsCustomSqlActive(!isCustomSqlActive);
   };

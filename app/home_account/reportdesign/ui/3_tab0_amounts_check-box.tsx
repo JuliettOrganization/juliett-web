@@ -1,5 +1,5 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
 
 interface GroupingValuesFilterProps {
   amountTypes: string[];
@@ -7,7 +7,11 @@ interface GroupingValuesFilterProps {
   setSelectedAmounts: (amounts: string[]) => void;
 }
 
-const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ amountTypes, selectedAmounts, setSelectedAmounts }) => {
+const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({
+  amountTypes,
+  selectedAmounts,
+  setSelectedAmounts,
+}) => {
   const handleCheckboxChange = (amount: string) => {
     const updatedAmounts = selectedAmounts.includes(amount)
       ? selectedAmounts.filter((a) => a !== amount)
@@ -32,7 +36,10 @@ const GroupingValuesFilter: React.FC<GroupingValuesFilterProps> = ({ amountTypes
               onChange={() => handleCheckboxChange(amount)}
               className="mr-2 cursor-pointer rounded border-gray-200 text-blue-600 focus:ring-blue-500"
             />
-            <label htmlFor={`amount-${index}`} className="text-sm text-gray-700">
+            <label
+              htmlFor={`amount-${index}`}
+              className="text-sm text-gray-700"
+            >
               {amount}
             </label>
           </div>
@@ -47,11 +54,25 @@ interface CheckBoxAmountProps {
   setSelectedAmounts: (amounts: string[]) => void;
 }
 
-const CheckBoxAmount: React.FC<CheckBoxAmountProps> = ({ selectedAmounts, setSelectedAmounts }) => {
-  const placeholderData = ['Gross Amount', 'Net Amount', 'Tax Amount', 'Commission Amount'];
+const CheckBoxAmount: React.FC<CheckBoxAmountProps> = ({
+  selectedAmounts,
+  setSelectedAmounts,
+}) => {
+  const placeholderData = [
+    "Gross Amount",
+    "Net Amount",
+    "Tax Amount",
+    "Commission Amount",
+  ];
   const [amountTypes] = useState<string[]>(placeholderData);
 
-  return <GroupingValuesFilter amountTypes={amountTypes} selectedAmounts={selectedAmounts} setSelectedAmounts={setSelectedAmounts} />;
+  return (
+    <GroupingValuesFilter
+      amountTypes={amountTypes}
+      selectedAmounts={selectedAmounts}
+      setSelectedAmounts={setSelectedAmounts}
+    />
+  );
 };
 
 export default CheckBoxAmount;

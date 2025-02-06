@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { sql } from "@vercel/postgres";
 import {
   CustomerField,
   CustomersTableType,
@@ -8,30 +8,28 @@ import {
   Revenue,
   UsersTable,
   AccountsTable,
-  AccountForm
-} from './definitions';
-import { formatCurrency } from './utils';
-
+  AccountForm,
+} from "./definitions";
+import { formatCurrency } from "./utils";
 
 export const ITEMS_PER_PAGE = 20;
-
 
 export async function fetchRevenue() {
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
 
-    console.log('Fetching revenue data...');
+    console.log("Fetching revenue data...");
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    console.log('Data fetch completed after 3 seconds.');
+    console.log("Data fetch completed after 3 seconds.");
 
     return data.rows;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch revenue data.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch revenue data.");
   }
 }
 
@@ -50,12 +48,12 @@ export async function fetchLatestInvoices() {
     }));
     return latestInvoices;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch the latest invoices.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch the latest invoices.");
   }
 }
 
-export async function fetchCardData () {
+export async function fetchCardData() {
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
@@ -78,23 +76,21 @@ export async function fetchCardData () {
     // const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     // const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
 
-    const report_manager = 'lipsun orem1';
-    const report_design = 'lipsun orem2';
-    const config = 'lipsun orem3';
-    const status_loading = 'lipsun orem4';
+    const report_manager = "lipsun orem1";
+    const report_design = "lipsun orem2";
+    const config = "lipsun orem3";
+    const status_loading = "lipsun orem4";
     return {
-       report_manager ,
-       report_design,
-       config ,
-       status_loading ,
+      report_manager,
+      report_design,
+      config,
+      status_loading,
     };
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch card data.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch card data.");
   }
 }
-
-
 
 //USE API INSTEAD
 // export async function fetchFilteredReports  (
@@ -106,7 +102,7 @@ export async function fetchCardData () {
 //   try {
 //     const reports = await sql<ReportsTable>`
 //       SELECT
-      
+
 //         reportid,
 //         reportname,
 //         description,
@@ -115,18 +111,18 @@ export async function fetchCardData () {
 //         status,
 //         tags
 //       FROM master.report_manager
-//        where 
+//        where
 //        report_manager.reportname ILIKE ${`%${query}%`} OR
 //         report_manager.description ILIKE ${`%${query}%`} OR
 //         report_manager.date_concept ILIKE ${`%${query}%`} OR
 //          report_manager.period ILIKE ${`%${query}%`} OR
 //           report_manager.status ILIKE ${`%${query}%`} OR
-//           report_manager.tags ILIKE ${`%${query}%`} 
+//           report_manager.tags ILIKE ${`%${query}%`}
 //       ORDER BY reportid DESC
 //       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
 //     `;
 
-//     return reports.rows; 
+//     return reports.rows;
 //     // was invoices.rows
 //   } catch (error) {
 //     console.error('Database Error:', error);
@@ -152,12 +148,12 @@ export async function fetchReportsPages(query: string): Promise<number> {
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of reports.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of reports.");
   }
 }
 
-export async function fetchReportById    (id: string) {
+export async function fetchReportById(id: string) {
   try {
     const data = await sql<ReportForm>`
       SELECT
@@ -177,8 +173,8 @@ export async function fetchReportById    (id: string) {
 
     return report[0];
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch report.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch report.");
   }
 }
 
@@ -195,8 +191,8 @@ export async function fetchCustomers() {
     const customers = data.rows;
     return customers;
   } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
+    console.error("Database Error:", err);
+    throw new Error("Failed to fetch all customers.");
   }
 }
 
@@ -228,18 +224,12 @@ export async function fetchFilteredCustomers(query: string) {
 
     return customers;
   } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch customer table.');
+    console.error("Database Error:", err);
+    throw new Error("Failed to fetch customer table.");
   }
 }
 
-
-
-
-export async function fetchFilteredUsers  (
-  query: string,
-  currentPage: number,
-) {
+export async function fetchFilteredUsers(query: string, currentPage: number) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
@@ -271,11 +261,11 @@ export async function fetchFilteredUsers  (
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    return users.rows; 
+    return users.rows;
     // was invoices.rows
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch users.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch users.");
   }
 }
 
@@ -306,22 +296,22 @@ export async function fetchUsersPages(query: string) {
           )
       ) subquery
     `;
-  const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
-  return totalPages;
-} catch (error) {
-  console.error('Database Error:', error);
-  throw new Error('Failed to fetch total number of reports.');
-}
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of reports.");
+  }
 }
 
-  export async function fetchFilteredAccounts  (
-    query: string,
-    currentPage: number,
-  ) {
-    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-  
-    try {
-      const accounts = await sql<AccountsTable>`
+export async function fetchFilteredAccounts(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const accounts = await sql<AccountsTable>`
         SELECT
          accountid,
          accountname,
@@ -341,18 +331,17 @@ export async function fetchUsersPages(query: string) {
         ORDER BY accountid DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
-  
-      return accounts.rows; 
-      
-    } catch (error) {
-      console.error('Database Error:', error);
-      throw new Error('Failed to fetch accounts.');
-    }
+
+    return accounts.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch accounts.");
   }
-  
-  export async function fetchAccountsPages(query: string) {
-    try {
-      const count = await sql`SELECT COUNT(*)
+}
+
+export async function fetchAccountsPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
       FROM public.accounts
       LEFT JOIN LATERAL jsonb_array_elements(accounts.users) AS usersj ON true
     WHERE 
@@ -366,14 +355,12 @@ export async function fetchUsersPages(query: string) {
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of reports.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of reports.");
   }
 }
 
-
-
-export async function fetchAccountById    (id: string) {
+export async function fetchAccountById(id: string) {
   try {
     const data = await sql<AccountForm>`
        SELECT
@@ -393,11 +380,7 @@ export async function fetchAccountById    (id: string) {
 
     return account[0];
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch account.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch account.");
   }
 }
-
-
-
-

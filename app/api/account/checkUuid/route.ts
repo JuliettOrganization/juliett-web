@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
+import { NextResponse } from "next/server";
+import { sql } from "@vercel/postgres";
 
 export async function POST(request: Request) {
   const { uuid } = await request.json();
@@ -15,8 +15,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ exists: false });
     }
   } catch (error) {
-    console.error('Database error:', error); // Log the error to the console
+    console.error("Database error:", error); // Log the error to the console
 
-    return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
 }

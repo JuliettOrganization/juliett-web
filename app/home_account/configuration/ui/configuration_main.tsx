@@ -4,13 +4,11 @@
 // import ClassMappingTable from '@/app/ui/home_account/configuration/classmapping/configuration-tab-classmapping_table'; // Updated import
 // // import AgencyGroup from '@/app/ui/home_account/configuration/configuration-tab-agencygroup'; // Updated import
 
-
-
 // const ConfigurationLayout: React.FC = () => {
 //   const [activeTab, setActiveTab] = useState<number>(0); // Step 4: Add state for active tab
 
 //   return (
-//     <main>   
+//     <main>
 //       <div className="flex flex-col mt-6 mr-4 h-full overflow-y-auto">
 //         {/* TAB NAMES */}
 //         <div className="flex space-x-1">
@@ -45,40 +43,40 @@
 //           {/* TAB 1 */}
 //           {activeTab === 0 && (
 //             <div className="flex flex-col w-full p-6 bg-white rounded space-y-4">
-//               <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4"> 
+//               <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4">
 //                 {/* <AgencyGroup /> */}
 //               </div>
 //                  </div>
 //           )}
 
-//           {/* TAB 2 */}   
+//           {/* TAB 2 */}
 //           {activeTab === 1 && (
 //             <div className="flex flex-col w-full p-2 bg-white rounded">
-//               <div className="flex flex-col w-full p-4 items-center bg-white rounded space-y-2"> 
+//               <div className="flex flex-col w-full p-4 items-center bg-white rounded space-y-2">
 //                 <ClassMappingSelection />
 //               </div>
-//               <div className="flex flex-col w-full p-4 items-center bg-white rounded space-y-2"> 
-             
+//               <div className="flex flex-col w-full p-4 items-center bg-white rounded space-y-2">
+
 //                 <ClassMappingTable />
 //               </div>
-              
+
 //             </div>
 //           )}
 
-//           {/* TAB 3 */}   
+//           {/* TAB 3 */}
 //           {activeTab === 2 && (
 //             <div className="flex flex-col w-full p-6 bg-white rounded space-y-4">
-//               <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4"> 
+//               <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4">
 //                 <p>content</p>
 //               </div>
 //               <p>content</p>
 //             </div>
 //           )}
 
-//           {/* TAB 4 */} 
+//           {/* TAB 4 */}
 //           {activeTab === 3 && (
 //             <div className="flex flex-col w-full p-6 bg-white rounded space-y-4">
-//               <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4"> 
+//               <div className="flex flex-col w-full p-6 items-center bg-white rounded space-y-4">
 //                 <p>content</p>
 //               </div>
 //               <p>content</p>

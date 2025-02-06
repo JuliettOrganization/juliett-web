@@ -31,7 +31,7 @@
     ".next/types/**/*.ts",
     "scripts/seed.js",
     "app/home_account/reportdesign/ui/3_tab3_custom-sql.js",
-    "app/home_user/admin/accounts/ui/1_accountbilling.tsx"  
+    "app/home_user/admin/accounts/ui/1_accountbilling.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,8 +1,8 @@
-import CardWrapper from '@/app/home_account/(overview)/ui/cards';
+import CardWrapper from "@/app/home_account/(overview)/ui/cards";
 
 export default async function Page() {
   return (
-    <main >
+    <main>
       <div className="w-full h-full p-4 sm:p-6 lg:p-8 justify-center bg-gray-300">
         <div className="p-10">
           <div className="space-y-1">
@@ -13,11 +13,9 @@ export default async function Page() {
             <div className="h-10"></div>
           </div>
 
-            <div className="flex w-full">
-     
-              <CardWrapper />
-    
-            </div>
+          <div className="flex w-full">
+            <CardWrapper />
+          </div>
           <div className="h-10"></div>
         </div>
       </div>

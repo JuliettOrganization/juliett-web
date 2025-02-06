@@ -1,5 +1,5 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 
 interface ReportInfoProps {
   reportInfo: any;
@@ -16,7 +16,7 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Tags:&nbsp;</strong>
-                  <span>{reportInfo[0].tags.join(' | ')}</span>
+                  <span>{reportInfo[0].tags.join(" | ")}</span>
                 </div>
               </li>
             )}
@@ -30,12 +30,13 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
               <div className="flex justify-start border-t py-2 border-gray-200">
                 <strong>Benchmark Period:&nbsp;</strong>
                 <span>
-                  {reportInfo[0].benchmark_period === 'Yes' ? (
+                  {reportInfo[0].benchmark_period === "Yes" ? (
                     <>
-                      {reportInfo[0].benchmark_date_from} <strong>&rarr;</strong> {reportInfo[0].benchmark_date_to}
+                      {reportInfo[0].benchmark_date_from}{" "}
+                      <strong>&rarr;</strong> {reportInfo[0].benchmark_date_to}
                     </>
                   ) : (
-                    'Last Year'
+                    "Last Year"
                   )}
                 </span>
               </div>
@@ -44,7 +45,11 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Agency Filter:&nbsp;</strong>
-                  <span>{reportInfo[0].selected_grouping_agency} <strong>&rarr;</strong> {reportInfo[0].selected_grouping_values_agency.join(', ')}</span>
+                  <span>
+                    {reportInfo[0].selected_grouping_agency}{" "}
+                    <strong>&rarr;</strong>{" "}
+                    {reportInfo[0].selected_grouping_values_agency.join(", ")}
+                  </span>
                 </div>
               </li>
             )}
@@ -52,7 +57,11 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Airline Issuing:&nbsp;</strong>
-                  <span>{reportInfo[0].selected_grouping_issuing} <strong>&rarr;</strong> {reportInfo[0].selected_grouping_values_issuing.join(', ')}</span>
+                  <span>
+                    {reportInfo[0].selected_grouping_issuing}{" "}
+                    <strong>&rarr;</strong>{" "}
+                    {reportInfo[0].selected_grouping_values_issuing.join(", ")}
+                  </span>
                 </div>
               </li>
             )}
@@ -60,7 +69,13 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Airline Marketing:&nbsp;</strong>
-                  <span>{reportInfo[0].selected_grouping_marketing} <strong>&rarr;</strong> {reportInfo[0].selected_grouping_values_marketing.join(', ')}</span>
+                  <span>
+                    {reportInfo[0].selected_grouping_marketing}{" "}
+                    <strong>&rarr;</strong>{" "}
+                    {reportInfo[0].selected_grouping_values_marketing.join(
+                      ", ",
+                    )}
+                  </span>
                 </div>
               </li>
             )}
@@ -68,7 +83,13 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Airline Operating:&nbsp;</strong>
-                  <span>{reportInfo[0].selected_grouping_operating} <strong>&rarr;</strong> {reportInfo[0].selected_grouping_values_operating.join(', ')}</span>
+                  <span>
+                    {reportInfo[0].selected_grouping_operating}{" "}
+                    <strong>&rarr;</strong>{" "}
+                    {reportInfo[0].selected_grouping_values_operating.join(
+                      ", ",
+                    )}
+                  </span>
                 </div>
               </li>
             )}
@@ -76,7 +97,9 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Geo From Filters:&nbsp;</strong>
-                  <span>{reportInfo[0].selected_grouping_values_geo_from.join(', ')}</span>
+                  <span>
+                    {reportInfo[0].selected_grouping_values_geo_from.join(", ")}
+                  </span>
                 </div>
               </li>
             )}
@@ -84,11 +107,14 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Geo To Filters:&nbsp;</strong>
-                  <span>{reportInfo[0].selected_grouping_values_geo_to.join(', ')}</span>
+                  <span>
+                    {reportInfo[0].selected_grouping_values_geo_to.join(", ")}
+                  </span>
                 </div>
               </li>
             )}
-            {(reportInfo[0].selected_grouping_values_geo_to.length > 0 || reportInfo[0].selected_grouping_values_geo_from.length > 0) && (
+            {(reportInfo[0].selected_grouping_values_geo_to.length > 0 ||
+              reportInfo[0].selected_grouping_values_geo_from.length > 0) && (
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Geo Filtering Concept:&nbsp;</strong>
@@ -103,10 +129,15 @@ const ReportInfo: React.FC<ReportInfoProps> = ({ reportInfo }) => {
             <li className="text-xs flex flex-col justify-center">
               <div className="flex justify-start border-t py-2 border-gray-200">
                 <strong>Transaction Type:&nbsp;</strong>
-                <span>{reportInfo[0].transaction_type && reportInfo[0].transaction_type.length > 0 ? reportInfo[0].transaction_type.join(', ') : 'all'}</span>
+                <span>
+                  {reportInfo[0].transaction_type &&
+                  reportInfo[0].transaction_type.length > 0
+                    ? reportInfo[0].transaction_type.join(", ")
+                    : "all"}
+                </span>
               </div>
             </li>
-            {reportInfo[0].is_custom_sql_active === '1' && (
+            {reportInfo[0].is_custom_sql_active === "1" && (
               <li className="text-xs flex flex-col justify-center">
                 <div className="flex justify-start border-t py-2 border-gray-200">
                   <strong>Custom Filter:&nbsp;</strong>

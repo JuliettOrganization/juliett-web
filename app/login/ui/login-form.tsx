@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
 import {
   AtSymbolIcon,
   KeyIcon,
   ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
-import { Button } from '../../../ui_general/button';
-import { useActionState } from 'react';
-import { authenticate } from '@/app/lib/actions';
+} from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { Button } from "../../ui_general/button";
+import { useActionState } from "react";
+import { authenticate } from "@/app/lib/actions";
 
 export default function LoginForm() {
   const [errorMessage, formAction, isPending] = useActionState(
@@ -67,7 +67,10 @@ export default function LoginForm() {
           Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div className="flex h-5 items-center justify-center mt-4 mb-2 pt-2">
-          <a href="#" className="text-xs items-start mb-4 justify-center text-blue-600 hover:underline">
+          <a
+            href="#"
+            className="text-xs items-start mb-4 justify-center text-blue-600 hover:underline"
+          >
             Reset password
           </a>
         </div>

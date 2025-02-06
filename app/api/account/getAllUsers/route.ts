@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
+import { NextResponse } from "next/server";
+import { sql } from "@vercel/postgres";
 
 export async function GET() {
   try {
@@ -9,8 +9,7 @@ export async function GET() {
 
     return NextResponse.json(users);
   } catch (error) {
-    console.error('Database error:', error); // Log the error to the console
-    return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    console.error("Database error:", error); // Log the error to the console
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
 }
-

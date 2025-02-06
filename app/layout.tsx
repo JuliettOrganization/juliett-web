@@ -1,17 +1,15 @@
+import { Metadata } from "next";
+import { AccountProvider } from "@/app/context/AccountContext";
 
-import { Metadata } from 'next';
-import { AccountProvider } from '@/context/AccountContext';
-
- 
 export const metadata: Metadata = {
-  title: 'JULIETT',
-  description: 'The official JULIETT WEBSITE',
+  title: "JULIETT",
+  description: "The official JULIETT WEBSITE",
   // metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
-import '@/ui_general/global.css';
-import { inter } from '@/ui_general/fonts';
- 
+import "@/app/ui_general/global.css";
+import { inter } from "@/app/ui_general/fonts";
+
 export default function RootLayout({
   children,
 }: {
@@ -19,10 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-        <body className={`${inter.className} antialiased`}> <AccountProvider>
-          {children}
-        </AccountProvider></body>
-        
+      <body className={`${inter.className} antialiased`}>
+        {" "}
+        <AccountProvider>{children}</AccountProvider>
+      </body>
     </html>
   );
 }

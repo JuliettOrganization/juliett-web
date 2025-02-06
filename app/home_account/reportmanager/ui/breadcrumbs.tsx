@@ -1,5 +1,5 @@
-import { clsx } from 'clsx';
-import Link from 'next/link';
+import { clsx } from "clsx";
+import Link from "next/link";
 
 interface Breadcrumb {
   label: string;
@@ -14,13 +14,15 @@ export default function Breadcrumbs({
 }) {
   return (
     <nav aria-label="Breadcrumb" className="mb-6 block">
-      <ol className='flex text-xl md:text-2xl font-bold text-purple-500'>
+      <ol className="flex text-xl md:text-2xl font-bold text-purple-500">
         {breadcrumbs.map((breadcrumb, index) => (
           <li
             key={breadcrumb.href}
             aria-current={breadcrumb.active}
             className={clsx(
-              breadcrumb.active ? 'font-bold text-purple-500' : 'font-bold text-purple-500',
+              breadcrumb.active
+                ? "font-bold text-purple-500"
+                : "font-bold text-purple-500",
             )}
           >
             <Link href={breadcrumb.href}>{breadcrumb.label}</Link>

@@ -1,29 +1,31 @@
 /* .transparentBlack { 
   @apply fixed top-0 left-0 w-full h-20 flex items-center p-4; 
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */  
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
 
 .backgrounds {
   /* background-image: url('/login_background.png');  */
-  background-image: url('/accounts/image2.jpg'); 
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat; /* You can adjust to repeat if needed */ 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; /* This centers the content vertically */ 
-  align-items: center; /* This centers the content horizontally */ 
-  min-height: 100vh; width: 100vw;
+  background-image: url("/accounts/image2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* You can adjust to repeat if needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* This centers the content vertically */
+  align-items: center; /* This centers the content horizontally */
+  min-height: 100vh;
+  width: 100vw;
   margin: 0;
 }
 
-.custom { 
-  display: flex; /* Enables flexbox layout */ 
-  flex-direction: column; /* Column direction */ 
-  justify-content: center; /* Centers content vertically */ 
-  align-items: flex-start; /* Aligns content to the left */ 
-  margin-left: 200rem auto; /* Adjust the value for the desired left margin */ 
+.custom {
+  display: flex; /* Enables flexbox layout */
+  flex-direction: column; /* Column direction */
+  justify-content: center; /* Centers content vertically */
+  align-items: flex-start; /* Aligns content to the left */
+  margin-left: 200rem auto; /* Adjust the value for the desired left margin */
   height: 100vh; /* Full viewport height */
-color: white; }
+  color: white;
+}
 
 /* components/VerticalFlexLayout.module.css */
 .container {
@@ -32,8 +34,9 @@ color: white; }
   width: 100vw;
 }
 
-.leftPanel, .rightPanel {
-  flex-direction: column; 
+.leftPanel,
+.rightPanel {
+  flex-direction: column;
   flex: 1; /* Distribute space equally between the panels */
   display: flex;
   justify-content: center; /* Center the content horizontally */
@@ -43,22 +46,25 @@ color: white; }
 
 .leftPanel {
   flex: 2;
-  background-color: rgb(4, 4, 4,0);
+  background-color: rgb(4, 4, 4, 0);
   font-size: 3.5rem;
-  color: gray-500; 
+  color: gray-500;
 }
 
 .rightPanel {
   flex: 4;
-  background-color: rgb(4, 4, 4,0); /* Slightly darker gray for the right panel */
-  color: white; /* White text color */ 
-  font-size: 40rem; /* Very large font size, adjust as needed */ 
+  background-color: rgb(
+    4,
+    4,
+    4,
+    0
+  ); /* Slightly darker gray for the right panel */
+  color: white; /* White text color */
+  font-size: 40rem; /* Very large font size, adjust as needed */
   font-weight: bold; /* Optional: Makes the text bold */
 }
 
-
 /* LOADING SPINNER */
-
 
 /* Dual Ring Spinner
 .dual-ring {

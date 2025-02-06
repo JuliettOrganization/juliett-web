@@ -1,9 +1,9 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
+  pageExtensions: ["mdx", "md", "jsx", "js", "tsx", "ts"],
   images: {
-    domains: ['localhost'],
+    domains: ["localhost"],
   },
   /* other config options here */
 };

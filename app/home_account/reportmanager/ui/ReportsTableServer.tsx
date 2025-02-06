@@ -20,7 +20,6 @@
 //   last_updated: string;
 // }
 
-
 // const ReportsTableServer: React.FC<ReportsTableServerProps> = ({ query, currentPage }) => {
 //   const [reports, setReports] = useState<Report[]>([]);
 //   const [loading, setLoading] = useState(true);

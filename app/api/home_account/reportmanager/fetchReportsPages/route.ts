@@ -1,18 +1,20 @@
-import { sql } from '@vercel/postgres';
-import { ITEMS_PER_PAGE } from '@/app/lib/data';
-import { NextResponse } from 'next/server';
+import { sql } from "@vercel/postgres";
+import { ITEMS_PER_PAGE } from "@/app/lib/data";
+import { NextResponse } from "next/server";
 //import { useAccount } from '@/app/context/AccountContext';
-
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get('query') || '';
+  const query = searchParams.get("query") || "";
   //const { accountid } = useAccount();
-const accountid = searchParams.get('accountid');
- 
-   if (!accountid) {
-     return NextResponse.json({ error: 'Account ID is required' }, { status: 400 });
-   }    
+  const accountid = searchParams.get("accountid");
+
+  if (!accountid) {
+    return NextResponse.json(
+      { error: "Account ID is required" },
+      { status: 400 },
+    );
+  }
 
   try {
     const result = await sql`
@@ -31,11 +33,10 @@ const accountid = searchParams.get('accountid');
   )
     `;
     const totalPages = Math.ceil(Number(result.rows[0].count) / ITEMS_PER_PAGE);
-  
 
     return NextResponse.json(totalPages);
   } catch (error) {
-    console.error('Database error:', error); // Log the error to the console
-    return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    console.error("Database error:", error); // Log the error to the console
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
 }

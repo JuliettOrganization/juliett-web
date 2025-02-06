@@ -3,11 +3,9 @@
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 
-
 export type DateConcept = {
-  concept: 'issue date' | 'travel date' | 'reporting date';
+  concept: "issue date" | "travel date" | "reporting date";
 };
-
 
 export type User = {
   id: string;
@@ -26,18 +24,17 @@ export type Customer = {
 };
 
 export type Report = {
-  userid: string  ;
+  userid: string;
   reportid: string;
   reportname: string;
   description: string;
   updated: Date;
   date_concept: string;
   period: string;
-  status: 'draft' | 'result';
-  tags:string;
+  status: "draft" | "result";
+  tags: string;
   // In TypeScript, this is called a string union type.
   // It means that the "status" property can only be one of the two strings: 'pending' or 'paid'.
-
 };
 
 export type Revenue = {
@@ -54,7 +51,7 @@ export type LatestInvoice = {
 };
 
 // The database returns a number for amount, but we later format it to a string with the formatCurrency function
-export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
+export type LatestInvoiceRaw = Omit<LatestInvoice, "amount"> & {
   amount: number;
 };
 
@@ -66,7 +63,7 @@ export type ReportsTable = {
   updated: Date;
   date_concept: string;
   period: string;
-  status: 'draft' | 'result' | 'running';
+  status: "draft" | "result" | "running";
   tags: string;
   last_update: string;
 };
@@ -96,35 +93,37 @@ export type CustomerField = {
   name: string;
 };
 
-
-
-
 export type ReportForm = {
   reportid: string;
   userid: string;
   tags: string;
-  status: 'pending' | 'paid';
-  
+  status: "pending" | "paid";
 };
 
-
 export type UsersTable = {
-  id: string, name: string, email: string, 
-  accountstatus: string, 
-  confirmationstatus: string ;
+  id: string;
+  name: string;
+  email: string;
+  accountstatus: string;
+  confirmationstatus: string;
   accountnames: string;
   role: string;
-  // createdtime: Date, 
+  // createdtime: Date,
   // lastupdatedtime: Date
 };
 
 export type AccountsTable = {
-  accountid: string, accountname: string, billing: string, 
-  datasources: string, 
-  currencies: string , users:string;
+  accountid: string;
+  accountname: string;
+  billing: string;
+  datasources: string;
+  currencies: string;
+  users: string;
 };
 export type AccountForm = {
-  accountid: string, accountname: string, billing: string, 
-  datasources: string, 
-  currencies: string ;
+  accountid: string;
+  accountname: string;
+  billing: string;
+  datasources: string;
+  currencies: string;
 };

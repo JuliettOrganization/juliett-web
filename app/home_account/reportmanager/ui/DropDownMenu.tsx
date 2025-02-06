@@ -1,10 +1,10 @@
-'use client';
-import React, { useState, useRef, useEffect } from 'react';
-import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import LoadingSpinner from '@/ui_general/LoadingSpinner';
-import PopupNotification from '@/ui_general/PopupNotification';
-import SchedulePopup from './schedulePopup';
+"use client";
+import React, { useState, useRef, useEffect } from "react";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import LoadingSpinner from "@/app/ui_general/LoadingSpinner";
+import PopupNotification from "@/app/ui_general/PopupNotification";
+import SchedulePopup from "./schedulePopup";
 
 interface Report {
   reportid: number;
@@ -18,7 +18,12 @@ interface DropDownMenuProps {
   handleClone: (reportId: string) => void;
 }
 
-const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, handleDelete, handleClone }) => {
+const DropDownMenu: React.FC<DropDownMenuProps> = ({
+  report,
+  handleEditReport,
+  handleDelete,
+  handleClone,
+}) => {
   const menuRef = useRef<HTMLUListElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,16 +34,15 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({ report, handleEditReport, h
     setLoading(false); // Stop loading when the component mounts or updates
   }, []);
 
- const handleClickDownload = async () => {
-  setLoading(true);
-  setPopupMessage('Downloading report, please wait until it is complete');
-window.location.href = `/api/home_account/reportmanager/downloadReport/${report.reportid}`;
+  const handleClickDownload = async () => {
+    setLoading(true);
+    setPopupMessage("Downloading report, please wait until it is complete");
+    window.location.href = `/api/home_account/reportmanager/downloadReport/${report.reportid}`;
     setTimeout(() => {
       setLoading(false);
       setPopupMessage(null);
     }, 5000); // Hide the popup after 3 seconds
-
-};
+  };
 
   const handleItemClick = (event: React.MouseEvent, action: () => void) => {
     event.stopPropagation();
@@ -53,11 +57,11 @@ window.location.href = `/api/home_account/reportmanager/downloadReport/${report.
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, []);
 
@@ -66,7 +70,7 @@ window.location.href = `/api/home_account/reportmanager/downloadReport/${report.
   };
 
   const handleScheduleSave = (scheduleData: any) => {
-    console.log('Schedule data saved:', scheduleData);
+    console.log("Schedule data saved:", scheduleData);
     // Add your save logic here
   };
 
@@ -76,74 +80,76 @@ window.location.href = `/api/home_account/reportmanager/downloadReport/${report.
         <EllipsisVerticalIcon className="h-6 w-6 text-gray-700" />
       </button>
       {isMenuOpen && (
-        <ul ref={menuRef} className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50">
+        <ul
+          ref={menuRef}
+          className="absolute right-0 mr-2 bg-white shadow-lg rounded w-48 z-50"
+        >
           <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' ? 'text-gray-400 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100'}`}
+            className={`px-4 py-2 cursor-pointer ${report.status === "running" ? "text-gray-400 cursor-not-allowed" : "text-gray-500 hover:bg-gray-100"}`}
             onClick={(event) => {
-              if (report.status !== 'running') {
-          setLoading(true);
-          handleItemClick(event, () => handleEditReport(report.reportid.toString()));
+              if (report.status !== "running") {
+                setLoading(true);
+                handleItemClick(event, () =>
+                  handleEditReport(report.reportid.toString()),
+                );
               }
             }}
           >
             Edit
           </li>
           <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100'}`}
+            className={`px-4 py-2 cursor-pointer ${report.status === "running" || report.status === "draft" ? "text-gray-400 cursor-not-allowed" : "text-gray-500 hover:bg-gray-100"}`}
             onClick={(event) => {
-              if (report.status !== 'running' && report.status !== 'draft') {
-          handleScheduleClick();
+              if (report.status !== "running" && report.status !== "draft") {
+                handleScheduleClick();
               }
             }}
           >
             Schedule
           </li>
           <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'result' ? 'text-gray-400 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100'}`}
+            className={`px-4 py-2 cursor-pointer ${report.status === "running" || report.status === "result" ? "text-gray-400 cursor-not-allowed" : "text-gray-500 hover:bg-gray-100"}`}
             onClick={(event) => {
-              if (report.status !== 'running' && report.status !== 'result') {
-          setLoading(true);
-          handleItemClick(event, () => handleClone(report.reportid.toString()));
+              if (report.status !== "running" && report.status !== "result") {
+                setLoading(true);
+                handleItemClick(event, () =>
+                  handleClone(report.reportid.toString()),
+                );
               }
             }}
           >
             Clone
           </li>
           <li
-            className={`px-4 py-2 cursor-pointer ${report.status === 'running' || report.status === 'draft' ? 'text-gray-400 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100'}`}
+            className={`px-4 py-2 cursor-pointer ${report.status === "running" || report.status === "draft" ? "text-gray-400 cursor-not-allowed" : "text-gray-500 hover:bg-gray-100"}`}
           >
-            {report.status === 'running' || report.status === 'draft' ? (
-              'Download'
+            {report.status === "running" || report.status === "draft" ? (
+              "Download"
             ) : (
-                <a onClick={handleClickDownload}>
-              Download
-                </a>
+              <a onClick={handleClickDownload}>Download</a>
             )}
           </li>
           <li
             className="px-4 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer"
-            onClick={(event) => { setLoading(true); handleItemClick(event, () => handleDelete(report.reportid.toString())) }}
+            onClick={(event) => {
+              setLoading(true);
+              handleItemClick(event, () =>
+                handleDelete(report.reportid.toString()),
+              );
+            }}
           >
             Delete
           </li>
         </ul>
-       
       )}
       {isSchedulePopupOpen && (
         <SchedulePopup
           onClose={() => setIsSchedulePopupOpen(false)}
-          
           reportid={report.reportid}
         />
       )}
-      {loading && (
-        <LoadingSpinner/>
-      )}
-      {popupMessage && (
-        <PopupNotification
-          message={popupMessage}
-        />
-      )}
+      {loading && <LoadingSpinner />}
+      {popupMessage && <PopupNotification message={popupMessage} />}
     </div>
   );
 };

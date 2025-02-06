@@ -1,40 +1,45 @@
 // Loading animation
-import React from 'react';
+import React from "react";
 
 const shimmer =
-  'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
+  "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent";
 
-  export function CardsSkeleton() {
-    return (
-      <div className="bg-gray-300 p-8 animate-pulse">
-        <div className="mx-auto justify-center">
-          {/* <div className="rounded-lg mb-8 w-[80vw] mx-auto">
+export function CardsSkeleton() {
+  return (
+    <div className="bg-gray-300 p-8 animate-pulse">
+      <div className="mx-auto justify-center">
+        {/* <div className="rounded-lg mb-8 w-[80vw] mx-auto">
             <div className="h-10 bg-gray-400 rounded mb-4"></div>
             <div className="h-6 bg-gray-400 rounded w-1/2"></div>
           </div> */}
-          <div className="flex justify-center w-[80vw] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
-              {[...Array(6)].map((_, index) => (
-                <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                  <div className={`${shimmer} relative overflow-hidden bg-gray-200 h-48`}></div>
-                  <div className="p-4 border-b">
-                    <div className="h-6 bg-gray-200 rounded mb-2"></div>
-                  </div>
-                  <div className="p-4">
-                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                  </div>
-                  <div className="p-4 border-t">
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                  </div>
+        <div className="flex justify-center w-[80vw] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+            {[...Array(6)].map((_, index) => (
+              <div
+                key={index}
+                className="bg-white shadow-lg rounded-lg overflow-hidden"
+              >
+                <div
+                  className={`${shimmer} relative overflow-hidden bg-gray-200 h-48`}
+                ></div>
+                <div className="p-4 border-b">
+                  <div className="h-6 bg-gray-200 rounded mb-2"></div>
                 </div>
-              ))}
-            </div>
+                <div className="p-4">
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded"></div>
+                </div>
+                <div className="p-4 border-t">
+                  <div className="h-4 bg-gray-200 rounded"></div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
 export function ReportsTableSkeleton() {
   return (
@@ -89,7 +94,6 @@ export function ReportsTableSkeleton() {
     </div>
   );
 }
-
 
 export function ReportsMobileSkeleton() {
   return (
@@ -152,7 +156,6 @@ export function TableRowSkeleton() {
   );
 }
 
-
 //   export function HomeSkeleton() {
 //     return (
 //       <div
@@ -168,12 +171,6 @@ export function TableRowSkeleton() {
 //       </div>
 //     );
 //   }
-
-
-
-
-
-
 
 // export function CardSkeleton() {
 //   return (
@@ -205,7 +202,6 @@ export function TableRowSkeleton() {
 //     </>
 //   );
 // }
-
 
 // export function InvoiceSkeleton() {
 //   return (
@@ -262,12 +258,9 @@ export function TableRowSkeleton() {
 //         <CardSkeleton />
 //       </div>
 //       {/* <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-  
+
 //         <LatestInvoicesSkeleton />
 //       </div> */}
 //     </div>
 //   );
 // }
-
-
-

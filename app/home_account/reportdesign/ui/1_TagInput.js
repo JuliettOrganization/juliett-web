@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const TagInput = ({ tags, setTags }) => {
   const getRandomColor = () => {
-    const colors = ['bg-red-500', 'bg-green-500', 'bg-blue-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500'];
+    const colors = [
+      "bg-red-500",
+      "bg-green-500",
+      "bg-blue-500",
+      "bg-yellow-500",
+      "bg-purple-500",
+      "bg-pink-500",
+    ];
     return colors[Math.floor(Math.random() * colors.length)];
   };
-  
-  const [inputValue, setInputValue] = useState('');
+
+  const [inputValue, setInputValue] = useState("");
 
   const addTag = (tag) => {
     setTags([...tags, { text: tag, color: getRandomColor() }]);
@@ -17,17 +24,15 @@ const TagInput = ({ tags, setTags }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       const trimmedValue = inputValue.trim();
-      if (trimmedValue && !tags.find(tag => tag.text === trimmedValue)) {
+      if (trimmedValue && !tags.find((tag) => tag.text === trimmedValue)) {
         addTag(trimmedValue);
-        setInputValue('');
+        setInputValue("");
       }
     }
   };
-
-
 
   return (
     <div className="grid grid-cols-5 gap-0 bg-transparent focus:outline-none">
@@ -42,7 +47,10 @@ const TagInput = ({ tags, setTags }) => {
       />
       <div className="col-span-4 md:col-span-4 flex flex-wrap space-x-2 bg-white p-1 items-center">
         {tags.map((tag, index) => (
-          <span key={index} className={`${tag.color} text-white rounded-full border border-white px-2 py-1 text-sm flex items-center`}>
+          <span
+            key={index}
+            className={`${tag.color} text-white rounded-full border border-white px-2 py-1 text-sm flex items-center`}
+          >
             {tag.text}
             <button
               type="button"

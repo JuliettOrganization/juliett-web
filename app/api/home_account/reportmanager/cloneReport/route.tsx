@@ -1,23 +1,28 @@
-import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
-import { v4 as uuidv4 } from 'uuid';
-import { auth } from '@/auth';
+import { NextResponse } from "next/server";
+import { sql } from "@vercel/postgres";
+import { v4 as uuidv4 } from "uuid";
+import { auth } from "@/auth";
 
 export async function POST(request: Request) {
   try {
     const { reportid } = await request.json();
 
     if (!reportid) {
-        return NextResponse.json({ error: 'Report ID is required' }, { status: 400 });
-      }
+      return NextResponse.json(
+        { error: "Report ID is required" },
+        { status: 400 },
+      );
+    }
 
     const newReportId = uuidv4();
-    
+
     // Ensure the reportid does not already exist
-    const checkReportIdQuery = 'SELECT 1 FROM reports WHERE reportid = $1';
-    const checkReportIdResult = await sql.query(checkReportIdQuery, [newReportId]);
+    const checkReportIdQuery = "SELECT 1 FROM reports WHERE reportid = $1";
+    const checkReportIdResult = await sql.query(checkReportIdQuery, [
+      newReportId,
+    ]);
     if (checkReportIdResult.rows.length > 0) {
-      throw new Error('Report ID already exists');
+      throw new Error("Report ID already exists");
     }
 
     const insertQuery = `
@@ -59,25 +64,21 @@ WHERE reportid = $2;
 
     `;
 
-    const insertValues = [
-      newReportId,
-      reportid,
-    ];
+    const insertValues = [newReportId, reportid];
 
     await sql.query(insertQuery, insertValues);
     console.log(sql.query(insertQuery, insertValues));
-   
+
     // return NextResponse.json({ message: 'Report cloned successfully', query: (insertValues) }, { status: 200 }); // Debugging
-    return NextResponse.json({ message: 'Report cloned successfully' }, { status: 200 });
+    return NextResponse.json(
+      { message: "Report cloned successfully" },
+      { status: 200 },
+    );
   } catch (error) {
-    console.error('Error saving report:', error);
-    return NextResponse.json({ error: 'Failed to clone report' }, { status: 500 });
+    console.error("Error saving report:", error);
+    return NextResponse.json(
+      { error: "Failed to clone report" },
+      { status: 500 },
+    );
   }
 }
-
-
-
-
-
-
-

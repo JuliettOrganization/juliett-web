@@ -1,6 +1,6 @@
-'user client';
-import { Building2, Network, Plane, Route } from "lucide-react"
-import { useSidebar } from "@/app/home_account/configuration/ui/sidebar/components/sidebar"
+"user client";
+import { Building2, Network, Plane, Route } from "lucide-react";
+import { useSidebar } from "@/app/home_account/configuration/ui/sidebar/components/sidebar";
 // import { Globe, Send, Building2, Route } from "lucide-react"
 
 import {
@@ -13,8 +13,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  
-} from "@/app/home_account/configuration/ui/sidebar/components/sidebar"
+} from "@/app/home_account/configuration/ui/sidebar/components/sidebar";
 
 // Menu items.
 const items = [
@@ -38,9 +37,7 @@ const items = [
     url: "/home_account/configuration/geogrouping",
     icon: Route,
   },
-
-]
-
+];
 
 export function AppSidebar() {
   const {
@@ -51,18 +48,18 @@ export function AppSidebar() {
     setOpenMobile,
     isMobile,
     toggleSidebar,
-  } = useSidebar()
-
-
-
+  } = useSidebar();
 
   return (
     <Sidebar collapsible="icon">
-      
-        <SidebarHeader><p className="text-transparent">______</p></SidebarHeader>
-        <SidebarHeader><p className="text-transparent">______</p></SidebarHeader>
-        
-        {/* <SidebarHeader></SidebarHeader> */}
+      <SidebarHeader>
+        <p className="text-transparent">______</p>
+      </SidebarHeader>
+      <SidebarHeader>
+        <p className="text-transparent">______</p>
+      </SidebarHeader>
+
+      {/* <SidebarHeader></SidebarHeader> */}
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Configuration</SidebarGroupLabel>
@@ -71,7 +68,7 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url} >
+                    <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
                     </a>
@@ -85,5 +82,5 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

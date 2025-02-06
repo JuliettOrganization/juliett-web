@@ -1,70 +1,80 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import CreateFormLayout from '@/app/home_account/reportdesign/ui/0_main_sub_layout';
-import LoadingSpinner from '@/ui_general/LoadingSpinner';
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import CreateFormLayout from "@/app/home_account/reportdesign/ui/0_main_sub_layout";
+import LoadingSpinner from "@/app/ui_general/LoadingSpinner";
 
 export default function Page() {
   const pathname = usePathname();
-  const reportid = pathname ? pathname.split('/').pop() || undefined : undefined;
+  const reportid = pathname
+    ? pathname.split("/").pop() || undefined
+    : undefined;
   const [initialValues, setInitialValues] = useState({
-    reportName: '',
-    description: '',
+    reportName: "",
+    description: "",
     tags: [],
-    dateConcept: 'Issue Date',
-    dateFrom: '2025-01-01',
-    dateTo: '2025-12-31',
-    benchmarkPeriod: 'Yes',
-    benchmarkDateFrom: '2024-01-01',
-    benchmarkDateTo: '2024-12-31',
-    currency: '',
+    dateConcept: "Issue Date",
+    dateFrom: "2025-01-01",
+    dateTo: "2025-12-31",
+    benchmarkPeriod: "Yes",
+    benchmarkDateFrom: "2024-01-01",
+    benchmarkDateTo: "2024-12-31",
+    currency: "",
     fields: [],
     transactionType: [],
     amounts: [],
-    ODconcept: 'Ticket based',
-    ODfiltering: 'Include',
+    ODconcept: "Ticket based",
+    ODfiltering: "Include",
     isCustomSqlActive: false,
-    selectedGroupingAgency: '',
-    selectedGroupingGeoFrom: '',
-    selectedGroupingGeoTo: '',
-    selectedGroupingIssuing: '',
-    selectedGroupingMarketing: '',
-    selectedGroupingOperating: '',
+    selectedGroupingAgency: "",
+    selectedGroupingGeoFrom: "",
+    selectedGroupingGeoTo: "",
+    selectedGroupingIssuing: "",
+    selectedGroupingMarketing: "",
+    selectedGroupingOperating: "",
     selectedGroupingValuesAgency: [],
     selectedGroupingValuesGeoFrom: [],
     selectedGroupingValuesGeoTo: [],
     selectedGroupingValuesIssuing: [],
     selectedGroupingValuesMarketing: [],
     selectedGroupingValuesOperating: [],
-    sqlCode: '',
+    sqlCode: "",
   });
   const [loading, setLoading] = useState(true);
   const getRandomColor = () => {
-    const colors = ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500'];
+    const colors = [
+      "bg-red-500",
+      "bg-blue-500",
+      "bg-green-500",
+      "bg-yellow-500",
+    ];
     return colors[Math.floor(Math.random() * colors.length)];
   };
 
   useEffect(() => {
     if (reportid) {
       fetch(`/api/home_account/reportdesign/getReportDetails`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ reportid }),
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error('Failed to fetch report details');
+            throw new Error("Failed to fetch report details");
           }
           return response.json();
         })
         .then((data) => {
-            setInitialValues({
+          setInitialValues({
             reportName: data.reportname,
             description: data.description,
-            tags: data.tags.map((tag: string) => ({ text: tag, color: getRandomColor() })),
+            tags: data.tags.map((tag: string) => ({
+              text: tag,
+              color: getRandomColor(),
+            })),
             dateConcept: data.date_concept,
             dateFrom: data.date_from,
             dateTo: data.date_to,
@@ -85,16 +95,20 @@ export default function Page() {
             selectedGroupingMarketing: data.selected_grouping_marketing,
             selectedGroupingOperating: data.selected_grouping_operating,
             selectedGroupingValuesAgency: data.selected_grouping_values_agency,
-            selectedGroupingValuesGeoFrom: data.selected_grouping_values_geo_from,
+            selectedGroupingValuesGeoFrom:
+              data.selected_grouping_values_geo_from,
             selectedGroupingValuesGeoTo: data.selected_grouping_values_geo_to,
-            selectedGroupingValuesIssuing: data.selected_grouping_values_issuing,
-            selectedGroupingValuesMarketing: data.selected_grouping_values_marketing,
-            selectedGroupingValuesOperating: data.selected_grouping_values_operating,
+            selectedGroupingValuesIssuing:
+              data.selected_grouping_values_issuing,
+            selectedGroupingValuesMarketing:
+              data.selected_grouping_values_marketing,
+            selectedGroupingValuesOperating:
+              data.selected_grouping_values_operating,
             sqlCode: data.sql_code,
           });
         })
         .catch((error) => {
-          console.error('Error fetching report details:', error);
+          console.error("Error fetching report details:", error);
         })
         .finally(() => {
           setLoading(false);
@@ -106,7 +120,11 @@ export default function Page() {
 
   // THIS IS VERY IMPORTANT OTHERWISE THE REPORT DATA OF THE REPORTID ARE NOT FETCHED. This is enabling the UI to wait for the report data
   if (loading) {
-    return <div><LoadingSpinner/></div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (

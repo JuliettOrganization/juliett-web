@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface AgencyCodesProps {
   selectedGroup: string | null;
@@ -19,13 +19,13 @@ const AgencyCodes: React.FC<AgencyCodesProps> = ({
 }) => {
   if (!selectedGroup || !selectedSubGroup) return null;
 
-  const filteredAgencyCodes = Object.keys(agencyCodes[selectedGroup] || {}).filter((code) =>
-    code.includes(searchQuery)
-  );
+  const filteredAgencyCodes = Object.keys(
+    agencyCodes[selectedGroup] || {},
+  ).filter((code) => code.includes(searchQuery));
 
   const getNotAllocatedCodes = () => {
     return Object.keys(agencyCodes[selectedGroup] || {}).filter(
-      (code) => agencyCodes[selectedGroup][code] === 'Not Allocated'
+      (code) => agencyCodes[selectedGroup][code] === "Not Allocated",
     );
   };
 
@@ -41,7 +41,7 @@ const AgencyCodes: React.FC<AgencyCodesProps> = ({
         onChange={(e) => setSearchQuery(e.target.value)}
         className="mb-4 p-2 border border-gray-300 rounded-full w-full"
       />
-      {selectedSubGroup === 'Not Allocated' ? (
+      {selectedSubGroup === "Not Allocated" ? (
         <ul className="space-y-2">
           {uniqueNotAllocatedCodes.map((code) => (
             <li key={code} className="p-2 rounded bg-gray-100">
@@ -55,14 +55,14 @@ const AgencyCodes: React.FC<AgencyCodesProps> = ({
             const isAllocatedToOtherSubGroup =
               selectedGroup &&
               selectedSubGroup &&
-              agencyCodes[selectedGroup][code] !== 'Not Allocated' &&
+              agencyCodes[selectedGroup][code] !== "Not Allocated" &&
               agencyCodes[selectedGroup][code] !== selectedSubGroup;
 
             return (
               <li
                 key={code}
                 className={`p-2 rounded ${
-                  isAllocatedToOtherSubGroup ? 'bg-gray-300' : 'bg-gray-100'
+                  isAllocatedToOtherSubGroup ? "bg-gray-300" : "bg-gray-100"
                 }`}
               >
                 <input
@@ -77,11 +77,11 @@ const AgencyCodes: React.FC<AgencyCodesProps> = ({
                       code,
                       selectedGroup &&
                         agencyCodes[selectedGroup][code] === selectedSubGroup
-                        ? 'Not Allocated'
-                        : selectedSubGroup || 'Not Allocated'
+                        ? "Not Allocated"
+                        : selectedSubGroup || "Not Allocated",
                     )
                   }
-                  disabled={selectedSubGroup === 'Not Allocated'}
+                  disabled={selectedSubGroup === "Not Allocated"}
                 />
                 {code}
                 {isAllocatedToOtherSubGroup && (

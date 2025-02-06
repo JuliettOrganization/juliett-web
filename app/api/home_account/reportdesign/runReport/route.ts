@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
-import { v4 as uuidv4 } from 'uuid';
-import { auth } from '@/auth';
+import { NextResponse } from "next/server";
+import { sql } from "@vercel/postgres";
+import { v4 as uuidv4 } from "uuid";
+import { auth } from "@/auth";
 
 export async function POST(request: Request) {
   try {
@@ -9,19 +9,21 @@ export async function POST(request: Request) {
     const session = await auth();
 
     if (!session || !session.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const useremail = session.user.email;
-    
-      // Insert new report
-      const newReportId = uuidv4();
-    
+
+    // Insert new report
+    const newReportId = uuidv4();
+
     // Ensure the reportid does not already exist
-    const checkReportIdQuery = 'SELECT 1 FROM reports WHERE reportid = $1';
-    const checkReportIdResult = await sql.query(checkReportIdQuery, [newReportId]);
+    const checkReportIdQuery = "SELECT 1 FROM reports WHERE reportid = $1";
+    const checkReportIdResult = await sql.query(checkReportIdQuery, [
+      newReportId,
+    ]);
     if (checkReportIdResult.rows.length > 0) {
-      throw new Error('Report ID already exists');
+      throw new Error("Report ID already exists");
     }
     const insertQuery = `
       INSERT INTO reports (
@@ -47,8 +49,8 @@ export async function POST(request: Request) {
       newReportId,
       useremail,
       reportData.reportName,
-      'running',
-      reportData.tags.map((tag: { text: string }) => tag.text).join(';'),
+      "running",
+      reportData.tags.map((tag: { text: string }) => tag.text).join(";"),
       reportData.description,
       reportData.ODconcept,
       reportData.ODfiltering,
@@ -76,17 +78,23 @@ export async function POST(request: Request) {
       reportData.selectedGroupingValuesOperating,
       reportData.sqlCode,
       reportData.transactionType,
-      reportData.accountid
+      reportData.accountid,
     ];
 
     await sql.query(insertQuery, insertValues);
 
-   
-    return NextResponse.json({ message: 'Go to Report Manager to download your results', reportId: newReportId }, { status: 200 })
-
-
+    return NextResponse.json(
+      {
+        message: "Go to Report Manager to download your results",
+        reportId: newReportId,
+      },
+      { status: 200 },
+    );
   } catch (error) {
-    console.error('Error running report:', error);
-    return NextResponse.json({ error: 'Failed to run report' }, { status: 500 });
+    console.error("Error running report:", error);
+    return NextResponse.json(
+      { error: "Failed to run report" },
+      { status: 500 },
+    );
   }
 }

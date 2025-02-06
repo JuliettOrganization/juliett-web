@@ -1,16 +1,16 @@
-import { sql } from '@vercel/postgres';
-import { NextResponse } from 'next/server';
-
-
+import { sql } from "@vercel/postgres";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
- const accountid = searchParams.get('accountid');
- const reportid = searchParams.get('reportid');
-
+  const accountid = searchParams.get("accountid");
+  const reportid = searchParams.get("reportid");
 
   if (!accountid) {
-    return NextResponse.json({ error: 'Account ID is required' }, { status: 400 });
+    return NextResponse.json(
+      { error: "Account ID is required" },
+      { status: 400 },
+    );
   }
 
   try {
@@ -36,15 +36,15 @@ export async function GET(request: Request) {
     LIMIT 1
   `;
 
-  // Log the query and parameters
-  console.log('Executing query:', reportsQuery);
-  console.log('Query parameters:', [accountid, reportid]);
+    // Log the query and parameters
+    console.log("Executing query:", reportsQuery);
+    console.log("Query parameters:", [accountid, reportid]);
 
-  const reports = await sql.query(reportsQuery, [accountid, reportid]);
- 
+    const reports = await sql.query(reportsQuery, [accountid, reportid]);
+
     return NextResponse.json(reports.rows);
   } catch (error) {
-    console.error('Database error:', error); // Log the error to the console
-    return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    console.error("Database error:", error); // Log the error to the console
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
 }

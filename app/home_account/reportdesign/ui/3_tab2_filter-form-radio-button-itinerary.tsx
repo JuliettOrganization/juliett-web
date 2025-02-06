@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface RadioButtonListItineraryProps {
   ODconcept: string;
@@ -20,10 +20,13 @@ const RadioButtonListItinerary: React.FC<RadioButtonListItineraryProps> = ({
               name="option"
               value="Ticket based"
               className="peer cursor-pointer text-green-500"
-              checked={ODconcept === 'Ticket based'}
+              checked={ODconcept === "Ticket based"}
               onChange={(e) => setODconcept(e.target.value)}
             />
-            <label htmlFor="ticket-based" className="ml-2 text-sm cursor-pointer">
+            <label
+              htmlFor="ticket-based"
+              className="ml-2 text-sm cursor-pointer"
+            >
               Ticket based
             </label>
           </div>
@@ -34,10 +37,13 @@ const RadioButtonListItinerary: React.FC<RadioButtonListItineraryProps> = ({
               name="option"
               value="Coupon based"
               className="peer cursor-pointer text-green-500"
-              checked={ODconcept === 'Coupon based'}
+              checked={ODconcept === "Coupon based"}
               onChange={(e) => setODconcept(e.target.value)}
             />
-            <label htmlFor="coupon-based" className="ml-2 text-sm cursor-pointer">
+            <label
+              htmlFor="coupon-based"
+              className="ml-2 text-sm cursor-pointer"
+            >
               Coupon based
             </label>
           </div>
@@ -48,10 +54,13 @@ const RadioButtonListItinerary: React.FC<RadioButtonListItineraryProps> = ({
               name="option"
               value="Stopover based"
               className="peer cursor-pointer text-green-500"
-              checked={ODconcept === 'Stopover based'}
+              checked={ODconcept === "Stopover based"}
               onChange={(e) => setODconcept(e.target.value)}
             />
-            <label htmlFor="stopover-based" className="ml-2 text-sm cursor-pointer">
+            <label
+              htmlFor="stopover-based"
+              className="ml-2 text-sm cursor-pointer"
+            >
               Stopover based
             </label>
           </div>

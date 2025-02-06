@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import AccountForm from '@/app/home_user/admin/accounts/create/ui/AccountForm';
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import AccountForm from "@/app/home_user/admin/accounts/create/ui/AccountForm";
 
 export default function Page() {
   const pathname = usePathname();
-  const id = pathname.split('/').pop();
+  const id = pathname.split("/").pop();
   const [initialValues, setInitialValues] = useState({
-    initialAccountId: '',
-    initialAccountName: '',
+    initialAccountId: "",
+    initialAccountName: "",
     initialBilling: false,
     initialSelectedFile: null,
     initialSelectedCurrencies: [],
@@ -21,10 +21,10 @@ export default function Page() {
   useEffect(() => {
     const fetchAccountDetails = async () => {
       try {
-        const response = await fetch('/api/account/getAccountDetails', {
-          method: 'POST',
+        const response = await fetch("/api/account/getAccountDetails", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ id }),
         });
@@ -36,15 +36,15 @@ export default function Page() {
             initialAccountName: data.accountname,
             initialBilling: data.billing,
             initialSelectedFile: data.selectedfile,
-            initialSelectedCurrencies: data.selectedcurrencies.split(';'),
-            initialSelectedSources: data.datasources.split(';'),
+            initialSelectedCurrencies: data.selectedcurrencies.split(";"),
+            initialSelectedSources: data.datasources.split(";"),
             initialSelectedUsers: data.users,
           });
         } else {
-          console.error('Failed to fetch account details');
+          console.error("Failed to fetch account details");
         }
       } catch (error) {
-        console.error('Error fetching account details:', error);
+        console.error("Error fetching account details:", error);
       } finally {
         setLoading(false);
       }
@@ -63,7 +63,6 @@ export default function Page() {
 
   return (
     <AccountForm
-     
       initialAccountName={initialValues.initialAccountName}
       initialBilling={initialValues.initialBilling}
       initialSelectedFile={initialValues.initialSelectedFile}

@@ -1,17 +1,17 @@
-import clsx from 'clsx';
+import clsx from "clsx";
 
 // Function to generate a color based on the tag
 const getTagColor = (tag: string) => {
   const colors = [
-    'bg-blue-100 text-blue-800',
-    'bg-green-100 text-green-800',
-    'bg-yellow-100 text-yellow-800',
-    'bg-red-100 text-red-800',
-    'bg-purple-100 text-purple-800',
-    'bg-pink-100 text-pink-800',
-    'bg-indigo-100 text-indigo-800',
-    'bg-teal-100 text-teal-800',
-    'bg-orange-100 text-orange-800',
+    "bg-blue-100 text-blue-800",
+    "bg-green-100 text-green-800",
+    "bg-yellow-100 text-yellow-800",
+    "bg-red-100 text-red-800",
+    "bg-purple-100 text-purple-800",
+    "bg-pink-100 text-pink-800",
+    "bg-indigo-100 text-indigo-800",
+    "bg-teal-100 text-teal-800",
+    "bg-orange-100 text-orange-800",
     // Add more colors as needed
   ];
 
@@ -24,8 +24,16 @@ const getTagColor = (tag: string) => {
   return colors[index];
 };
 
-export default function Currencies({ Currencies }: { Currencies: string | null }) {
-  const tags = Currencies ? Currencies.split(';').map(tag => tag.trim()).filter(tag => tag !== '') : [];
+export default function Currencies({
+  Currencies,
+}: {
+  Currencies: string | null;
+}) {
+  const tags = Currencies
+    ? Currencies.split(";")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag !== "")
+    : [];
 
   return (
     <div className="inline-flex flex-wrap gap-1">
@@ -33,8 +41,8 @@ export default function Currencies({ Currencies }: { Currencies: string | null }
         <span
           key={index}
           className={clsx(
-            'inline-flex items-center rounded-full px-2 py-1 text-xs font-medium',
-            getTagColor(tag)
+            "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
+            getTagColor(tag),
           )}
         >
           {tag}

@@ -1,1 +1,1 @@
-declare module 'clsx';
+declare module "clsx";

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import NavLinks from '@/app/home_account/ui/Account_NAV_2_menuLinks';
+import { useState } from "react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import NavLinks from "@/app/home_account/ui/Account_NAV_2_menuLinks";
 
 export default function NavClient() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
