@@ -9,7 +9,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/app/home_account/configuration/ui/sidebar/components/tabs";
+} from "@/app/home_account/reportdesign/ui/tabs";
 import {
   Chart as ChartJS,
   CategoryScale,

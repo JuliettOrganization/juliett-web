@@ -55,12 +55,7 @@
     "eslint-config-prettier": "^10.0.1",
     "prettier": "3.4.2"
   },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
-    }
-  },
+
   "volta": {
     "node": "22.13.1",
     "yarn": "1.22.22"

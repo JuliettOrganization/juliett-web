@@ -272,7 +272,16 @@ const ReportsTableClient: React.FC<ReportsTableClientProps> = ({
                     )}
                   </td>
                   <td className="px-4 py-4 break-words text-sm text-gray-500">
-                    {report.last_updated}
+                    {new Date(report.last_updated).toLocaleString("en-GB", {
+                      timeZone: "UTC",
+                      hour12: true, // Ensures AM/PM format
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      timeZoneName: "short", // Displays "UTC"
+                    })}
                   </td>
                   <td className="px-6 py-4 break-words text-right text-sm font-medium relative">
                     <DropDownMenu
