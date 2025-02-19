@@ -1,0 +1,262 @@
+/* .transparentBlack { 
+  @apply fixed top-0 left-0 w-full h-20 flex items-center p-4; 
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+
+.backgrounds {
+  /* background-image: url('/login_background.png');  */
+  background-image: url("/accounts/image2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* You can adjust to repeat if needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* This centers the content vertically */
+  align-items: center; /* This centers the content horizontally */
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+.custom {
+  display: flex; /* Enables flexbox layout */
+  flex-direction: column; /* Column direction */
+  justify-content: center; /* Centers content vertically */
+  align-items: flex-start; /* Aligns content to the left */
+  margin-left: 200rem auto; /* Adjust the value for the desired left margin */
+  height: 100vh; /* Full viewport height */
+  color: white;
+}
+
+/* components/VerticalFlexLayout.module.css */
+.container {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+  width: 100vw;
+}
+
+.leftPanel,
+.rightPanel {
+  flex-direction: column;
+  flex: 1; /* Distribute space equally between the panels */
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  padding: 150;
+}
+
+.leftPanel {
+  flex: 2;
+  background-color: rgb(4, 4, 4, 0);
+  font-size: 3.5rem;
+  color: gray-500;
+}
+
+.rightPanel {
+  flex: 4;
+  background-color: rgb(
+    4,
+    4,
+    4,
+    0
+  ); /* Slightly darker gray for the right panel */
+  color: white; /* White text color */
+  font-size: 40rem; /* Very large font size, adjust as needed */
+  font-weight: bold; /* Optional: Makes the text bold */
+}
+
+/* LOADING SPINNER */
+
+/* Dual Ring Spinner
+.dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.dual-ring:after {
+  content: " J ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #2d16b1;
+  border-color: #ba5151  #40c7ae ;
+  animation: dual-ring-spin 1.2s linear infinite;
+}
+@keyframes dual-ring-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} */
+
+/* Popup Notification Styles */
+.popup-notification {
+  position: fixed;
+  top: 24px;
+  right: 0;
+  transform: translateX(100%);
+  border-left: 8px solid #38a169; /* Green border */
+  background-color: white;
+  color: #38a169; /* Green text */
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-out;
+}
+
+.popup-notification-enter {
+  transform: translateX(0);
+}
+
+.popup-notification-leave {
+  transform: translateX(100%);
+}
+
+/* General Styles */
+.main-container {
+  padding: 40px;
+  width: 80vw;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.header-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.header-buttons button {
+  height: 40px;
+  width: 144px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-buttons .save-button {
+  background-color: black;
+  color: white;
+}
+
+.header-buttons .cancel-button {
+  background-color: #f7fafc;
+  color: #4a5568;
+  font-size: 14px;
+  font-weight: medium;
+  transition: background-color 0.2s;
+}
+
+.header-buttons .cancel-button:hover {
+  background-color: #edf2f7;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.flex-container-md {
+  flex-direction: row;
+}
+
+.flex-item {
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1;
+}
+
+.flex-item h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.flex-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flex-item ul li {
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-item ul li.selected {
+  background-color: #4a5568;
+  color: white;
+}
+
+.flex-item ul li button {
+  margin-left: 8px;
+  background-color: black;
+  color: white;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 4px;
+  transition: background-color 0.2s;
+}
+
+.flex-item ul li button:hover {
+  background-color: #718096;
+}
+
+.add-button {
+  margin-top: 16px;
+  background-color: #4299e1;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+
+.add-button-md {
+  width: 40px;
+}
+
+.add-button span {
+  display: none;
+}
+
+.add-button-md span {
+  display: inline;
+}
+
+.add-button-md span.hidden {
+  display: none;
+}
+
+.add-button-md span.inline {
+  display: inline;
+}
